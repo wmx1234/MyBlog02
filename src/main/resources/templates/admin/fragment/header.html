@@ -82,17 +82,7 @@
                             </a>
                         </li>
 
-                        <li>
-                            <a href="#">
-                                <div class="clearfix">
-											<span class="pull-left">
-												<i class="btn btn-xs no-hover btn-success icon-shopping-cart"></i>
-												新订单
-											</span>
-                                    <span class="pull-right badge badge-success">+8</span>
-                                </div>
-                            </a>
-                        </li>
+
 
                         <li>
                             <a href="#">
@@ -189,11 +179,11 @@
 
                 <li class="light-blue">
                     <a data-toggle="dropdown" href="#" class="dropdown-toggle">
-                        <img class="nav-user-photo" th:src="@{/static/admin/avatars/user.jpg}" alt="Jason's Photo" />
+                        <img class="nav-user-photo" th:src="${user.avatar}" alt="Jason's Photo" />
                         <span class="user-info">
 									<small>欢迎光临,</small>
-									Jason
-								</span>
+                            <span th:text="${user.name}"></span>
+                        </span>
 
                         <i class="icon-caret-down"></i>
                     </a>

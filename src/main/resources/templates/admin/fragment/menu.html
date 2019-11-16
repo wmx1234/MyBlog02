@@ -17,13 +17,12 @@
 
 
             <ul class="nav nav-list" th:each="menu,stat:${menus}">
-                <li class="active">
-                    <a href="../index.html">
-                        <i class="icon-dashboard"></i>
+                <li class="">
+                    <a th:href="${menu.url}">
+                        <i th:class="${menu.icon}"></i>
                         <span class="menu-text" th:text="${menu.name}">控制台  </span>
                     </a>
                 </li>
-
             </ul><!-- /.nav-list -->
 
             <div class="sidebar-collapse" id="sidebar-collapse">
@@ -85,5 +84,5 @@
     <a href="#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
         <i class="icon-double-angle-up icon-only bigger-110"></i>
     </a>
-</div><!-- /.main-container -->
+</div>
 

@@ -69,7 +69,7 @@ public class IndedxController {
         model.addAttribute("user",currentUser);
         model.addAttribute("menus",permissionService.getPermissionsByRole(1));
 
-        model.addAttribute("permissions",permissionService.getPermissionsByRole(1));
+        //model.addAttribute("permissions",permissionService.getAll());
 
         return "/admin/permission";
     }

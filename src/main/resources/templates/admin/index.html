@@ -1,12 +1,149 @@
 <!DOCTYPE html>
 <html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
-<header th:replace="admin/fragment/header::header-fragment"></header>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+    <link rel="stylesheet" th:href="@{/admin/css/x-admin.css}">
+    <link rel="icon" href="/favicon.ico">
+    <title>管理后台</title>
 </head>
-<body>
-    <div th:replace="admin/fragment/header::header"></div>
-    <div th:replace="admin/fragment/menu::menu"></div>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+
+    <div th:replace="admin/fragment/menu::header"></div>
+    <div th:replace="admin/fragment/menu::left"></div>
+
+    <div class="layui-tab layui-tab-card site-demo-title x-main" lay-filter="x-tab" lay-allowclose="true" style="left: 200px;border-left: solid 2px #2299ee;">
+        <ul class="layui-tab-title">
+            <li class="layui-this"> 我的桌面 <i class="layui-icon layui-unselect layui-tab-close">ဆ</i> </li>
+        </ul>
+        <div class="layui-tab-content site-demo site-demo-body">
+            <div class="layui-tab-item layui-show">
+                <form class="layui-form x-center" action="" style="width:70%">
+                    <div class="layui-form-pane" style="margin-top: 15px;">
+                        <div class="layui-form-item">
+                            <div class="layui-input-inline">
+                                <select name="cname">
+                                    <option value="">请选择角色</option>
+                                    <option value="评论相关">评论相关</option>
+                                    <option value="评论相关">评论相关</option>
+                                    <option value="会员相关">会员相关</option>
+                                </select>
+                            </div>
+                            <div class="layui-input-inline">
+                                <input type="text" name="rules"  placeholder="模块/控制器/方法" autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="layui-input-inline">
+                                <input type="text" name="name"  placeholder="权限名称" autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="layui-input-inline" style="width:80px">
+                                <button class="layui-btn"  lay-submit="" lay-filter="*"><i class="layui-icon">&#xe608;</i>添加</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <xblock><button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除</button><span class="x-right" style="line-height:40px">共有数据：88 条</span></xblock>
+                <table class="layui-hide" id="test" lay-filter="test"></table>
+
+                <div id="page"></div>
+            </div>
+            </div>
+        </div>
+    </div>
+
+</div>
 
 
+
+
+<script th:src="@{/admin/lib/layui/layui.js}" charset="utf-8"></script>
+<script th:src="@{/admin/js/x-admin.js}"></script>
+
+<script th:inline="javascript">
+
+    var data = [[${permissions}]];
+
+    console.log(data);
+    layui.use('table', function(){
+        var table = layui.table;
+
+        table.render({
+            elem: '#test',
+            //url:'/test/table/demo1.json'
+            data: data,
+            toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            ,defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+                title: '提示'
+                ,layEvent: 'LAYTABLE_TIPS'
+                ,icon: 'layui-icon-tips'
+            }]
+            ,title: '用户数据表',
+            cols: [[ //aaa
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true}
+                ,{field:'username', title:'用户名', width:120, edit: 'text'}
+                ,{field:'email', title:'邮箱', width:150, edit: 'text', templet: function(res){
+                        return '<em>'+ res.email +'</em>'
+                    }}
+                ,{field:'sex', title:'性别', width:80, edit: 'text', sort: true}
+                ,{field:'city', title:'城市', width:100}
+                ,{field:'sign', title:'签名'}
+                ,{field:'experience', title:'积分', width:80, sort: true}
+                ,{field:'ip', title:'IP', width:120}
+                ,{field:'logins', title:'登入次数', width:100, sort: true}
+                ,{field:'joinTime', title:'加入时间', width:120}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+            ]]
+            ,page: true
+        });
+
+        //头工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch(obj.event){
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：'+ data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选': '未全选');
+                    break;
+
+                //自定义头工具栏右侧图标 - 提示
+                case 'LAYTABLE_TIPS':
+                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
+                    break;
+            };
+        });
+
+        //监听行工具事件
+        table.on('tool(test)', function(obj){
+            var data = obj.data;
+            //console.log(obj)
+            if(obj.event === 'del'){
+                layer.confirm('真的删除行么', function(index){
+                    obj.del();
+                    layer.close(index);
+                });
+            } else if(obj.event === 'edit'){
+                layer.prompt({
+                    formType: 2
+                    ,value: data.email
+                }, function(value, index){
+                    obj.update({
+                        email: value
+                    });
+                    layer.close(index);
+                });
+            }
+        });
+    });
+</script>
 </body>
 </html>

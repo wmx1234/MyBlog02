@@ -13,4 +13,9 @@ public interface PermissionService {
 
     List<Permission> getPermissionsByRole(int roleId);
 
+    List<Permission> getAll();
+
+    int insert(Permission permission);
+
+    void delete(Integer id);
 }

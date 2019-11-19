@@ -15,10 +15,16 @@
     <div th:replace="admin/fragment/menu::header"></div>
     <div th:replace="admin/fragment/menu::left"></div>
 
+
     <div class="layui-tab layui-tab-card site-demo-title x-main" lay-filter="x-tab" lay-allowclose="true" style="left: 200px;border-left: solid 2px #2299ee;">
-        <ul class="layui-tab-title">
-            <li class="layui-this"> 我的桌面 <i class="layui-icon layui-unselect layui-tab-close">ဆ</i> </li>
-        </ul>
+        <div class="x-nav">
+            <span class="layui-breadcrumb">
+              <a><cite>首页</cite></a>
+              <a><cite>会员管理</cite></a>
+              <a><cite>权限规则</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
+        </div>
         <div class="layui-tab-content site-demo site-demo-body">
             <div class="layui-tab-item layui-show">
                 <form class="layui-form x-center" action="" style="width:70%">

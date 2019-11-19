@@ -20,7 +20,14 @@
 
 
     <div class="layui-tab layui-tab-card site-demo-title x-main" lay-filter="x-tab" lay-allowclose="true" style="left: 200px;border-left: solid 2px #2299ee;">
-
+        <div class="x-nav">
+            <span class="layui-breadcrumb">
+              <a><cite>首页</cite></a>
+              <a><cite>会员管理</cite></a>
+              <a><cite>权限规则</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
+        </div>
         <div class="layui-tab-content site-demo site-demo-body">
 
 
@@ -57,7 +64,6 @@
 <script th:src="@{/js/jquery-2.0.3.min.js}"></script>
 <script th:inline="javascript">
 
-    var data = [[${permissions}]]
 
     layui.use(['table','form','layer'], function(){
         var table = layui.table;
@@ -67,9 +73,9 @@
         var cols = [];
         var col = [//加个注释
             {type: 'checkbox', fixed: 'left'},
-            {field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true},
-            {field:'name', title:'名称',  edit: 'text'},
-            {field:'icon', title:'图标',  edit: 'text', sort: true},
+            {field:'id', title:'ID', width:80, unresize: true, sort: true},
+            {field:'name', title:'名称' ,  sort: true},
+            {field:'icon', title:'图标'},
             {field:'url', title:'路径'},
             {field:'description', title:'描述'},
 
@@ -98,7 +104,7 @@
 
                     break;
                 case 'getCheckLength':
-                    banner_add('添加用户',$("#add_permission"),'600','500');
+                    permission_add('新增权限',$("#add_permission"),'600','500');
                     break;
                 //自定义头工具栏右侧图标 - 提示
                 case 'LAYTABLE_TIPS':
@@ -114,7 +120,7 @@
             if(obj.event === 'del'){
                 layer.confirm('真的删除行么', function(index){
                     console.log(obj);
-                    $.post("/admin/permission/delete/"+obj.data.id,{},function(){
+                    $.post("/admin/permission/delete/"+data.id,{},function(){
                         tableIns.reload({
                             where: {},
                             page: {curr: 1 }
@@ -125,15 +131,8 @@
 
                 });
             } else if(obj.event === 'edit'){
-                layer.prompt(
-                    {
-                    formType: 2 ,value: data.email
-                }, function(value, index){
-                    obj.update({
-                        email: value
-                    });
-                    layer.close(index);
-                });
+
+                permission_add('修改权限',$("#add_permission"),'600','500',data);
             }
         });
 
@@ -144,7 +143,23 @@
             console.log(data.field);
             $.post("/admin/permission/insert",data.field,function(index){
 
-                layer.msg('新增成功');
+                layer.msg('保存成功');
+                x_admin_close();
+                tableIns.reload({
+                    where: {},
+                    page: {curr: 1 }
+                });
+            })
+
+            return false;
+        });
+
+        //监听提交
+        form.on('submit(edit)', function(data){
+            console.log(data.field);
+            $.post("/admin/permission/update",data.field,function(index){
+
+                layer.msg('保存成功');
                 x_admin_close();
                 tableIns.reload({
                     where: {},
@@ -155,8 +170,8 @@
             return false;
         });
         /*添加*/
-        function banner_add(title,url,w,h){
-            x_admin_show(1,title,url,w,h);
+        function permission_add(title,url,w,h,data){
+            x_admin_show(1,title,url,w,h,data);
         }
 
         /*批量删除*/

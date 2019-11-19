@@ -42,6 +42,12 @@ public class PermissionController {
         permissionService.delete(id);
     }
 
+    @RequestMapping("/update")
+    @ResponseBody
+    public void update(Permission permission){
+
+        permissionService.update(permission);
+    }
 
     @RequestMapping("/getAll")
     @ResponseBody

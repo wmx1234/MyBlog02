@@ -1,8 +1,10 @@
 package com.xiao.blog.controller.admin;
 
+import com.xiao.blog.model.Permission;
 import com.xiao.blog.model.Role;
 import com.xiao.blog.model.User;
 import com.xiao.blog.service.PermissionService;
+import com.xiao.blog.service.RoleService;
 import com.xiao.blog.service.UserService;
 import com.xiao.blog.shiro.ShiroKit;
 import org.apache.shiro.SecurityUtils;
@@ -17,6 +19,8 @@ import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.List;
+
 /**
  * @author wangmx
  * @create 2019-11-14 22:07
@@ -28,6 +32,9 @@ public class IndedxController {
 
     @Autowired
     UserService userService;
+
+    @Autowired
+    RoleService roleService;
 
     @Autowired
     PermissionService permissionService;
@@ -52,9 +59,7 @@ public class IndedxController {
         Session session = ShiroKit.getSession();
 
         session.setAttribute("user",currentUser);
-
-        model.addAttribute("user",currentUser);
-        model.addAttribute("menus",permissionService.getPermissionsByRole(1));
+        session.setAttribute("permissions",permissionService.getPermissionsByRole(roleService.getRoleByUser(currentUser.getId())));
 
         return "/admin/index";
     }
@@ -74,5 +79,18 @@ public class IndedxController {
         return "/admin/permission";
     }
 
+    @RequestMapping("/role")
+    public String role(Model model){
 
+        Session session = ShiroKit.getSession();
+
+        User currentUser = (User)session.getAttribute("user");
+
+        model.addAttribute("user",currentUser);
+        //model.addAttribute("menus",permissionService.getPermissionsByRole(1));
+
+        //model.addAttribute("permissions",permissionService.getAll());
+
+        return "/admin/role";
+    }
 }

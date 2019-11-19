@@ -19,6 +19,7 @@
     <result column="registered_time" property="registeredTime" jdbcType="TIMESTAMP" />
     <result column="salt" property="salt" jdbcType="VARCHAR" />
     <result column="user_ip" property="userIp" jdbcType="VARCHAR" />
+
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     <!--

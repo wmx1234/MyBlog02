@@ -46,4 +46,6 @@ public interface RoleMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(Role record);
+
+    Role getRoleByUser(Integer userId);
 }

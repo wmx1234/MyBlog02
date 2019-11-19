@@ -29,7 +29,8 @@
                               </a>
                               </li> -->
             <li class="layui-nav-item"><img src="./images/logo.png" class="layui-circle" style="border: 2px solid #A9B7B7;" width="35px" alt=""></li>
-            <li class="layui-nav-item"> <a href="javascript:;">admin</a>
+            <li class="layui-nav-item">
+                <a href="javascript:;" th:text="${session.user.userName}">admin</a>
                 <dl class="layui-nav-child">
                     <!-- 二级菜单 -->
                     <dd><a href="">个人信息</a></dd>
@@ -48,7 +49,7 @@
 <div class="layui-side-scroll">
     <ul class="layui-nav layui-nav-tree site-demo-nav" lay-filter="side">
 
-        <li class="layui-nav-item" th:each="menu,stat:${menus}">
+        <li class="layui-nav-item" th:each="menu,stat:${session.permissions}">
             <a class="javascript:;" th:href="${menu.url}">
                 <i th:class="${menu.icon}" style="top: 3px;"></i>
                 <cite th:text="${menu.name}">机构管理</cite>

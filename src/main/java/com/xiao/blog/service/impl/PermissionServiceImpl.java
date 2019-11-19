@@ -44,4 +44,9 @@ public class PermissionServiceImpl implements PermissionService {
         //同时删除角色权限关联
         relationMapper.deleteRelationByPermissionId(id);
     }
+
+    @Override
+    public int update(Permission permission) {
+        return permissionMapper.updateByPrimaryKey(permission);
+    }
 }

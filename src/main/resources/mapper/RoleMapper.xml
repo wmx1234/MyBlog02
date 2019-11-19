@@ -49,6 +49,7 @@
     from sys_role
     where id = #{id,jdbcType=INTEGER}
   </select>
+
   <select id="selectAll" resultMap="BaseResultMap" >
     <!--
       WARNING - @mbggenerated

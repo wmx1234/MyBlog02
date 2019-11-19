@@ -7,7 +7,7 @@
 	w		弹出层宽度（缺省调默认值）
 	h		弹出层高度（缺省调默认值）
 */
-function x_admin_show(type,title,url,w,h){
+function x_admin_show(type,title,url,w,h,data){
 	if (title == null || title == '') {
 		title=false;
 	};
@@ -30,6 +30,17 @@ function x_admin_show(type,title,url,w,h){
 		title: title,
 		content: url
 	});
+
+	if (data != null || data != '') {
+		jQuery.each(data, function(i, val) {
+
+			$("input[name='"+ i +"']").val(val);
+
+		});
+
+		$(".layui-form-item .layui-btn").attr("lay-filter","edit");
+	};
+
 }
 
 /*关闭弹出框口*/

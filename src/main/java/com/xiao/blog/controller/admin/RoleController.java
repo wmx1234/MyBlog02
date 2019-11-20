@@ -16,13 +16,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
  * @desc:
  */
 @Controller
-@RequestMapping("/admin")
+@RequestMapping("/admin/role")
 public class RoleController {
 
     @Autowired
     RoleService roleService;
 
-    @RequestMapping("/role/getAll")
+    @RequestMapping("/getAll")
     @ResponseBody
     public Page<Role> getAll(Page page){
         PageHelper.startPage(page.getPage(),page.getLimit());

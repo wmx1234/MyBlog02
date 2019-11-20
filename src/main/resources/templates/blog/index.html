@@ -7,94 +7,178 @@
 	<title>index</title>
 	<meta name="keywords" content="">
 	<meta name="description" content="">
-	<link rel="stylesheet" th:href="@{/css/base1.css}" />
-	<link rel="stylesheet" th:href="@{/css/index1.css}" />
+	<link rel="stylesheet" href="//at.alicdn.com/t/font_1185766_kfdxqhzcz59.css">
+	<style>
+		html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+			margin: 0;
+			padding: 0;
+			border: 0;
+			outline: 0;
+			font-weight: inherit;
+			font-style: inherit;
+			font-family: inherit;
+			font-size: 100%;
+			vertical-align: baseline;
+		}
+		body{
+			background-color: #ddd;
+		}
+		.container{
+			display: flex;
+			flex-direction: column;
+		}
+		.blog_header{
+			padding-top: 90px;
+			width: 100%;
+			height: 500px;
+			background: url(../images/index/banner.jpg) no-repeat center center;
+		}
+		.blog_body{
+			display: flex;
+			flex-direction: row;
+			width: 100%;
+		}
+		.blog_boy{
+			width: 50%;
+			height: 500px;
+			border-right: 2px solid blue;
+
+		}
+		.blog_gril{
+			width: 50%;
+			height: 500px;
+			border-left: 2px solid pink;
+		}
+		.blog_center{
+			display: flex;
+			flex-direction: column;
+			width: 80%;
+			border-bottom: 4px solid black;
+			margin: 0 auto;
+		}
+		.cont-info-heart {
+			display: block;
+			position: absolute;
+			top: 170px;
+			left: 50%;
+			margin-left: -80px;
+			width: 160px;
+			height: 140px;
+			z-index: 3;
+		}
+		.title_boy{
+			width: 40%;
+			text-align: center;
+		}
+		.title_center h2 {
+			line-height: 3.125rem;
+			font-weight: 500;
+			font-size: 2.188rem;
+			font-family: 'Pacifico', cursive;
+			margin-top: 50px;
+		}
+
+		.title_center{
+			width: 20%;
+			text-align: center;
+		}
+		.title_center i {
+			color: #FFB9FC;
+			font-size: 36px;
+
+		}
+		.blog_title{
+			display: flex;
+		}
+		.title_boy img{
+			margin-top: 50px;
+			width: 100px;
+		}
+		.underline {
+			height: 2px;
+			width: 100px;
+			margin: auto;
+			margin-top: 1px;
+			margin-bottom: 10px;
+			position: relative;
+			top: -26px;
+			background-color: #FFB9FC;
+		}
+
+		.cont-article-list {
+			margin: 0;
+			width: 100%;
+		}
+
+		.cont-article-list li {
+			position: relative;
+			padding: 10px 15px;
+			margin-bottom: 10px;
+			background: #ffffff;
+			border-radius: 5px;
+			width: 80%;
+		}
+		.cont-article-list li>a {
+			display: block;
+		}
+
+		.cont-article-list li::before {
+			left: -20px;
+			border-left: 0;
+			border-right: 20px solid #ffffff;
+		}
+
+		.cont-article-list li::before, .cont-article-list li::before {
+			content: '';
+			position: absolute;
+			top: 25px;
+			right: -20px;
+			width: 0;
+			height: 0;
+			border-top: 10px solid transparent;
+			border-left: 20px solid #ffffff;
+			border-bottom: 10px solid transparent;
+		}
+		.cont-article-list h2 {
+			font-size: 18px;
+			line-height: 50px;
+			font-weight: bold;
+			color: #000000;
+		}
+
+		.cont-article-list p {
+			margin: 10px 0;
+			font-size: 14px;
+			line-height: 1.7;
+			color: #303e49;
+			text-indent: 2em;
+		}
+	</style>
 </head>
 <body>
-<header id="header">
-	<nav class="header-nav clear">
-		<a class="logo fl" href="#"><img th:src="@{/images/lib/logo.png}"></a>
-		<ul class="fr">
-			<li><a class="active" href="index.html">首页</a></li></a>
-			<li><a href="/boy">男主专区</a></li>
-			<li><a href="/boy">女主专区</a></li>
-			<li><a href="/love_track">爱情足迹</a></li>
-			<li><a href="list_article.html">关于我们</a></li>
 
-		</ul>
-	</nav>
-	<!--nav end-->
-</header>
-<!--header end-->
-<div class="banner">
-	<span class="banner-title">Record  Our  Love  Story  With  Words</span>
-	<span class="banner-introduce">欢迎来到Mr.H与Mrs.C的情侣博客，这里是我们在互联网的“窝”，这里有技术的学习笔记，也有好看的博客模板，更有我们的爱情故事，如果你喜欢我们的情侣博客，记得留言与我们互动哟！</span>
-	<span class="banner-sign">——Mr.H&Mrs.C</span>
-</div>
-<!-- banner end -->
-<div class="wraper">
-	<div class="wrap">
-		<div class="cont-info clear">
-			<img class="cont-info-heart" th:src="@{/images/index/blog_heart.png}" />
-			<div class="cont-info-boy fl">
-				<img th:src="@{/images/index/blog_boy.png}" />
-				<h5>Mr.H</h5>
-				<p>因为未来谁也无法预料，总担心未来会怎样，只是庸人自扰，我们活在现在，就应该为现在实实在在的生活或者学习努力。不为模糊不清的未来担心，只为清清楚楚的现在努力。</p>
-			</div>
-			<div class="cont-info-girl fr">
-				<img th:src="@{/images/index/blog_girl.png}" />
-				<h5>Mrs.C</h5>
-				<p>因为未来谁也无法预料，总担心未来会怎样，只是庸人自扰，我们活在现在，就应该为现在实实在在的生活或者学习努力。不为模糊不清的未来担心，只为清清楚楚的现在努力。</p>
-			</div>
+	<div class="container">
+		<div class="blog_header">
 		</div>
-		<div class="cont-article clear">
-			<div class="cont-article-line">&nbsp;</div>
-			<div class="cont-article-boy fl">
-				<ul class="cont-article-list">
-					<li>
-						<div class="cont-timeline-img"><i class="iconfont icon-img-icon"></i></div>
-						<a href="article_article.html" target="_blank">
-							<h2>HTML5+CSS3实现的响应式垂直时间轴</h2>
 
-							<p>网页时间轴一般用于展示以时间为主线的事件，如企业网站常见的公司发展历程等。本文将给大家介绍一款基于HTML5和CSS3的漂亮的垂直时间轴，它可以响应页面布局，适用于HTML5开发的PC和移动手机WEB应用。</p>
-						</a>
-						<div class="cont-article-info">
-							<span class="cont-article-time"><i class="iconfont info-icon">&#xe600;</i>2016-05-29</span>
-							<span class="cont-article-author"><i class="iconfont info-icon">&#xe603;</i>胡小刚</span>
-							<span class="cont-article-tag"><i class="iconfont info-icon">&#xe602;</i>HTML5、CSS3</span>
-							<span class="cont-article-classify"><i class="iconfont info-icon">&#xe601;</i>学习笔记</span>
-						</div>
-					</li>
-					<li>
-						<div class="cont-timeline-img"><i class="iconfont icon-img-icon"></i></div>
-						<a href="article_article.html" target="_blank">
-							<h2>HTML5+CSS3实现的响应式垂直时间轴</h2>
-							<p>网页时间轴一般用于展示以时间为主线的事件，如企业网站常见的公司发展历程等。本文将给大家介绍一款基于HTML5和CSS3的漂亮的垂直时间轴，它可以响应页面布局，适用于HTML5开发的PC和移动手机WEB应用。</p>
-						</a>
-						<div class="cont-article-info">
-							<span class="cont-article-time"><i class="iconfont info-icon">&#xe600;</i>2016-05-29</span>
-							<span class="cont-article-author"><i class="iconfont info-icon">&#xe603;</i>胡小刚</span>
-							<span class="cont-article-tag"><i class="iconfont info-icon">&#xe602;</i>HTML5、CSS3</span>
-							<span class="cont-article-classify"><i class="iconfont info-icon">&#xe601;</i>学习笔记</span>
-						</div>
-					</li>
-					<li>
-						<div class="cont-timeline-img"><i class="iconfont icon-img-icon"></i></div>
-						<a href="article_article.html" target="_blank">
-							<h2>HTML5+CSS3实现的响应式垂直时间轴</h2>
-
-							<p>网页时间轴一般用于展示以时间为主线的事件，如企业网站常见的公司发展历程等。本文将给大家介绍一款基于HTML5和CSS3的漂亮的垂直时间轴，它可以响应页面布局，适用于HTML5开发的PC和移动手机WEB应用。</p>
-						</a>
-						<div class="cont-article-info">
-							<span class="cont-article-time"><i class="iconfont info-icon">&#xe600;</i>2016-05-29</span>
-							<span class="cont-article-author"><i class="iconfont info-icon">&#xe603;</i>胡小刚</span>
-							<span class="cont-article-tag"><i class="iconfont info-icon">&#xe602;</i>HTML5、CSS3</span>
-							<span class="cont-article-classify"><i class="iconfont info-icon">&#xe601;</i>学习笔记</span>
-						</div>
-					</li>
-				</ul>
+		<div class="blog_center">
+			<div class="blog_title">
+				<div class="title_boy">
+					<img th:src="@{/images/index/blog_boy.png}" style="width: 100px">
+				</div>
+				<div  class="title_center">
+					<h2>王明晓 & 宋静静</h2>
+					<i class="iconfont icon-zan1"></i>
+					<div class="underline"></div>
+				</div>
+				<div class="title_boy">
+					<img th:src="@{/images/index/blog_girl.png}" style="width: 100px">
+				</div>
 			</div>
-			<div class="cont-article-girl fr">
+			<div style="text-align: center"><p>浮世万千，吾爱有三，日月卿。日为朝，月为暮，卿为朝朝暮暮</p></div>
+		</div>
+		<div class="blog_body">
+			<div class="blog_boy">
 				<ul class="cont-article-list">
 					<li>
 						<div class="cont-timeline-img"><i class="iconfont icon-img-icon"></i></div>
@@ -108,83 +192,14 @@
 							<span class="cont-article-tag"><i class="iconfont info-icon">&#xe602;</i>HTML5、CSS3</span>
 							<span class="cont-article-classify"><i class="iconfont info-icon">&#xe601;</i>学习笔记</span>
 						</div>
+						<div> </div>
 					</li>
-					<li>
-						<div class="cont-timeline-img"><i class="iconfont icon-img-icon"></i></div>
-						<a href="#" target="_blank">
-							<h2>HTML5+CSS3实现的响应式垂直时间轴</h2>
-							<p>网页时间轴一般用于展示以时间为主线的事件，如企业网站常见的公司发展历程等。本文将给大家介绍一款基于HTML5和CSS3的漂亮的垂直时间轴，它可以响应页面布局，适用于HTML5开发的PC和移动手机WEB应用。</p>
-						</a>
-						<div class="cont-article-info">
-							<span class="cont-article-time"><i class="iconfont info-icon">&#xe600;</i>2016-05-29</span>
-							<span class="cont-article-author"><i class="iconfont info-icon">&#xe603;</i>胡小刚</span>
-							<span class="cont-article-tag"><i class="iconfont info-icon">&#xe602;</i>HTML5、CSS3</span>
-							<span class="cont-article-classify"><i class="iconfont info-icon">&#xe601;</i>学习笔记</span>
-						</div>
-					</li>
-					<li>
-						<div class="cont-timeline-img"><i class="iconfont icon-img-icon"></i></div>
-						<a href="#" target="_blank">
-							<h2>HTML5+CSS3实现的响应式垂直时间轴</h2>
-
-							<p>网页时间轴一般用于展示以时间为主线的事件，如企业网站常见的公司发展历程等。本文将给大家介绍一款基于HTML5和CSS3的漂亮的垂直时间轴，它可以响应页面布局，适用于HTML5开发的PC和移动手机WEB应用。</p>
-						</a>
-						<div class="cont-article-info">
-							<span class="cont-article-time"><i class="iconfont info-icon">&#xe600;</i>2016-05-29</span>
-							<span class="cont-article-author"><i class="iconfont info-icon">&#xe603;</i>胡小刚</span>
-							<span class="cont-article-tag"><i class="iconfont info-icon">&#xe602;</i>HTML5、CSS3</span>
-							<span class="cont-article-classify"><i class="iconfont info-icon">&#xe601;</i>学习笔记</span>
-						</div>
-					</li>
-
 				</ul>
+
 			</div>
+
+			<div class="blog_gril">2</div>
 		</div>
 	</div>
-
-</div>
-<div id="totop" style="display: block;"><i class="iconfont icon-xiangshang"></i></div>
-<footer id="footer">
-	<div class="wrap footer-fat">
-		<section class="about">
-			<ul>
-				<li>
-					<h5>关于我们</h5>
-					<a target="_blank" href="http://520.jzdlink.com">爱情告白</a>
-					<a href="http://www.jzdlink.com/about">博主档案</a>
-					<a href="">留言板</a>
-				</li>
-				<li>
-					<h5>网站赞助</h5>
-					<a href="">热点标签</a>
-					<a href="http://www.jzdlink.com/sitemap_baidu.xml">sitemap</a>
-				</li>
-			</ul>
-		</section>
-		<section class="links">
-			<h5>友情链接</h5>
-			<ul>
-				<li><a target="_blank" href="http://www.macrr.com">闲鱼博客</a></li>
-				<li><a target="_blank" href="http://wasds.com">大肥博客</a></li>
-			</ul>
-		</section>
-		<section class="contact">
-			<h5>我们一直在努力着...</h5>
-			<ul>
-				<li>2016-06-15：博客改版为《情侣博客》模板</li>
-				<li>2015-07-31：胡小呆表白曹小萌，成为情侣</li>
-				<li>2015-06:博客改版,启用《简单》模板</li>
-				<li>2014-11-24：第一篇文章被百度快照</li>
-				<li>2014-09-19：博客成立</li>
-			</ul>
-			<p>本站运行：<span id="htmer_time">1年274天21时21分48秒</span></p>
-		</section>
-	</div>
-	<section class="copy">
-		版权所有(c)2015-2016 · <a href="">晋ICP备14007273号</a> · 基于Wordpress · Designed By 胡小呆 · Cody By 曹小萌
-	</section>
-</footer>
-<script type="text/javascript" th:src="@{/js/jquery-1.10.1.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/footer.js}"></script>
 </body>
 </html>

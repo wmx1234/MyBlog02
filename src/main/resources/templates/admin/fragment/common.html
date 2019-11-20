@@ -3,6 +3,7 @@
 <div class="x-body" id="add_permission" th:fragment="add_permission" style="display: none">
     <form class="layui-form">
 
+        <input type="hidden"  name="id"  >
 
         <div class="layui-form-item">
             <label for="name" class="layui-form-label">
@@ -41,7 +42,7 @@
         </div>
         <div class="layui-form-item">
 
-            <button  class="layui-btn" lay-filter="add" > 保存 </button>
+            <button  class="layui-btn" lay-filter="add" lay-submit=""> 保存 </button>
         </div>
     </form>
 </div>

@@ -48,4 +48,7 @@ public interface PermissionMapper {
     int updateByPrimaryKey(Permission record);
 
     List<Permission> getPermissionsByRole(int roleId);
+
+    int deleteBatch(List<Integer> ids);
+
 }

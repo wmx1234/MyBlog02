@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
@@ -40,6 +41,12 @@ public class PermissionController {
     @ResponseBody
     public void delete(@PathVariable("id") Integer id){
         permissionService.delete(id);
+    }
+
+    @RequestMapping("/deleteBatch")
+    @ResponseBody
+    public void delete(@RequestParam("ids[]") List<Integer> ids){
+        permissionService.deleteBatch(ids);
     }
 
     @RequestMapping("/update")

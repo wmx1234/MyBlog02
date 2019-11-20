@@ -20,4 +20,6 @@ public interface PermissionService {
     void delete(Integer id);
 
     int update(Permission permission);
+
+    int deleteBatch(List<Integer> ids);
 }

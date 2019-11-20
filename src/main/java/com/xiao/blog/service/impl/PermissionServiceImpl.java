@@ -49,4 +49,10 @@ public class PermissionServiceImpl implements PermissionService {
     public int update(Permission permission) {
         return permissionMapper.updateByPrimaryKey(permission);
     }
+
+    @Override
+    public int deleteBatch(List<Integer> ids) {
+        System.out.println(ids.size());
+        return permissionMapper.deleteBatch(ids);
+    }
 }

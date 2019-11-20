@@ -63,7 +63,12 @@ public class IndedxController {
 
         return "/admin/index";
     }
-
+    @RequestMapping("/logout")
+    public String logout(){
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return "/admin/login";
+    }
     @RequestMapping("/permission")
     public String permission(Model model){
 
@@ -73,24 +78,16 @@ public class IndedxController {
 
         model.addAttribute("user",currentUser);
         model.addAttribute("menus",permissionService.getPermissionsByRole(1));
-
-        //model.addAttribute("permissions",permissionService.getAll());
-
         return "/admin/permission";
     }
 
     @RequestMapping("/role")
     public String role(Model model){
-
-        Session session = ShiroKit.getSession();
-
-        User currentUser = (User)session.getAttribute("user");
-
-        model.addAttribute("user",currentUser);
-        //model.addAttribute("menus",permissionService.getPermissionsByRole(1));
-
-        //model.addAttribute("permissions",permissionService.getAll());
-
         return "/admin/role";
+    }
+
+    @RequestMapping("/user")
+    public String user(Model model){
+        return "/admin/user";
     }
 }

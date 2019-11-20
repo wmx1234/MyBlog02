@@ -20,14 +20,7 @@
 
 
     <div class="layui-tab layui-tab-card site-demo-title x-main" lay-filter="x-tab" lay-allowclose="true" style="left: 200px;border-left: solid 2px #2299ee;">
-        <div class="x-nav">
-            <span class="layui-breadcrumb">
-              <a><cite>首页</cite></a>
-              <a><cite>会员管理</cite></a>
-              <a><cite>权限规则</cite></a>
-            </span>
-            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
-        </div>
+
         <div class="layui-tab-content site-demo site-demo-body">
 
 
@@ -74,9 +67,9 @@
         var cols = [];
         var col = [//加个注释
             {type: 'checkbox', fixed: 'left'},
-            {field:'id', title:'ID', width:80, unresize: true, sort: true},
-            {field:'name', title:'名称' ,  sort: true},
-            {field:'icon', title:'图标'},
+            {field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true},
+            {field:'name', title:'名称',  edit: 'text'},
+            {field:'icon', title:'图标',  edit: 'text', sort: true},
             {field:'url', title:'路径'},
             {field:'description', title:'描述'},
 
@@ -86,7 +79,7 @@
         var tableIns = table.render({
             elem: '#test',
             //data: data,
-            url:'/admin/permission/getAll',
+            url:'/admin/user/getAll',
             toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板
             defaultToolbar: ['filter'],
             title: '权限表',
@@ -101,11 +94,11 @@
             switch(obj.event){
                 case 'getCheckData':
                     var data = checkStatus.data;
-                    deleteBatch(data);
+                    layer.alert(JSON.stringify(data));
 
                     break;
                 case 'getCheckLength':
-                    permission_add('新增权限',$("#add_permission"),'600','500',null);
+                    banner_add('添加用户',$("#add_permission"),'600','500');
                     break;
                 //自定义头工具栏右侧图标 - 提示
                 case 'LAYTABLE_TIPS':
@@ -121,7 +114,7 @@
             if(obj.event === 'del'){
                 layer.confirm('真的删除行么', function(index){
                     console.log(obj);
-                    $.post("/admin/permission/delete/"+data.id,{},function(){
+                    $.post("/admin/permission/delete/"+obj.data.id,{},function(){
                         tableIns.reload({
                             where: {},
                             page: {curr: 1 }
@@ -132,8 +125,15 @@
 
                 });
             } else if(obj.event === 'edit'){
-
-                permission_add('修改权限',$("#add_permission"),'600','500',data);
+                layer.prompt(
+                    {
+                    formType: 2 ,value: data.email
+                }, function(value, index){
+                    obj.update({
+                        email: value
+                    });
+                    layer.close(index);
+                });
             }
         });
 
@@ -144,23 +144,7 @@
             console.log(data.field);
             $.post("/admin/permission/insert",data.field,function(index){
 
-                layer.msg('保存成功');
-                x_admin_close();
-                tableIns.reload({
-                    where: {},
-                    page: {curr: 1 }
-                });
-            })
-
-            return false;
-        });
-
-        //监听提交
-        form.on('submit(edit)', function(data){
-            console.log(data.field);
-            $.post("/admin/permission/update",data.field,function(index){
-
-                layer.msg('保存成功');
+                layer.msg('新增成功');
                 x_admin_close();
                 tableIns.reload({
                     where: {},
@@ -171,28 +155,12 @@
             return false;
         });
         /*添加*/
-        function permission_add(title,url,w,h,data){
-            x_admin_show(1,title,url,w,h,data);
+        function banner_add(title,url,w,h){
+            x_admin_show(1,title,url,w,h);
         }
 
         /*批量删除*/
-        function deleteBatch(data){
-            console.log(data);
-            var ids = [];
-
-            for(var i=0;i<data.length;i++){
-                ids.push(data[i].id);
-            }
-            console.log(ids);
-            $.post("/admin/permission/deleteBatch",{'ids':ids},function(index){
-
-                layer.msg('保存成功');
-                x_admin_close();
-                tableIns.reload({
-                    where: {},
-                    page: {curr: 1 }
-                });
-            })
+        function deleteAllCheck(){
 
         }
     });

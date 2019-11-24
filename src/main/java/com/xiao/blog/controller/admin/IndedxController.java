@@ -54,12 +54,12 @@ public class IndedxController {
 
         subject.login(token);
 
-        User currentUser = userService.getUser(user.getUserName());
+        User currentUser = userService.getLoginUser(user.getUserName());
 
         Session session = ShiroKit.getSession();
 
         session.setAttribute("user",currentUser);
-        session.setAttribute("permissions",permissionService.getPermissionsByRole(roleService.getRoleByUser(currentUser.getId())));
+        session.setAttribute("permissions",permissionService.getPermissionsByRole(currentUser.getRole().getId()));
 
         return "/admin/index";
     }
@@ -72,12 +72,7 @@ public class IndedxController {
     @RequestMapping("/permission")
     public String permission(Model model){
 
-        Session session = ShiroKit.getSession();
-
-        User currentUser = (User)session.getAttribute("user");
-
-        model.addAttribute("user",currentUser);
-        model.addAttribute("menus",permissionService.getPermissionsByRole(1));
+        model.addAttribute("permissions",permissionService.getPermissionsByParent(0));
         return "/admin/permission";
     }
 

@@ -7,7 +7,10 @@
 	w		弹出层宽度（缺省调默认值）
 	h		弹出层高度（缺省调默认值）
 */
+
+
 function x_admin_show(type,title,url,w,h,data){
+	debugger;
 	if (title == null || title == '') {
 		title=false;
 	};
@@ -28,16 +31,14 @@ function x_admin_show(type,title,url,w,h,data){
 		shadeClose: true,
 		shade:0.4,
 		title: title,
-		content: url
+		content: $(url)
 	});
 
 	if (data != null && data != '') {
+
 		jQuery.each(data, function(i, val) {
-
 			$("input[name='"+ i +"']").val(val);
-
 		});
-
 		$(".layui-form-item .layui-btn").attr("lay-filter","edit");
 	}else{
 		$(':input','form')
@@ -48,7 +49,6 @@ function x_admin_show(type,title,url,w,h,data){
 
 			.removeAttr('checked')
 
-			.removeAttr('checked')
 
 		$(".layui-form-item .layui-btn").attr("lay-filter","add");
 	}

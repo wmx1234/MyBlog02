@@ -1,6 +1,7 @@
 package com.xiao.blog.service;
 
 import com.xiao.blog.model.Permission;
+import com.xiao.blog.model.PermissionTree;
 
 import java.util.List;
 
@@ -15,6 +16,8 @@ public interface PermissionService {
 
     List<Permission> getAll();
 
+    List<Permission> getPermissionsByParent(Integer parentId);
+
     int insert(Permission permission);
 
     void delete(Integer id);
@@ -22,4 +25,7 @@ public interface PermissionService {
     int update(Permission permission);
 
     int deleteBatch(List<Integer> ids);
+
+
+    List<PermissionTree> getPermissionTree();
 }

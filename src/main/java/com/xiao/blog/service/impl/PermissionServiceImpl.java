@@ -3,6 +3,7 @@ package com.xiao.blog.service.impl;
 import com.xiao.blog.mapper.PermissionMapper;
 import com.xiao.blog.mapper.RelationMapper;
 import com.xiao.blog.model.Permission;
+import com.xiao.blog.model.PermissionTree;
 import com.xiao.blog.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,11 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
+    public List<Permission> getPermissionsByParent(Integer parentId) {
+        return permissionMapper.getPermissionsByParent(parentId);
+    }
+
+    @Override
     public int insert(Permission permission) {
         return permissionMapper.insert(permission);
     }
@@ -54,5 +60,12 @@ public class PermissionServiceImpl implements PermissionService {
     public int deleteBatch(List<Integer> ids) {
         System.out.println(ids.size());
         return permissionMapper.deleteBatch(ids);
+    }
+
+    @Override
+    public List<PermissionTree> getPermissionTree() {
+
+        List<PermissionTree> a = permissionMapper.getPermissionTree();
+        return a;
     }
 }

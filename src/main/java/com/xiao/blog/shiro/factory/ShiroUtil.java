@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.xiao.blog.mapper.PermissionMapper;
+import com.xiao.blog.mapper.RelationMapper;
 import com.xiao.blog.model.Permission;
 import com.xiao.blog.model.Role;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.xiao.blog.mapper.UserMapper;
 import com.xiao.blog.model.User;
+
+import javax.management.relation.RelationService;
 
 
 @Component
@@ -25,10 +28,13 @@ public class ShiroUtil implements IShiro {
     @Autowired
     private PermissionMapper permissionMapper;
 
+    @Autowired
+    private RelationMapper relationMapper;
+
     @Override
     public User getUser(String userName) {
         
-        return userMapper.getUser(userName);
+        return userMapper.getLoginUser(userName);
     }
 
     @Override
@@ -36,8 +42,7 @@ public class ShiroUtil implements IShiro {
         List<Permission> permissions = permissionMapper.selectAll();
         Map<String,String> filterChainDefinitionMap = new LinkedHashMap<String,String>();
         for(Permission permission:permissions) {
-
-            List<Role> roles = permission.getRoles();
+            List<Role> roles =  permission.getRoles();
             if(roles == null || roles.size() == 0) {
                 filterChainDefinitionMap.put(permission.getUrl(),"anon");
             }else {
@@ -50,7 +55,7 @@ public class ShiroUtil implements IShiro {
         }
 
         filterChainDefinitionMap.put("/**", "customRolesAuthorizationFilter");
-        filterChainDefinitionMap.put("/logout", "logout");
+        filterChainDefinitionMap.put("/admin/logout", "logout");
         return filterChainDefinitionMap;
     }
     

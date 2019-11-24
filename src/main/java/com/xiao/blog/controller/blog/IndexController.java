@@ -13,9 +13,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/")
 public class IndexController {
 
+
+    @RequestMapping("/test")
+    public String test(){
+        return "/test";
+    }
+
+
     @RequestMapping({"/index","/"})
     public String index(){
-        return "blog/index";
+        return "blog/index4";
     }
 
 
@@ -23,4 +30,7 @@ public class IndexController {
     public String boy(){
         return "blog/prefecture";
     }
+
+
+
 }

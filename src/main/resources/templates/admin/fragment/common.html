@@ -1,7 +1,7 @@
 <html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
 
 <div class="x-body" id="add_permission" th:fragment="add_permission" style="display: none">
-    <form class="layui-form">
+    <form class="layui-form" id="add_permission_form">
 
         <input type="hidden"  name="id"  >
 
@@ -33,6 +33,20 @@
         </div>
         <div class="layui-form-item">
             <label for="description" class="layui-form-label">
+                父权限
+            </label>
+            <div class="layui-input-inline" >
+                <select name="parentId" lay-verify="" >
+                    <option value="0">请选择父权限</option>
+                    <div th:each="permission:${permissions}">
+                        <option th:value="${permission.id}" th:text="${permission.name}"></option>
+                    </div>
+                </select>
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+            <label for="description" class="layui-form-label">
                 描述
             </label>
             <div class="layui-input-inline">
@@ -40,9 +54,21 @@
             </div>
 
         </div>
+
+
+
+
+
         <div class="layui-form-item">
 
             <button  class="layui-btn" lay-filter="add" lay-submit=""> 保存 </button>
         </div>
     </form>
 </div>
+
+
+<div class="x-body" id="set_role" th:fragment="set_role" style="display: none">
+
+    <div id="test12" class="demo-tree-more"></div>
+</div>
+

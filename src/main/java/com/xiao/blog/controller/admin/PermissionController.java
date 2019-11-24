@@ -4,13 +4,11 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xiao.blog.model.Page;
 import com.xiao.blog.model.Permission;
+import com.xiao.blog.model.PermissionTree;
 import com.xiao.blog.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -56,15 +54,32 @@ public class PermissionController {
         permissionService.update(permission);
     }
 
-    @RequestMapping("/getAll")
+    /**
+     * 获取所有一级菜单
+     * @param page
+     * @return
+     */
+    @GetMapping("/getPermissionsByParent/{parentId}")
     @ResponseBody
-    public Page<Permission> getAll(Page page){
+    public Page<Permission> getPermissionsByParent(Page page,@PathVariable("parentId") Integer parentId){
         PageHelper.startPage(page.getPage(),page.getLimit());
-        PageInfo info=new PageInfo(permissionService.getAll());//创建pageinfo，包含分页的信息
+        PageInfo info=new PageInfo(permissionService.getPermissionsByParent(parentId));//创建pageinfo，包含分页的信息
         page.setData(info.getList());
         page.setCode(0);
         page.setCount(info.getTotal());
 
         return page;
+    }
+
+    /**
+     * 获取所有一级菜单
+     * @param
+     * @return
+     */
+    @PostMapping("/getPermissionTree")
+    @ResponseBody
+    public List<PermissionTree> getPermissionTree(){
+
+        return permissionService.getPermissionTree();
     }
 }

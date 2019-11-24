@@ -13,7 +13,7 @@
 .header-demo .layui-nav .layui-this:after, .header-demo .layui-nav-bar { background-color: #393D49;}
 .layui-layout-admin .layui-side{ top: 60px;}
 
-.layui-nav{position: absolute; right: 0; top: 0; padding: 0; background:none;}
+.layui-nav{right: 0; top: 0; padding: 0; background:none;}
 .layui-nav-item .layui-icon{position: relative; font-size: 20px;}
 .layui-nav-item a cite{padding: 0 10px;}
 .layui-nav-tree .layui-nav-child a .x-menu{top: 3px;left:20px}

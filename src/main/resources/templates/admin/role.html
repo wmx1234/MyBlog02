@@ -35,6 +35,8 @@
 
 </div>
 <div th:replace="admin/fragment/common::add_permission"></div>
+<div th:replace="admin/fragment/common::set_role"></div>
+
 
 
 
@@ -42,7 +44,7 @@
     <div class="layui-btn-container">
         <button class="layui-btn layui-btn-sm" lay-event="getCheckData">批量删除</button>
         <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">新增</button>
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">授权</button>
+        <button class="layui-btn layui-btn-sm" lay-event="setRole">授权</button>
     </div>
 </script>
 
@@ -64,7 +66,7 @@
         var table = layui.table;
         var form = layui.form;
         var layer = layui.layer;
-
+        var tree = layui.tree;
 
         var tableIns = table.render({
             elem: '#test',
@@ -96,7 +98,10 @@
 
                     break;
                 case 'getCheckLength':
-                    banner_add('添加用户',$("#add_permission"),'600','500');
+                    banner_add('添加用户',$("#set_role"),'600','500');
+                    break;
+                case 'setRole':
+                    setRole('授权',$("#set_role"),'600','500');
                     break;
                 //自定义头工具栏右侧图标 - 提示
                 case 'LAYTABLE_TIPS':
@@ -154,13 +159,41 @@
         });
         /*添加*/
         function banner_add(title,url,w,h){
-            x_admin_show(1,title,url,w,h);
+            x_admin_show(1,title,url,w,h,null);
         }
+        function setRole(title,url,w,h){
 
+            $.post(
+                '/admin/permission/getPermissionTree',
+                function(data){
+                    console.log(data);
+                    //基本演示
+                    tree.render({
+                        elem: '#test12',
+                        data: data,
+                        showCheckbox: true,  //是否显示复选框
+                        id: 'demoId1',
+                        isJump: true, //是否允许点击节点时弹出新窗口跳转
+                        click: function(obj){
+                            var data = obj.data;  //获取当前点击的节点数据
+                            layer.msg('状态：'+ obj.state + '<br>节点数据：' + JSON.stringify(data));
+                        }
+                    })
+
+                })
+            x_admin_show(1,title,url,w,h,null);
+        }
         /*批量删除*/
         function deleteAllCheck(){
 
         }
+
+
+
+
+
+
+
     });
 
 

@@ -39,7 +39,7 @@ function x_admin_show(type,title,url,w,h,data){
 		jQuery.each(data, function(i, val) {
 			$("input[name='"+ i +"']").val(val);
 		});
-		$(".layui-form-item .layui-btn").attr("lay-filter","edit");
+
 	}else{
 		$(':input','form')
 
@@ -49,8 +49,6 @@ function x_admin_show(type,title,url,w,h,data){
 
 			.removeAttr('checked')
 
-
-		$(".layui-form-item .layui-btn").attr("lay-filter","add");
 	}
 
 }

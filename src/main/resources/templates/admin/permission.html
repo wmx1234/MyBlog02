@@ -250,9 +250,10 @@
 
 
         //监听提交
-        form.on('submit(add)', function(data){
-            console.log(data.field);
-            $.post("/admin/permission/insert",data.field,function(index){
+        form.on('submit(save)', function(data){
+
+            console.log(data);
+            $.post("/admin/permission/save",data.field,function(index){
 
                 layer.msg('保存成功');
                 x_admin_close();
@@ -265,21 +266,7 @@
             return false;
         });
 
-        //监听提交
-        form.on('submit(edit)', function(data){
-            console.log(data.field);
-            $.post("/admin/permission/update",data.field,function(index){
 
-                layer.msg('保存成功');
-                x_admin_close();
-                tableIns.reload({
-                    where: {},
-                    page: {curr: 1 }
-                });
-            })
-
-            return false;
-        });
         /*添加*/
         function permission_add(title,url,w,h,data){
             x_admin_show(1,title,url,w,h,data);

@@ -20,11 +20,11 @@
   </resultMap>
 
 
-  <resultMap id="PermissionTreeMap" type="com.xiao.blog.model.PermissionTree" >
+  <resultMap id="PermissionTreeMap" type="com.xiao.blog.model.TreeModel" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="title" jdbcType="VARCHAR" />
 
-    <collection property="children" ofType="com.xiao.blog.model.PermissionTree">
+    <collection property="children" ofType="com.xiao.blog.model.TreeModel">
       <id column="permission_id" property="id" jdbcType="INTEGER" />
       <result column="permission_name" property="title" jdbcType="VARCHAR" />
     </collection>

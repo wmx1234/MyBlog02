@@ -1,7 +1,7 @@
 package com.xiao.blog.mapper;
 
 import com.xiao.blog.model.Permission;
-import com.xiao.blog.model.PermissionTree;
+import com.xiao.blog.model.TreeModel;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -54,5 +54,5 @@ public interface PermissionMapper {
 
     List<Permission> getPermissionsByParent(Integer parentId);
 
-    List<PermissionTree> getPermissionTree();
+    List<TreeModel> getPermissionTree();
 }

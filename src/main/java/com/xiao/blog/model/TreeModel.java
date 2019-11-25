@@ -10,7 +10,7 @@ import java.util.List;
  * @Desc
  */
 @Data
-public class PermissionTree {
+public class TreeModel {
 
     private Integer id;
 
@@ -18,6 +18,6 @@ public class PermissionTree {
 
     private boolean checked;
 
-    private List<PermissionTree> children;
+    private List<TreeModel> children;
 
 }

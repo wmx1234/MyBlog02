@@ -37,7 +37,7 @@
             </label>
             <div class="layui-input-inline" >
                 <select name="parentId" lay-verify="" >
-                    <option value="0">请选择父权限</option>
+                    <option value="0">请选择</option>
                     <div th:each="permission:${permissions}">
                         <option th:value="${permission.id}" th:text="${permission.name}"></option>
                     </div>
@@ -55,20 +55,18 @@
 
         </div>
 
-
-
-
-
-        <div class="layui-form-item">
-
-            <button  class="layui-btn" lay-filter="add" lay-submit=""> 保存 </button>
+        <div class="layui-form-item" style="text-align: center;margin-top: 30px">
+            <button  class="layui-btn" lay-filter="save" lay-submit> 保存 </button>
         </div>
     </form>
 </div>
 
 
 <div class="x-body" id="set_role" th:fragment="set_role" style="display: none">
-
-    <div id="test12" class="demo-tree-more"></div>
+    <input name="id" type="hidden">
+    <div id="permission_tree" class="demo-tree-more"></div>
+    <div class="layui-form-item" style="text-align: center;margin-top: 30px">
+        <button  class="layui-btn" lay-filter="setPermission" lay-submit> 授权 </button>
+    </div>
 </div>
 

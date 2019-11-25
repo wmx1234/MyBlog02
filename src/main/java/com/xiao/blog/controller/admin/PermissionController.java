@@ -4,15 +4,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xiao.blog.model.Page;
 import com.xiao.blog.model.Permission;
-import com.xiao.blog.model.PermissionTree;
+import com.xiao.blog.model.TreeModel;
 import com.xiao.blog.service.PermissionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author wangmx
@@ -27,35 +25,42 @@ public class PermissionController {
     @Autowired
     PermissionService permissionService;
 
-    @RequestMapping("/insert")
+    /**
+     * 保存权限
+     * @param permission
+     * @return
+     */
+    @RequestMapping("/save")
     @ResponseBody
     public int insert(Permission permission){
-
-        return permissionService.insert(permission);
-
+        if(permission.getId() == null)
+            return permissionService.insert(permission);
+        else
+           return permissionService.update(permission);
     }
 
+    /**
+     * 删除权限
+     * @param id
+     */
     @RequestMapping("/delete/{id}")
     @ResponseBody
     public void delete(@PathVariable("id") Integer id){
         permissionService.delete(id);
     }
 
+    /**
+     * 批量删除权限
+     * @param ids
+     */
     @RequestMapping("/deleteBatch")
     @ResponseBody
     public void delete(@RequestParam("ids[]") List<Integer> ids){
         permissionService.deleteBatch(ids);
     }
 
-    @RequestMapping("/update")
-    @ResponseBody
-    public void update(Permission permission){
-
-        permissionService.update(permission);
-    }
-
     /**
-     * 获取所有一级菜单
+     * 根据父权限获取权限列表
      * @param page
      * @return
      */
@@ -72,14 +77,13 @@ public class PermissionController {
     }
 
     /**
-     * 获取所有一级菜单
+     * 获取权限树
      * @param
      * @return
      */
     @PostMapping("/getPermissionTree")
     @ResponseBody
-    public List<PermissionTree> getPermissionTree(){
-
+    public List<TreeModel> getPermissionTree(){
         return permissionService.getPermissionTree();
     }
 }

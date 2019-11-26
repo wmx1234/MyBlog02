@@ -4,6 +4,7 @@ import com.xiao.blog.model.Role;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface RoleMapper {
@@ -48,4 +49,6 @@ public interface RoleMapper {
     int updateByPrimaryKey(Role record);
 
     Role getRoleByUser(Integer userId);
+
+    int insertRolePermissionRelation(List<Map> list);
 }

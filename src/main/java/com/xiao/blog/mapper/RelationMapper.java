@@ -23,4 +23,9 @@ public interface RelationMapper {
 
     @Select("select role.* from sys_role_permission srp left join sys_role role on srp.role_id = role.id where srp.permission_id = #{id}")
     public List<Role> getRolesByPermission(Integer id);
+
+    @Delete("delete from sys_role_permission where role_id = #{id}")
+    void deleteRelationByRoleId(Integer id);
+
+
 }

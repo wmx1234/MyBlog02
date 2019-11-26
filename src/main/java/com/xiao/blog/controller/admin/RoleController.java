@@ -4,11 +4,16 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xiao.blog.model.Page;
 import com.xiao.blog.model.Role;
+import com.xiao.blog.model.TreeModel;
 import com.xiao.blog.service.RoleService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
 
 /**
  * @author wangmx
@@ -33,4 +38,14 @@ public class RoleController {
 
         return page;
     }
+
+    @RequestMapping("/setPermission")
+    @ResponseBody
+    public void setPermission(
+            @RequestParam("permissions[]") List<Integer> permissions,
+            @RequestParam("roleId") Integer roleId){
+
+        roleService.setPermission(permissions,roleId);
+    }
+
 }

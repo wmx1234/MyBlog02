@@ -167,7 +167,7 @@
 
         form.on('submit(setPermission)', function(data){
             console.log(data);
-
+            setPermission();
             return false;
         });
 
@@ -206,12 +206,35 @@
         }
 
         function setPermission(){
-
-            console.log();
             var checkedData = tree.getChecked('permissionTree'); //获取选中节点的数据
 
-            layer.alert(JSON.stringify(checkedData), {shade:0});
+            var roleId = $("input[name='id']").val();
+            var permissions = [];
             console.log(checkedData);
+            for(var i=0;i<checkedData.length;i++){
+
+                permissions.push(checkedData[i].id);
+
+                var children = checkedData[i].children;
+                if(children != null && children.length >0){
+                    for(var j=0;i<children.length;j++){
+                        permissions.push(children[i].id)
+                    }
+                }
+            }
+            console.log(permissions);
+
+            $.post("/admin/role/setPermission",{'permissions':permissions,'roleId':roleId},function(index){
+
+                layer.msg('新增成功');
+                x_admin_close();
+                tableIns.reload({
+                    where: {},
+                    page: {curr: 1 }
+                });
+            })
+
+
         }
 
 

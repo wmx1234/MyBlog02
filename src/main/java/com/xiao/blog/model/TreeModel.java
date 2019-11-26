@@ -20,4 +20,8 @@ public class TreeModel {
 
     private List<TreeModel> children;
 
+
+    public void setChecked(){
+        checked = true;
+    }
 }

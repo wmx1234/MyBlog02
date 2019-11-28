@@ -202,6 +202,22 @@
                     permission_add('修改权限',"#add_permission",'600','500',data);
 
                 }
+
+                if(obj.event === 'del_children'){
+                    layer.confirm('真的删除行么', function(index){
+                        console.log(obj);
+                        $.post("/admin/permission/delete/"+data.id,{},function(){
+                            tableIns.reload({
+                                where: {},
+                                page: {curr: 1 }
+                            });
+                            layer.close(index);
+
+                        })
+
+                    });
+
+                }
         });
         function collapseTable(options) {
             var trObj = options.elem;

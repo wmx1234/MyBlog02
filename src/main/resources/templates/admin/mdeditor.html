@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+
+    <title>写文章-sblog</title>
+    <link rel="stylesheet" th:href="@{/admin/css/x-admin.css}">
+    <link rel="icon" href="/favicon.ico">
+    <link th:href="@{/admin/mdeditor/css/editormd.css}" rel="stylesheet">
+    <link th:href="@{/admin/lib/layui/css/layui.css}" rel="stylesheet">
+	<script th:src="@{/js/jquery-2.0.3.min.js}"></script>
+    <script th:src="@{/admin/mdeditor/js/editormd.min.js}"></script>
+</head>
+<body style="overflow-y: auto">
+<div class="layui-layout layui-layout-admin">
+
+    <div th:replace="admin/fragment/menu::header"></div>
+    <div th:replace="admin/fragment/menu::left"></div>
+
+
+
+    <div class="layui-tab layui-tab-card site-demo-title x-main" lay-filter="x-tab" lay-allowclose="true" style="left: 200px;border-left: solid 2px #2299ee;">
+        <div class="layui-main">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">文章标题</label>
+                <div class="layui-input-block">
+                    <input type="text" name="username" lay-verify="required" lay-reqtext="文章标题是必填项，岂能为空？" placeholder="请输入文章标题" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div id="my-editormd">
+
+                    <textarea id="my-editormd-markdown-doc" name="my-editormd-markdown-doc" style="display:none;"></textarea>
+                    <!-- 注意：name属性的值-->
+                    <textarea id="my-editormd-html-code" name="my-editormd-html-code" style="display:none;"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">复选框</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="like[write]" title="写作">
+                    <input type="checkbox" name="like[read]" title="阅读" checked="">
+                    <input type="checkbox" name="like[game]" title="游戏">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+        </div>
+
+    </div>
+
+
+
+
+
+</div>
+</body>
+
+<script th:src="@{/admin/lib/layui/layui.js}" charset="utf-8"></script>
+<script th:src="@{/admin/js/x-layui.js}"></script>
+<script th:src="@{/admin/js/x-admin.js}"></script>
+
+<script type="text/javascript">
+	$(function() {
+		md_edit = editormd("my-editormd", {//注意1：这里的就是上面的DIV的id属性值
+			width : "100%",
+			height : $(window).height()*(0.8),
+			syncScrolling : "single",
+			path : "../mdeditor/lib/",//注意2：你的路径
+			emoji : true,
+			saveHTMLToTextarea : true,//注意3：这个配置，方便post提交表单
+			/* 上传图片配置 */
+			imageUpload : true,
+			/*imageFormats : [ "jpg", "jpeg", "gif", "png", "bmp", "webp" ],*/
+			imageUploadURL : "/upload2", //注意你后端的上传图片服务地址
+			onload: function() {
+                // 引入插件 执行监听方法
+                editormd.loadPlugin("../mdeditor/plugins/image-dialog/image-handle-paste", function(){
+                	md_edit.imagePaste();
+                });
+            }
+		});
+	    
+
+		
+	});
+	
+
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer
+            ,layedit = layui.layedit
+            ,laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#date'
+        });
+        laydate.render({
+            elem: '#date1'
+        });
+
+        //创建一个编辑器
+        var editIndex = layedit.build('LAY_demo_editor');
+
+        //自定义验证规则
+        form.verify({
+            title: function(value){
+                if(value.length < 5){
+                    return '标题至少得5个字符啊';
+                }
+            }
+            ,pass: [
+                /^[\S]{6,12}$/
+                ,'密码必须6到12位，且不能出现空格'
+            ]
+            ,content: function(value){
+                layedit.sync(editIndex);
+            }
+        });
+
+        //监听指定开关
+        form.on('switch(switchTest)', function(data){
+            layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+                offset: '6px'
+            });
+            layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+        });
+
+        //监听提交
+        form.on('submit(demo1)', function(data){
+            layer.alert(JSON.stringify(data.field), {
+                title: '最终的提交信息'
+            })
+            return false;
+        });
+
+        //表单赋值
+        layui.$('#LAY-component-form-setval').on('click', function(){
+            form.val('example', {
+                "username": "贤心" // "name": "value"
+                ,"password": "123456"
+                ,"interest": 1
+                ,"like[write]": true //复选框选中状态
+                ,"close": true //开关状态
+                ,"sex": "女"
+                ,"desc": "我爱 layui"
+            });
+        });
+
+        //表单取值
+        layui.$('#LAY-component-form-getval').on('click', function(){
+            var data = form.val('example');
+            alert(JSON.stringify(data));
+        });
+
+    });
+</script>
+
+</html>

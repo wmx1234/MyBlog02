@@ -16,12 +16,8 @@ public class TreeModel {
 
     private String title;
 
-    private boolean checked;
+    private String checked;
 
     private List<TreeModel> children;
 
-
-    public void setChecked(){
-        checked = true;
-    }
 }

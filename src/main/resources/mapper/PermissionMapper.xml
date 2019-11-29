@@ -23,7 +23,7 @@
   <resultMap id="PermissionTreeMap" type="com.xiao.blog.model.TreeModel" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="title" jdbcType="VARCHAR" />
-
+    <result column="checked" property="checked" jdbcType="VARCHAR" />
     <collection property="children" ofType="com.xiao.blog.model.TreeModel">
       <id column="permission_id" property="id" jdbcType="INTEGER" />
       <result column="permission_name" property="title" jdbcType="VARCHAR" />
@@ -105,9 +105,10 @@
     select
     p1.id,
     p1.`name`,
-    1 checked,
+    'checked' checked,
     p2.id permission_id,
-    p2.name permission_name
+    p2.name permission_name,
+
     from sys_permission p1
     left join sys_permission p2 on p1.id = p2.parent_id
     where p1.parent_id = 0

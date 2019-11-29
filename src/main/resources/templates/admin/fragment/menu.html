@@ -46,18 +46,17 @@
 
 
 <div class="layui-side layui-bg-black x-side" th:fragment="left">
-<div class="layui-side-scroll">
+
     <ul class="layui-nav layui-nav-tree site-demo-nav" lay-filter="side">
 
-        <li class="layui-nav-item" th:each="menu,stat:${session.permissions}">
-            <a class="javascript:;" th:href="${menu.url}">
+        <li class="layui-nav-item" th:each="menu,stat:${session.permissions}" th:id="${#strings.replace(menu.url,'/','')}">
+            <a class="javascript:;" th:href="${menu.url}" >
                 <i th:class="${menu.icon}" style="top: 3px;"></i>
                 <cite th:text="${menu.name}">机构管理</cite>
             </a>
-
         </li>
 
     </ul>
-</div>
+
 </div>
 

@@ -1,12 +1,12 @@
 package com.xiao.blog.controller.admin;
 
+import com.xiao.blog.mapper.RelationMapper;
 import com.xiao.blog.model.Permission;
 import com.xiao.blog.model.Role;
 import com.xiao.blog.model.User;
-import com.xiao.blog.service.PermissionService;
-import com.xiao.blog.service.RoleService;
-import com.xiao.blog.service.UserService;
+import com.xiao.blog.service.*;
 import com.xiao.blog.shiro.ShiroKit;
+import com.xiao.blog.util.ToolUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
@@ -38,6 +38,15 @@ public class IndedxController {
 
     @Autowired
     PermissionService permissionService;
+
+    @Autowired
+    LabelService labelService;
+
+    @Autowired
+    CategoriesService categoriesService;
+
+    @Autowired
+    RelationMapper relationMapper;
 
     @GetMapping("/login")
     public String login(){
@@ -84,5 +93,27 @@ public class IndedxController {
     @RequestMapping("/user")
     public String user(Model model){
         return "/admin/user";
+    }
+
+    @RequestMapping("/categories")
+    public String categories(Model model){
+
+        return "/admin/categories";
+    }
+
+
+    @RequestMapping("/label")
+    public String label(Model model){
+
+        return "/admin/label";
+    }
+
+    @RequestMapping("/editor")
+    public String write(Model model){
+
+        model.addAttribute("articleId", ToolUtil.nextValue());
+        model.addAttribute("categoriesList",categoriesService.getAll());
+        model.addAttribute("labels",labelService.getAll());
+        return "/admin/mdeditor";
     }
 }

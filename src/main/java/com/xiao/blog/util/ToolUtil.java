@@ -15,6 +15,10 @@ package com.xiao.blog.util;
  * limitations under the License.
  */
 
+import com.xiao.blog.mapper.RelationMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -35,6 +39,24 @@ import java.util.Set;
  * 高频方法集合�?
  */
 public class ToolUtil {
+
+
+    @Autowired
+    private RelationMapper relationMapper;
+
+
+    public static ToolUtil toolUtil;
+
+    @PostConstruct
+    public void init() {
+        toolUtil = this;
+        toolUtil.relationMapper = this.relationMapper;
+    }
+
+
+    public static int nextValue(){
+        return toolUtil.relationMapper.nextValue();
+    }
 
     /**
      * 获取随机位数的字符串

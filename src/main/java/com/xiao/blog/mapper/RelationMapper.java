@@ -1,7 +1,9 @@
 package com.xiao.blog.mapper;
 
+import com.xiao.blog.model.Relation;
 import com.xiao.blog.model.Role;
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -15,6 +17,9 @@ import java.util.List;
 @Mapper
 public interface RelationMapper {
 
+    @Select("select nextval('tbl_fs')")
+    public Integer nextValue();
+
     @Delete("delete from sys_role_permission where permission_id = #{id}")
     public void deleteRelationByPermissionId(Integer id);
 
@@ -27,5 +32,9 @@ public interface RelationMapper {
     @Delete("delete from sys_role_permission where role_id = #{id}")
     void deleteRelationByRoleId(Integer id);
 
+    @Insert("insert into blog_article_categories (article_id, categories_id) values (#{aId,jdbcType=INTEGER}, #{bId,jdbcType=INTEGER})")
+    void insertArticleCategoriesRelation(Relation relation);
 
+
+    int batchInsertArticleLabelRelation(List<Relation> list);
 }

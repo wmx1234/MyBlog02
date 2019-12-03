@@ -107,7 +107,7 @@
     p1.`name`,
     'checked' checked,
     p2.id permission_id,
-    p2.name permission_name,
+    p2.name permission_name
 
     from sys_permission p1
     left join sys_permission p2 on p1.id = p2.parent_id

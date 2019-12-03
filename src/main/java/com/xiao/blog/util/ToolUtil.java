@@ -41,22 +41,7 @@ import java.util.Set;
 public class ToolUtil {
 
 
-    @Autowired
-    private RelationMapper relationMapper;
 
-
-    public static ToolUtil toolUtil;
-
-    @PostConstruct
-    public void init() {
-        toolUtil = this;
-        toolUtil.relationMapper = this.relationMapper;
-    }
-
-
-    public static int nextValue(){
-        return toolUtil.relationMapper.nextValue();
-    }
 
     /**
      * 获取随机位数的字符串

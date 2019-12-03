@@ -8,12 +8,6 @@
     <link rel="stylesheet" th:href="@{/admin/css/x-admin.css}">
     <link rel="icon" href="/favicon.ico">
     <title>管理后台</title>
-    <style>
-
-        .layui-form-item-button{
-
-        }
-    </style>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -27,12 +21,31 @@
 
     <div class="layui-tab layui-tab-card site-demo-title x-main" lay-filter="x-tab" lay-allowclose="true" style="left: 200px;border-left: solid 2px #2299ee;">
 
-        <div class="layui-tab-content site-demo site-demo-body">
+        <div class="x-nav">
+            <span class="layui-breadcrumb">
+              <a><cite>首页</cite></a>
+              <a><cite>会员管理</cite></a>
+              <a><cite>分类管理</cite></a>
+            </span>
+            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
+        </div>
+        <div class="x-body">
+            <form class="layui-form x-center" action="" style="width:50%">
+                <div class="layui-form-pane" style="margin-top: 15px;">
+                    <div class="layui-form-item">
 
 
-            <div class="layui-tab-item layui-show">
-                <table class="layui-hide" id="test" lay-filter="test"></table>
-            </div>
+                        <div class="layui-input-inline" style="width:120px">
+                            <input type="text" name="name"  placeholder="标签名名" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-input-inline" style="width:80px">
+                            <button class="layui-btn"  lay-submit="" lay-filter="add"><i class="layui-icon">&#xe608;</i>增加</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <xblock><button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除</button><span class="x-right" style="line-height:40px">共有数据：88 条</span></xblock>
+            <table class="layui-hide" id="test" lay-filter="test"></table>
         </div>
     </div>
 
@@ -46,13 +59,7 @@
 
 
 
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">批量删除</button>
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">新增</button>
-        <button class="layui-btn layui-btn-sm" lay-event="setRole">授权</button>
-    </div>
-</script>
+
 
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i></a>
@@ -67,6 +74,7 @@
 <script th:src="@{/js/jquery-2.0.3.min.js}"></script>
 <script th:inline="none">
 
+    $("#adminlabel").addClass('layui-this');
 
     layui.use(['table','form','layer','tree'], function(){
         var table = layui.table;
@@ -77,7 +85,7 @@
         var tableIns = table.render({
             elem: '#test',
             //data: data,
-            url:'/admin/role/getAll',
+            url:'/admin/label/getAll',
             toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板
             defaultToolbar: ['filter'],
             title: '权限表',
@@ -85,13 +93,11 @@
             cols: [[
                 {type: 'checkbox', fixed: 'left'},
                 {field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true},
-                {field:'roleName', title:'角色',  edit: 'text'},
-                {field:'name', title:'角色名称',  edit: 'text', sort: true},
-                {field:'description', title:'描述'},
+                {field:'name', title:'角色',  edit: 'text'},
 
                 {title:'操作', toolbar: '#barDemo', width:150}
             ]],
-            page: true
+            page: false
         });
 
         //头工具栏事件
@@ -136,13 +142,13 @@
             } else if(obj.event === 'edit'){
                 layer.prompt(
                     {
-                    formType: 2 ,value: data.email
-                }, function(value, index){
-                    obj.update({
-                        email: value
+                        formType: 2 ,value: data.email
+                    }, function(value, index){
+                        obj.update({
+                            email: value
+                        });
+                        layer.close(index);
                     });
-                    layer.close(index);
-                });
             }
         });
 
@@ -151,7 +157,7 @@
         //监听提交
         form.on('submit(add)', function(data){
             console.log(data.field);
-            $.post("/admin/permission/insert",data.field,function(index){
+            $.post("/admin/label/save",data.field,function(index){
 
                 layer.msg('新增成功');
                 x_admin_close();
@@ -178,7 +184,7 @@
         function setRole(title,url,w,h,data){
             if(data.length != 1){
                 layer.open({
-                   content: '请选择一个角色'
+                    content: '请选择一个角色'
                 });
                 return;
             }
@@ -233,14 +239,7 @@
                     page: {curr: 1 }
                 });
             })
-
-
         }
-
-
-
-
-
 
     });
 

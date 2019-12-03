@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.xiao.blog.mapper.CategoriesMapper">
+
+
+    <resultMap id="BaseResultMap" type="com.xiao.blog.model.Categories">
+      <id     column="id"           jdbcType="INTEGER"  property="id" />
+      <result column="text"         jdbcType="VARCHAR"  property="text" />
+      <result column="publishdate"  jdbcType="VARCHAR"  property="publishdate" />
+      <result column="updatedate"   jdbcType="VARCHAR"  property="updatedate" />
+      <result column="icon"         jdbcType="VARCHAR"  property="icon" />
+      <result column="user_id"      jdbcType="INTEGER"  property="userId" />
+    </resultMap>
+
+
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+      delete from blog_categories where id = #{id,jdbcType=INTEGER}
+    </delete>
+
+
+    <insert id="insert" parameterType="com.xiao.blog.model.Categories">
+      insert into blog_categories (id, `text`, publishdate,
+       user_id, icon)
+      values (#{id,jdbcType=INTEGER}, #{text,jdbcType=VARCHAR}, #{publishdate,jdbcType=VARCHAR},
+        #{userId,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR})
+    </insert>
+
+
+    <update id="updateByPrimaryKey" parameterType="com.xiao.blog.model.Categories">
+      update blog_categories
+      set `text` = #{text,jdbcType=VARCHAR},
+        publishdate = #{publishdate,jdbcType=VARCHAR},
+        updatedate = #{updatedate,jdbcType=VARCHAR},
+        icon = #{icon,jdbcType=VARCHAR}
+      where id = #{id,jdbcType=INTEGER}
+    </update>
+
+
+    <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+      select id, `text`, publishdate, updatedate, icon,user_id
+      from blog_categories
+      where id = #{id,jdbcType=INTEGER}
+    </select>
+
+
+    <select id="selectAll" resultMap="BaseResultMap">
+      select id, `text`, publishdate, updatedate, icon,user_id
+      from blog_categories
+      where user_id = #{userId,jdbcType=INTEGER}
+    </select>
+</mapper>

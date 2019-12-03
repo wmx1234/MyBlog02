@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiao.blog.mapper.LabelMapper" >
+  <resultMap id="BaseResultMap" type="com.xiao.blog.model.Label" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name"        property="name"        jdbcType="VARCHAR" />
+    <result column="publishdate" property="publishdate" jdbcType="VARCHAR" />
+    <result column="updatedate"  property="updatedate"  jdbcType="VARCHAR" />
+    <result column="user_id"     property="userId"      jdbcType="INTEGER" />
+  </resultMap>
+  <!--新增标签-->
+  <insert id="insert" parameterType="com.xiao.blog.model.Label" >
+
+    insert into
+    blog_label
+    (
+        id,
+        `name`,
+        publishdate,
+        user_id
+    )
+    values
+     (
+        #{id,jdbcType=INTEGER},
+        #{name,jdbcType=VARCHAR},
+        #{publishdate,jdbcType=VARCHAR},
+        #{userId,jdbcType=INTEGER}
+     )
+  </insert>
+
+  <!--根据id删除标签-->
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from blog_label
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <update id="updateByPrimaryKey" parameterType="com.xiao.blog.model.Label" >
+    update blog_label
+    set `name` = #{name,jdbcType=VARCHAR},
+      publishdate = #{publishdate,jdbcType=VARCHAR},
+      updatedate = #{updatedate,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, `name`, publishdate, updatedate,user_id
+    from blog_label
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select id, `name`, publishdate, updatedate,user_id
+    from blog_label
+    where user_id = #{userId,jdbcType=INTEGER}
+  </select>
+</mapper>

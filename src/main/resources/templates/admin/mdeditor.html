@@ -10,6 +10,14 @@
     <link th:href="@{/admin/layui/css/layui.css}" rel="stylesheet">
 	<script th:src="@{/js/jquery-2.0.3.min.js}"></script>
     <script th:src="@{/admin/mdeditor/js/editormd.min.js}"></script>
+    <style>
+        .add_button{
+            line-height: 36px;
+            background-color: #1E9FFF;
+            border-radius: 5px;
+        }
+
+    </style>
 </head>
 <body style="overflow-y: auto">
 <div class="layui-layout layui-layout-admin">
@@ -30,10 +38,9 @@
                     <input type="hidden" name="editorType" value="1">
 
                     <div class="layui-form-item">
-                        <label class="layui-form-label">标题</label>
-                        <div class="layui-input-block">
+
                             <input type="text" name="articleTitle" lay-verify="required" autocomplete="off" placeholder="请输入标题" class="layui-input">
-                        </div>
+
                     </div>
 
                     <div class="layui-form-item">
@@ -62,21 +69,41 @@
                                 <select name="categories" lay-verify="required" lay-search="" >
                                     <option th:each="categories,stat:${categoriesList}" th:text="${categories.text}" th:value="${categories.id}">直接选择或搜索选择</option>
                                 </select>
+
+
+
                             </div>
+                            <div class="layui-input-inline">
+                            <a href="#" class="add_button" onclick="add()"><i class="layui-icon layui-icon-add-1" style="color: white"></i></a>
+                            添加分类
+                            </div>
+
+
                         </div>
                     </div>
 
                     <div class="layui-form-item" pane="">
                         <label class="layui-form-label">博客标签</label>
-                        <div class="layui-input-block checked" id="article_labels_checked">
+                        <div class="layui-input-block checked">
+                            <div class="layui-input-inline"  id="article_labels_checked">
+
+                            </div>
+                            <div class="layui-input-inline">
+                                <a href="#" class="add_button" onclick="add()"><i class="layui-icon layui-icon-add-1" style="color: white"></i></a>
+                                添加标签
+                            </div>
 
                         </div>
 
+
+
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label"></label>
                         <div class="layui-input-block all" id="article_labels_all">
                             <input type="checkbox" th:each="label,stat:${labels}" th:value="${label.id}" th:title="${label.name}" lay-filter="labels" lay-skin="primary">
                         </div>
                     </div>
-
                     <div class="layui-form-item">
                         <label class="layui-form-label"></label>
                         <div class="layui-input-block">
@@ -207,6 +234,9 @@
         $.ajax({method:'post',contentType:'application/json',url:'/admin/article/save',data:data,success:function(e){
 
         }})
+
+    }
+    function add(){
 
     }
 

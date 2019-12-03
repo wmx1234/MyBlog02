@@ -6,6 +6,7 @@ import com.xiao.blog.model.Role;
 import com.xiao.blog.model.User;
 import com.xiao.blog.service.*;
 import com.xiao.blog.shiro.ShiroKit;
+import com.xiao.blog.util.DataBaseUtil;
 import com.xiao.blog.util.ToolUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -72,12 +73,21 @@ public class IndedxController {
 
         return "/admin/index";
     }
+
+
+
     @RequestMapping("/logout")
     public String logout(){
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
         return "/admin/login";
     }
+
+    @RequestMapping("/index")
+    public String index(){
+        return "/admin/index";
+    }
+
     @RequestMapping("/permission")
     public String permission(Model model){
 
@@ -111,7 +121,7 @@ public class IndedxController {
     @RequestMapping("/editor")
     public String write(Model model){
 
-        model.addAttribute("articleId", ToolUtil.nextValue());
+        model.addAttribute("articleId", DataBaseUtil.nextValue());
         model.addAttribute("categoriesList",categoriesService.getAll());
         model.addAttribute("labels",labelService.getAll());
         return "/admin/mdeditor";

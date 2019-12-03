@@ -5,6 +5,7 @@ import com.xiao.blog.mapper.RelationMapper;
 import com.xiao.blog.model.Permission;
 import com.xiao.blog.model.TreeModel;
 import com.xiao.blog.service.PermissionService;
+import com.xiao.blog.util.DataBaseUtil;
 import com.xiao.blog.util.ToolUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,7 +42,7 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public int insert(Permission permission) {
-        permission.setId(ToolUtil.nextValue());
+        permission.setId(DataBaseUtil.nextValue());
         return permissionMapper.insert(permission);
     }
 

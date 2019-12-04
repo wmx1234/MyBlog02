@@ -69,19 +69,18 @@
 <script th:src="@{/js/jquery-2.0.3.min.js}"></script>
 <script th:src="@{/admin/layui/layui.js}" charset="utf-8"></script>
 <script th:src="@{/admin/js/x-layui.js}"></script>
+<script th:src="@{/admin/js/utils.js}"></script>
 <script th:src="@{/admin/js/x-admin.js}"></script>
 
 <script th:inline="none">
 
-    layui.config({
-        version: '1545041465443' //为了更新 js 缓存，可忽略
-    });
-    layui.use(['table','form','layer'], function(){
-        var table = layui.table;
-        var form = layui.form;
-        var layer = layui.layer;
 
-        var cols = [[//加个注释
+    layui.use(['table','form','layer'], function(){
+        let table = layui.table,
+            form = layui.form,
+            layer = layui.layer;
+
+        let cols = [[//加个注释
             {type: 'checkbox', fixed: 'left'},
             {field:'id',
                 title:'ID',
@@ -99,7 +98,7 @@
             {title:'操作', toolbar: '#barDemo', width:150}
         ]];
 
-        var ccols = [[//加个注释
+        let childrencols = [[//加个注释
             {type: 'checkbox', fixed: 'left'},
             {field:'id',
                 title:'ID',
@@ -113,7 +112,7 @@
 
             {title:'操作', toolbar: '#childbarDemo', width:150}
         ]];
-        var tableIns = table.render({
+        let tableIns = table.render({
             elem: '#test',
 
             url:'/admin/permission/getPermissionsByParent/0',
@@ -127,10 +126,10 @@
 
         //头工具栏事件
         table.on('toolbar(test)', function(obj){
-            var checkStatus = table.checkStatus(obj.config.id);
+            let checkStatus = table.checkStatus(obj.config.id);
             switch(obj.event){
                 case 'getCheckData':
-                    var data = checkStatus.data;
+                    let data = checkStatus.data;
                     deleteBatch(data);
 
                     break;
@@ -169,7 +168,7 @@
                                 elem: "#" + index,
                                 url:'/admin/permission/getPermissionsByParent/'+data.id,
                                 cellMinWidth: 80,
-                                cols: ccols
+                                cols: childrencols
                             });
 
                         }
@@ -196,8 +195,7 @@
         table.on('tool(children)',
             function(obj) {
 
-                var data = obj.data
-                console.log(data);
+                let data = obj.data
                 if(obj.event === 'edit_children'){
                     permission_add('修改权限',"#add_permission",'600','500',data);
 
@@ -205,14 +203,12 @@
 
                 if(obj.event === 'del_children'){
                     layer.confirm('真的删除行么', function(index){
-                        console.log(obj);
                         $.post("/admin/permission/delete/"+data.id,{},function(){
                             tableIns.reload({
                                 where: {},
                                 page: {curr: 1 }
                             });
                             layer.close(index);
-
                         })
 
                     });
@@ -268,7 +264,6 @@
         //监听提交
         form.on('submit(save)', function(data){
 
-            console.log(data);
             $.post("/admin/permission/save",data.field,function(index){
 
                 layer.msg('保存成功');
@@ -285,18 +280,15 @@
 
         /*添加*/
         function permission_add(title,url,w,h,data){
-            x_admin_show(1,title,url,w,h,data);
+            businessUtils.showWindow(1,title,url,w,h,data);
         }
 
         /*批量删除*/
-        function deleteBatch(data){
-            console.log(data);
-            var ids = [];
-
-            for(var i=0;i<data.length;i++){
+        function  deleteBatch(data){
+            let ids = [];
+            for(let i=0;i<data.length;i++){
                 ids.push(data[i].id);
             }
-            console.log(ids);
             $.post("/admin/permission/deleteBatch",{'ids':ids},function(index){
 
                 layer.msg('保存成功');

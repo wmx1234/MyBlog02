@@ -69,33 +69,28 @@
                                 <select name="categories" lay-verify="required" lay-search="" >
                                     <option th:each="categories,stat:${categoriesList}" th:text="${categories.text}" th:value="${categories.id}">直接选择或搜索选择</option>
                                 </select>
-
-
-
                             </div>
-                            <div class="layui-input-inline">
+                            <div class="layui-input-inline" >
                             <a href="#" class="add_button" onclick="add()"><i class="layui-icon layui-icon-add-1" style="color: white"></i></a>
                             添加分类
                             </div>
-
-
                         </div>
                     </div>
 
                     <div class="layui-form-item" pane="">
                         <label class="layui-form-label">博客标签</label>
                         <div class="layui-input-block checked">
-                            <div class="layui-input-inline"  id="article_labels_checked">
+                            <div class="layui-input-inline" style="width: auto" id="article_labels_checked">
+
+                            </div>
+                            <div class="layui-input-inline" style="width: auto" id="article_labels_add">
 
                             </div>
                             <div class="layui-input-inline">
                                 <a href="#" class="add_button" onclick="add()"><i class="layui-icon layui-icon-add-1" style="color: white"></i></a>
                                 添加标签
                             </div>
-
                         </div>
-
-
 
                     </div>
                     <div class="layui-form-item">
@@ -206,9 +201,6 @@
                    labels.splice({'aId':$("input[name='id']").val(),'bId':data.value},1);
                }else{
                    if($("#article_labels_checked").children().length == 5){
-
-                       $(othis).removeClass();
-                       $(othis).addClass('layui-unselect layui-form-checkbox layui-form');
                        layer.msg("最多只能选5个标签");
                    }else{
                        $(othis).removeClass();
@@ -237,9 +229,36 @@
 
     }
     function add(){
+        if($("#article_labels_checked").children().length == 5){
+
+            layer.msg("最多只能选5个标签");
+            return;
+        }
+
+
+        var add_label =
+            '<div class="layui-input-inline" style="width:120px">\n' +
+            '<input type="text" name="name"  placeholder="标签名" autocomplete="off" class="layui-input">\n' +
+
+            '</div>'+
+            '<div class="layui-input-inline" style="width:50px">\n' +
+            '<a href="#" onclick="aaa()" style="display: inline;height: 38px;line-height: 38px"><i class="layui-icon layui-icon-ok" style="color: #00d95a;font-weight: 25"></i></a>\n'+
+            '<a href="#" onclick="quit()" style="display: inline;height: 38px;line-height: 38px"><i class="layui-icon layui-icon-close" style="color: #9d1e15;font-weight: 25"></i></a>\n'+
+            '</div>\n'
+
+
+        $("#article_labels_add").append(add_label);
+
+
 
     }
+    function quit(){
+        $("#article_labels_add").empty();
+    }
 
+    function aaa(){
+        $("#article_labels_checked").append('<input type="checkbox" title="aaa">');
+    }
 </script>
 
 </html>

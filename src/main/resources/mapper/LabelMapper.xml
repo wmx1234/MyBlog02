@@ -47,7 +47,7 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
-    select id, `name`, publishdate, updatedate,user_id
+    select id, `name`
     from blog_label
     where user_id = #{userId,jdbcType=INTEGER}
   </select>

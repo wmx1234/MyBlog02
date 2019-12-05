@@ -61,7 +61,6 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public int deleteBatch(List<Integer> ids) {
-        System.out.println(ids.size());
         return permissionMapper.deleteBatch(ids);
     }
 

@@ -107,7 +107,7 @@ public class IndedxController {
 
     @RequestMapping("/categories")
     public String categories(Model model){
-
+        model.addAttribute("categoriesList",categoriesService.getAll());
         return "/admin/categories";
     }
 

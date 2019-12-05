@@ -5,6 +5,7 @@ import com.xiao.blog.model.Label;
 import com.xiao.blog.service.LabelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -27,6 +28,14 @@ public class LabelController {
     @ResponseBody
     public int save(Label label){
         return labelService.save(label);
+    }
+
+    @RequestMapping("/add")
+    public String add(Label label, Model model){
+
+        labelService.save(label);
+        model.addAttribute("labels",labelService.getAll());
+        return "/admin/mdeditor::article_label_all";
     }
 
     @RequestMapping("/getAll")

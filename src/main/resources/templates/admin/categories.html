@@ -8,6 +8,15 @@
     <link rel="stylesheet" th:href="@{/admin/css/x-admin.css}">
     <link rel="icon" href="/favicon.ico">
     <title>管理后台</title>
+
+    <style>
+
+        .layui-btn-lg {
+
+            padding: 0 5px 0 25px;
+
+        }
+    </style>
 </head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
@@ -45,8 +54,11 @@
                         </div>
                     </div>
                 </div>
+
             </form>
-            <xblock><button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除</button><span class="x-right" style="line-height:40px">共有数据：88 条</span></xblock>
+            <xblock><button class="layui-btn layui-btn-danger " onclick="delAll()"><i class="layui-icon">&#xe640;</i>批量删除</button><span class="x-right" style="line-height:40px">共有数据：88 条</span></xblock>
+
+
             <table class="layui-hide" id="test" lay-filter="test"></table>
         </div>
     </div>
@@ -73,12 +85,12 @@
 
     $("#admincategories").addClass('layui-this');
     layui.use(['table','form','layer'], function(){
-        var table = layui.table;
-        var form = layui.form;
-        var layer = layui.layer;
+        let table = layui.table;
+        let form = layui.form;
+        let layer = layui.layer;
 
 
-        var tableIns = table.render({
+        let tableIns = table.render({
             elem: '#test',
             //data: data,
             url:'/admin/categories/getAll',
@@ -89,10 +101,7 @@
             cols: [[
                 {type: 'checkbox', fixed: 'left'},
                 {field:'id', title:'ID', width:80, fixed: 'left', unresize: true, sort: true},
-                {field:'text', title:'角色',  edit: 'text'},
-                {field:'name', title:'角色名称',  edit: 'text', sort: true},
-                {field:'description', title:'描述'},
-
+                {field:'text', title:'分类名称',  edit: 'text'},
                 {title:'操作', toolbar: '#barDemo', width:150}
             ]],
             page: true
@@ -100,7 +109,7 @@
 
         //头工具栏事件
         table.on('toolbar(test)', function(obj){
-            var checkStatus = table.checkStatus(obj.config.id);
+            let checkStatus = table.checkStatus(obj.config.id);
             switch(obj.event){
                 case 'getCheckData':
                     var data = checkStatus.data;
@@ -168,76 +177,18 @@
             return false;
         });
 
-
-        form.on('submit(setPermission)', function(data){
-            console.log(data);
-            setPermission();
-            return false;
+        //监听单元格编辑
+        table.on('edit(test)', function(obj){
+            let value = obj.value //得到修改后的值
+                ,data = obj.data //得到所在行所有键值
+                ,field = obj.field; //得到字段
+            layer.msg('[ID: '+ data.id +'] ' + field + ' 字段更改为：'+ value);
         });
 
-        /*添加*/
-        function banner_add(title,url,w,h){
-            x_admin_show(1,title,url,w,h,null);
-        }
-        function setRole(title,url,w,h,data){
-            if(data.length != 1){
-                layer.open({
-                    content: '请选择一个角色'
-                });
-                return;
-            }
-            $.post(
-                '/admin/permission/getPermissionTree',
-                function(data){
-                    tree.render({
-                        elem: '#permission_tree',
-                        data: data,
-                        showCheckbox: true,  //是否显示复选框
-                        id: 'permissionTree',
-                        isJump: true, //是否允许点击节点时弹出新窗口跳转
-                        click: function(obj){
-                            var data = obj.data;  //获取当前点击的节点数据
-                            layer.msg('状态：'+ obj.state + '<br>节点数据：' + JSON.stringify(data));
-                        }
-                    })
 
-                })
-            x_admin_show(1,title,url,w,h,data[0]);
-        }
-        /*批量删除*/
-        function deleteAllCheck(){
 
-        }
 
-        function setPermission(){
-            var checkedData = tree.getChecked('permissionTree'); //获取选中节点的数据
 
-            var roleId = $("input[name='id']").val();
-            var permissions = [];
-            console.log(checkedData);
-            for(var i=0;i<checkedData.length;i++){
-
-                permissions.push(checkedData[i].id);
-
-                var children = checkedData[i].children;
-                if(children != null && children.length >0){
-                    for(var j=0;i<children.length;j++){
-                        permissions.push(children[i].id)
-                    }
-                }
-            }
-            console.log(permissions);
-
-            $.post("/admin/role/setPermission",{'permissions':permissions,'roleId':roleId},function(index){
-
-                layer.msg('新增成功');
-                x_admin_close();
-                tableIns.reload({
-                    where: {},
-                    page: {curr: 1 }
-                });
-            })
-        }
 
     });
 

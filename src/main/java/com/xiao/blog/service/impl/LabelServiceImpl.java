@@ -25,6 +25,7 @@ public class LabelServiceImpl implements LabelService {
 
     @Override
     public int save(Label label) {
+        label.setUserId(ShiroKit.getUser().getId());
         if(label.getId() != null)
             return update(label);
         else

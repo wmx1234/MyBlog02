@@ -95,7 +95,7 @@
                     </div>
                     <div class="layui-form-item">
                         <label class="layui-form-label"></label>
-                        <div class="layui-input-block all" id="article_labels_all">
+                        <div class="layui-input-block all" id="article_labels_all" th:fragment="article_label_all">
                             <input type="checkbox" th:each="label,stat:${labels}" th:value="${label.id}" th:title="${label.name}" lay-filter="labels" lay-skin="primary">
                         </div>
                     </div>
@@ -105,7 +105,7 @@
                             <button type="button" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="save">立即提交</button>
                             <button type="button" class="layui-btn layui-btn-warm" lay-submit="" lay-filter="draft">保存草稿</button>
                             <button type="button" class="layui-btn layui-btn-danger" lay-submit="" lay-filter="demo1">返回列表</button>
-
+                            <button id="aaa" type="button" class="layui-btn layui-btn-danger" lay-submit="" lay-filter="add2">返回列表</button>
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -187,9 +187,12 @@
                 let field = data.field;
                 field['isDraft'] = 1;
 
-                return;
-                save(field);
+
                 return false;
+            });
+
+            form.on('submit(add2)', function(data){
+                alert(1);
             });
             form.on('checkbox(labels)', function(data){
                let othis = (data.othis)[0];
@@ -221,7 +224,6 @@
 	
     function save(e){
 
-        console.log(e);
         let data = JSON.stringify({'fieldMap':e})
         $.ajax({method:'post',contentType:'application/json',url:'/admin/article/save',data:data,success:function(e){
 
@@ -238,26 +240,38 @@
 
         var add_label =
             '<div class="layui-input-inline" style="width:120px">\n' +
-            '<input type="text" name="name"  placeholder="标签名" autocomplete="off" class="layui-input">\n' +
+            '<input type="text" name="labelName"  placeholder="标签名" autocomplete="off" class="layui-input">\n' +
 
             '</div>'+
             '<div class="layui-input-inline" style="width:50px">\n' +
-            '<a href="#" onclick="aaa()" style="display: inline;height: 38px;line-height: 38px"><i class="layui-icon layui-icon-ok" style="color: #00d95a;font-weight: 25"></i></a>\n'+
+            '<a href="#" onclick="add2()" style="display: inline;height: 38px;line-height: 38px"><i class="layui-icon layui-icon-ok" style="color: #00d95a;font-weight: 25"></i></a>\n'+
             '<a href="#" onclick="quit()" style="display: inline;height: 38px;line-height: 38px"><i class="layui-icon layui-icon-close" style="color: #9d1e15;font-weight: 25"></i></a>\n'+
             '</div>\n'
 
-
         $("#article_labels_add").append(add_label);
-
-
 
     }
     function quit(){
         $("#article_labels_add").empty();
     }
 
-    function aaa(){
-        $("#article_labels_checked").append('<input type="checkbox" title="aaa">');
+    function add2(){
+$("#aaa").click();
+return;
+        let name = $("input[name='labelName']").val();
+
+        $.ajax({
+            url: '/admin/label/add',
+            data:{'name':name},
+            type: 'POST',
+            success: function (data) {
+                $("#article_labels_add").empty();
+
+                $("#article_labels_all").html(data);
+console.log(form);
+                form.render('checkbox');
+            }
+        })
     }
 </script>
 

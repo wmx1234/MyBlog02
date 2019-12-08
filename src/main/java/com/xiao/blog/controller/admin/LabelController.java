@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public class LabelController {
 
         labelService.save(label);
         model.addAttribute("labels",labelService.getAll());
-        return "/admin/mdeditor::article_label_all";
+        return "/admin/mdeditor::mdeditor_labels";
     }
 
     @RequestMapping("/getAll")
@@ -45,5 +46,15 @@ public class LabelController {
         result.setCode(0);
         result.setData(labelService.getAll());
         return result;
+    }
+
+    /**
+     * 批量删除权限
+     * @param ids
+     */
+    @RequestMapping("/deleteBatch")
+    @ResponseBody
+    public void delete(@RequestParam("ids[]") List<Integer> ids){
+        labelService.deleteBatch(ids);
     }
 }

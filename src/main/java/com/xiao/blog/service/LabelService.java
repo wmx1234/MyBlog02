@@ -14,4 +14,6 @@ public interface LabelService {
     public int save(Label label);
 
     List<Label> getAll();
+
+    int deleteBatch(List<Integer> ids);
 }

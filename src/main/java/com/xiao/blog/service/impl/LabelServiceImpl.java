@@ -39,6 +39,11 @@ public class LabelServiceImpl implements LabelService {
         return labelMapper.selectAll(ShiroKit.getUser().getId());
     }
 
+    @Override
+    public int deleteBatch(List<Integer> ids) {
+        return labelMapper.deleteBatch(ids);
+    }
+
 
     private int insert(Label label){
         label.setPublishdate(DateUtil.today());

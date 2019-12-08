@@ -16,7 +16,7 @@ public class Article implements Serializable {
 
     private String articleAbstract;
 
-    private String articleAuthor;
+    private int userId;
 
     private String articleTitle;
 

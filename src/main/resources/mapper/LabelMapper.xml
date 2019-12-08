@@ -28,11 +28,21 @@
      )
   </insert>
 
-  <!--根据id删除标签-->
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    <!--根据id删除标签-->
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from blog_label
     where id = #{id,jdbcType=INTEGER}
-  </delete>
+    </delete>
+    <!--批量删除删除标签-->
+    <delete id="deleteBatch" parameterType="java.util.List">
+        delete from
+        blog_label
+        where
+        id IN
+        <foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+    </delete>
 
   <update id="updateByPrimaryKey" parameterType="com.xiao.blog.model.Label" >
     update blog_label
@@ -50,5 +60,6 @@
     select id, `name`
     from blog_label
     where user_id = #{userId,jdbcType=INTEGER}
+    order by id desc
   </select>
 </mapper>

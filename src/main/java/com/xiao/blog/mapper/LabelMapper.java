@@ -45,4 +45,6 @@ public interface LabelMapper {
      * @mbggenerated
      */
     int updateByPrimaryKey(Label record);
+
+    int deleteBatch(List<Integer> ids);
 }

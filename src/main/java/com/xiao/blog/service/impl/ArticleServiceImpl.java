@@ -1,16 +1,16 @@
 package com.xiao.blog.service.impl;
 
+import cn.hutool.core.date.DateUtil;
 import com.xiao.blog.mapper.ArticleMapper;
 import com.xiao.blog.mapper.RelationMapper;
 import com.xiao.blog.model.Article;
-import com.xiao.blog.model.Categories;
 import com.xiao.blog.model.Params;
 import com.xiao.blog.model.Relation;
 import com.xiao.blog.service.ArticleService;
+import com.xiao.blog.shiro.ShiroKit;
+import com.xiao.blog.util.ArticleUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * @author wangmx
@@ -29,7 +29,17 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public void save(Params params) {
 
-        articleMapper.insert(params.getObject("article",Article.class));
+        Article article = params.getObject("article",Article.class);
+
+        article.setArticleAbstract(ArticleUtil.buildArticleTabloid(article.getArticleHtmlContent()));
+
+        article.setCreateDate(DateUtil.today());
+
+        article.setUserId(ShiroKit.getUser().getId());
+
+        article.setLastArticleId(articleMapper.getLastArticleId());
+
+        articleMapper.insert(article);
 
         relationMapper.batchInsertArticleLabelRelation(params.getList("labels"));
 

@@ -4,6 +4,7 @@ import com.xiao.blog.model.Article;
 import com.xiao.blog.model.Label;
 import com.xiao.blog.model.Relation;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 import java.util.Map;
@@ -23,4 +24,7 @@ public interface ArticleMapper {
     List<Article> selectAll();
 
     int insertArticleLabelRelation(List<Relation> relations);
+
+    @Select("select max(id) from blog_article")
+    int getLastArticleId();
 }

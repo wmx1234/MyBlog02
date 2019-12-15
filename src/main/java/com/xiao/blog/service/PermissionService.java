@@ -20,7 +20,7 @@ public interface PermissionService {
 
     int insert(Permission permission);
 
-    void delete(Integer id);
+    int delete(Integer id);
 
     int update(Permission permission);
 

@@ -47,11 +47,13 @@ public class PermissionServiceImpl implements PermissionService {
     }
 
     @Override
-    public void delete(Integer id) {
-        //删除权限
-        permissionMapper.deleteByPrimaryKey(id);
+    public int delete(Integer id) {
+
         //同时删除角色权限关联
         relationMapper.deleteRelationByPermissionId(id);
+
+        //删除权限
+        return permissionMapper.deleteByPrimaryKey(id);
     }
 
     @Override

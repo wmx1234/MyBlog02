@@ -15,4 +15,5 @@ public interface UserService {
 
     public List<User> getAll();
 
+    List<User> getBloger();
 }

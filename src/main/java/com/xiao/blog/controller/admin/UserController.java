@@ -1,10 +1,11 @@
 package com.xiao.blog.controller.admin;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.xiao.blog.model.Page;
-import com.xiao.blog.model.Permission;
 import com.xiao.blog.model.User;
+import com.xiao.blog.pojo.request.PageRequest;
+import com.xiao.blog.pojo.response.PageResponse;
 import com.xiao.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,14 +27,13 @@ public class UserController {
 
     @RequestMapping("/getAll")
     @ResponseBody
-    public Page<User> getAll(Page page){
-        PageHelper.startPage(page.getPage(),page.getLimit());
-        PageInfo info=new PageInfo(userService.getAll());//创建pageinfo，包含分页的信息
-        page.setData(info.getList());
-        page.setCode(0);
-        page.setCount(info.getTotal());
+    public PageResponse<User> getAll(PageRequest request){
 
-        return page;
+        PageHelper.startPage(request.getPage(),request.getLimit());
+
+        PageInfo info=new PageInfo(userService.getAll());//创建pageinfo，包含分页的信息
+
+        return new PageResponse<User>(info);
     }
 
 

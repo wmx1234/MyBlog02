@@ -1,6 +1,7 @@
 package com.xiao.blog.controller.admin;
 
 import com.xiao.blog.model.Params;
+import com.xiao.blog.pojo.response.BaseResponse;
 import com.xiao.blog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,10 +23,11 @@ public class ArticleController {
 
     @RequestMapping("/save")
     @ResponseBody
-    public void save(@RequestBody Params params){
+    public BaseResponse save(@RequestBody Params params){
 
         articleService.save(params);
 
+        return new BaseResponse();
     }
 
 }

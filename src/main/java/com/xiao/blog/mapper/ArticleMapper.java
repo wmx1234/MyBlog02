@@ -27,4 +27,7 @@ public interface ArticleMapper {
 
     @Select("select max(id) from blog_article")
     int getLastArticleId();
+
+    @Select("select count(id) from blog_article where id = #{id}")
+    int articleIsExist(Integer id);
 }

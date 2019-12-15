@@ -2,6 +2,7 @@ package com.xiao.blog.mapper;
 
 import com.xiao.blog.model.User;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -19,4 +20,6 @@ public interface UserMapper {
     int updateByPrimaryKey(User record);
 
     User getLoginUser(String userName);
+
+    List<User> getBloger();
 }

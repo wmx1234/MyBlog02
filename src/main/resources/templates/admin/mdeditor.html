@@ -173,17 +173,15 @@
             form.on('submit(save)', function(data){
 
                 let params = {};
-                let labels = [];
+
                 let field = data.field;
                 field['isDraft'] = 0;
                 field['articleHtmlContent'] = field['my-editormd-html-code'];
                 params['article'] = field;
+                let labels = [];
                 $("input:checkbox[name='label']:checked").each(function () {
-
                     labels.push({'aId':$("input[name='id']").val(),'bId':$(this).val()});
-
                 });
-
                 params['labels'] = labels;
                 params['categories'] = {'aId':$("input[name='id']").val(),'bId':field.categories};
 

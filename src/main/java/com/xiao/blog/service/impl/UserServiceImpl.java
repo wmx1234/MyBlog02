@@ -1,5 +1,7 @@
 package com.xiao.blog.service.impl;
 
+import com.xiao.blog.exception.BusinessException;
+import com.xiao.blog.exception.assertion.BusinessExceptionAssert;
 import com.xiao.blog.mapper.UserMapper;
 import com.xiao.blog.model.User;
 import com.xiao.blog.service.UserService;
@@ -27,5 +29,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAll() {
         return userMapper.selectAll();
+    }
+
+    @Override
+    public List<User> getBloger() throws BusinessException {
+
+        List<User> users = userMapper.getBloger();
+
+
+        return users;
     }
 }

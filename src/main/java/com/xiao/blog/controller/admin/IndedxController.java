@@ -55,6 +55,7 @@ public class IndedxController {
     }
 
 
+
     @PostMapping("/login")
     public String login(User user, Model model){
 
@@ -71,7 +72,7 @@ public class IndedxController {
         session.setAttribute("user",currentUser);
         session.setAttribute("permissions",permissionService.getPermissionsByRole(currentUser.getRole().getId()));
 
-        return "/admin/index";
+        return "redirect:/admin/index";
     }
 
 

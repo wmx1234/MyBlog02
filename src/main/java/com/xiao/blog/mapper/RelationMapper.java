@@ -37,4 +37,11 @@ public interface RelationMapper {
 
 
     int batchInsertArticleLabelRelation(List<Relation> list);
+
+
+    @Delete("delete from blog_article_label where article_id = #{id}")
+    void deleteLabelsByArticleId(Integer id);
+
+    @Delete("delete from blog_article_categories where article_id = #{id}")
+    void deleteCategoriesByArticleId(Integer id);
 }

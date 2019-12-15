@@ -2,11 +2,10 @@ package com.xiao.blog.controller.admin;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.xiao.blog.model.Page;
 import com.xiao.blog.model.Role;
-import com.xiao.blog.model.TreeModel;
+import com.xiao.blog.pojo.request.PageRequest;
+import com.xiao.blog.pojo.response.PageResponse;
 import com.xiao.blog.service.RoleService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,14 +28,12 @@ public class RoleController {
 
     @RequestMapping("/getAll")
     @ResponseBody
-    public Page<Role> getAll(Page page){
-        PageHelper.startPage(page.getPage(),page.getLimit());
+    public PageResponse<Role> getAll(PageRequest request){
+        PageHelper.startPage(request.getPage(),request.getLimit());
         PageInfo info=new PageInfo(roleService.getAll());//创建pageinfo，包含分页的信息
-        page.setData(info.getList());
-        page.setCode(0);
-        page.setCount(info.getTotal());
 
-        return page;
+
+        return new PageResponse<Role>(info);
     }
 
     @RequestMapping("/setPermission")

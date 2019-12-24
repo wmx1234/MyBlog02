@@ -1,7 +1,7 @@
 package com.xiao.blog.service;
 
 import com.xiao.blog.model.Permission;
-import com.xiao.blog.model.TreeModel;
+import com.xiao.blog.pojo.TreeModel;
 
 import java.util.List;
 

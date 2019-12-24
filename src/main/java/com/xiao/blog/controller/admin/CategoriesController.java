@@ -1,7 +1,8 @@
 package com.xiao.blog.controller.admin;
 
-import com.xiao.blog.model.BaseResponse;
 import com.xiao.blog.model.Categories;
+import com.xiao.blog.pojo.response.BaseResponse;
+import com.xiao.blog.pojo.response.CommonResponse;
 import com.xiao.blog.service.CategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -39,8 +40,8 @@ public class CategoriesController {
 
     @RequestMapping("/getAll")
     @ResponseBody
-    public BaseResponse<List<Categories>> getAll(){
-        BaseResponse result = new BaseResponse();
+    public CommonResponse<List<Categories>> getAll(){
+        CommonResponse result = new CommonResponse();
         result.setCode(0);
         result.setData(categoriesService.getAll());
         return result;

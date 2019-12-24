@@ -1,9 +1,12 @@
 package com.xiao.blog.controller.blog;
 
 import com.xiao.blog.model.User;
+import com.xiao.blog.service.ArticleService;
 import com.xiao.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -18,8 +21,17 @@ import java.util.List;
 @RequestMapping("/")
 public class IndexController {
 
+    @Value("${bloger.boy}")
+    private int boy;
+
+    @Value("${bloger.gril}")
+    private int gril;
+
     @Autowired
     UserService userService;
+
+    @Autowired
+    ArticleService articleService;
 
     @RequestMapping("/test")
     public String test(){
@@ -39,7 +51,8 @@ public class IndexController {
 
 
     @RequestMapping("/boy")
-    public String boy(){
+    public String boy(Model model){
+        model.addAttribute("articles",articleService.getArticleByUserId(boy));
         return "blog/prefecture";
     }
 

@@ -1,8 +1,7 @@
 package com.xiao.blog.mapper;
 
 import com.xiao.blog.model.Article;
-import com.xiao.blog.model.Label;
-import com.xiao.blog.model.Relation;
+import com.xiao.blog.vo.ArticleVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -12,22 +11,22 @@ import java.util.Map;
 @Mapper
 public interface ArticleMapper {
 
+    int deleteArticleById(Integer id);
 
-    int insert(Article record);
+    int insert(Article article);
 
-    int deleteByPrimaryKey(Integer id);
+    Article getArticleById(Integer id);
 
-    int updateByPrimaryKey(Article record);
 
-    Article selectByPrimaryKey(Integer id);
+    int updateArticleById(Article article);
 
-    List<Article> selectAll();
 
-    int insertArticleLabelRelation(List<Relation> relations);
 
-    @Select("select max(id) from blog_article")
-    int getLastArticleId();
+    List<ArticleVO> getArticles(Article article);
 
     @Select("select count(id) from blog_article where id = #{id}")
     int articleIsExist(Integer id);
+
+    @Select("select max(id) from blog_article")
+    int getLastArticleId();
 }

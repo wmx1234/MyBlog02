@@ -1,4 +1,4 @@
-package com.xiao.blog.model;
+package com.xiao.blog.pojo;
 
 import lombok.Data;
 

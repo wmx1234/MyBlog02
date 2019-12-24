@@ -31,17 +31,18 @@ public class CategoriesServiceImpl implements CategoriesService {
 
     @Override
     public List<Categories> getAll() {
-        return categoriesMapper.selectAll(ShiroKit.getUser().getId());
+
+        return categoriesMapper.selectAll();
     }
 
     private int insert(Categories categories){
-        categories.setPublishdate(DateUtil.today());
+        categories.setCreateDate(DateUtil.today());
         categories.setUserId(ShiroKit.getUser().getId());
         return categoriesMapper.insert(categories);
     }
 
     private int update(Categories categories){
-        categories.setUpdatedate(DateUtil.today());
+        categories.setUpdateDate(DateUtil.today());
         return categoriesMapper.updateByPrimaryKey(categories);
     }
 }

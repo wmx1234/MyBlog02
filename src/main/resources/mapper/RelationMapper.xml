@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xiao.blog.mapper.RelationMapper" >
-  <resultMap id="BaseResultMap" type="com.xiao.blog.model.Relation" >
+  <resultMap id="BaseResultMap" type="com.xiao.blog.pojo.Relation" >
 
 
     <result column="article_id" property="aId" jdbcType="INTEGER" />

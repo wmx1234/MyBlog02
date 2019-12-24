@@ -14,7 +14,9 @@ server:
 #    key-store-type: PKCS12
 #condition:
 #  http2https: true
-
+bloger:
+    boy: 21
+    gril: 20
 file:
     staticAccessPath: /upload/**
     uploadFolder: /image/upload

@@ -1,8 +1,9 @@
 package com.xiao.blog.controller.admin;
 
-import com.xiao.blog.model.BaseResponse;
-import com.xiao.blog.model.Label;
-import com.xiao.blog.service.LabelService;
+import com.xiao.blog.model.Tags;
+import com.xiao.blog.pojo.response.BaseResponse;
+import com.xiao.blog.pojo.response.CommonResponse;
+import com.xiao.blog.service.TagsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,16 +24,16 @@ import java.util.List;
 public class LabelController {
 
     @Autowired
-    LabelService labelService;
+    TagsService labelService;
 
     @RequestMapping("/save")
     @ResponseBody
-    public int save(Label label){
+    public int save(Tags label){
         return labelService.save(label);
     }
 
     @RequestMapping("/add")
-    public String add(Label label, Model model){
+    public String add(Tags label, Model model){
 
         labelService.save(label);
         model.addAttribute("labels",labelService.getAll());
@@ -41,8 +42,8 @@ public class LabelController {
 
     @RequestMapping("/getAll")
     @ResponseBody
-    public BaseResponse<List<Label>> getAll(){
-        BaseResponse result = new BaseResponse();
+    public CommonResponse<List<Tags>> getAll(){
+        CommonResponse result = new CommonResponse();
         result.setCode(0);
         result.setData(labelService.getAll());
         return result;

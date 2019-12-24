@@ -1,6 +1,6 @@
 package com.xiao.blog.service;
 
-import com.xiao.blog.model.Label;
+import com.xiao.blog.model.Tags;
 
 import java.util.List;
 
@@ -9,11 +9,11 @@ import java.util.List;
  * @create 2019-11-30 10:03
  * @Desc
  */
-public interface LabelService {
+public interface TagsService {
 
-    public int save(Label label);
+    public int save(Tags label);
 
-    List<Label> getAll();
+    List<Tags> getAll();
 
     int deleteBatch(List<Integer> ids);
 }

@@ -1,6 +1,6 @@
 package com.xiao.blog.mapper;
 
-import com.xiao.blog.model.Relation;
+import com.xiao.blog.pojo.Relation;
 import com.xiao.blog.model.Role;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;

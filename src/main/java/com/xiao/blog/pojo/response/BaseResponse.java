@@ -22,6 +22,8 @@ public class BaseResponse {
      */
     protected String msg;
 
+
+
     public BaseResponse() {
         // 默认创建成功的回应
         this(ResponseCode.SUCCESS,"操作成功");

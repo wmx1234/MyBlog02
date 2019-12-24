@@ -1,13 +1,10 @@
 package com.xiao.blog.controller.admin;
 
 import com.xiao.blog.mapper.RelationMapper;
-import com.xiao.blog.model.Permission;
-import com.xiao.blog.model.Role;
 import com.xiao.blog.model.User;
 import com.xiao.blog.service.*;
 import com.xiao.blog.shiro.ShiroKit;
 import com.xiao.blog.util.DataBaseUtil;
-import com.xiao.blog.util.ToolUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
@@ -16,11 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
-import java.util.List;
 
 /**
  * @author wangmx
@@ -41,7 +35,7 @@ public class IndedxController {
     PermissionService permissionService;
 
     @Autowired
-    LabelService labelService;
+    TagsService labelService;
 
     @Autowired
     CategoriesService categoriesService;

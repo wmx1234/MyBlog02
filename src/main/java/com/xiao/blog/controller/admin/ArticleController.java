@@ -1,6 +1,6 @@
 package com.xiao.blog.controller.admin;
 
-import com.xiao.blog.model.Params;
+import com.xiao.blog.pojo.param.Params;
 import com.xiao.blog.pojo.response.BaseResponse;
 import com.xiao.blog.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;

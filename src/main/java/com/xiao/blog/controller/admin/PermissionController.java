@@ -3,7 +3,7 @@ package com.xiao.blog.controller.admin;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xiao.blog.model.Permission;
-import com.xiao.blog.model.TreeModel;
+import com.xiao.blog.pojo.TreeModel;
 import com.xiao.blog.pojo.request.PageRequest;
 import com.xiao.blog.pojo.response.CommonResponse;
 import com.xiao.blog.pojo.response.PageResponse;

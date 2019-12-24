@@ -32,7 +32,7 @@
 
         <!-- 注释 -->
         <commentGenerator >
-            <property name="suppressAllComments" value="false"/><!-- 是否取消注释 -->
+            <property name="suppressAllComments" value="true"/><!-- 是否取消注释 -->
             <property name="suppressDate" value="true" /> <!-- 是否生成注释代时间戳-->
         </commentGenerator>
 
@@ -62,10 +62,11 @@
         <table tableName="sys_user" domainObjectName="User" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
         <table tableName="sys_role" domainObjectName="Role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
         <table tableName="sys_permission" domainObjectName="Permission" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
--->
+
         <table tableName="blog_article" domainObjectName="Article" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
         <table tableName="blog_categories" domainObjectName="Categories" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
-        <table tableName="blog_label" domainObjectName="Label" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
+        -->
+        <table tableName="blog_tags" domainObjectName="Tags" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table>
 
     </context>
 </generatorConfiguration>

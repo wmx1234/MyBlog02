@@ -4,20 +4,23 @@ import cn.hutool.core.date.DateUtil;
 import com.xiao.blog.mapper.ArticleMapper;
 import com.xiao.blog.mapper.RelationMapper;
 import com.xiao.blog.model.Article;
-import com.xiao.blog.model.Params;
-import com.xiao.blog.model.Relation;
+import com.xiao.blog.pojo.Relation;
+import com.xiao.blog.pojo.param.Params;
 import com.xiao.blog.service.ArticleService;
 import com.xiao.blog.shiro.ShiroKit;
 import com.xiao.blog.util.ArticleUtil;
+import com.xiao.blog.vo.ArticleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @author wangmx
  * @create 2019-11-30 21:02
  * @Desc
  */
-@Service
+@Service("articleService")
 public class ArticleServiceImpl implements ArticleService {
 
     @Autowired
@@ -33,24 +36,26 @@ public class ArticleServiceImpl implements ArticleService {
 
         int isExist = articleMapper.articleIsExist(article.getId());
 
-        if(isExist > 0)
-            insert(params);
-        else
-            update(params);
+        if(isExist > 0) insert(params);
+
+        else update(params);
 
     }
 
+    @Override
+    public List<ArticleVO> getArticleByUserId(int userId) {
+        Article a =new Article();
+        a.setUserId(userId);
+        return articleMapper.getArticles(a);
 
-
-
-
+    }
 
 
     private void insert(Params params){
 
         Article article = params.getObject("article",Article.class);
 
-        article.setArticleAbstract(ArticleUtil.buildArticleTabloid(article.getArticleHtmlContent()));
+        article.setArticleDigest(ArticleUtil.buildArticleTabloid(article.getArticleHtmlContent()));
 
         article.setCreateDate(DateUtil.today());
 
@@ -69,15 +74,11 @@ public class ArticleServiceImpl implements ArticleService {
 
         Article article = params.getObject("article",Article.class);
 
-        article.setArticleAbstract(ArticleUtil.buildArticleTabloid(article.getArticleHtmlContent()));
+        article.setArticleDigest(ArticleUtil.buildArticleTabloid(article.getArticleHtmlContent()));
 
         article.setUpdateDate(DateUtil.today());
 
-        article.setUserId(ShiroKit.getUser().getId());
-
-        article.setLastArticleId(articleMapper.getLastArticleId());
-
-        articleMapper.updateByPrimaryKey(article);
+        articleMapper.updateArticleById(article);
 
         relationMapper.deleteLabelsByArticleId(article.getId());
 

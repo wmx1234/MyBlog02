@@ -1,6 +1,9 @@
 package com.xiao.blog.service;
 
-import com.xiao.blog.model.Params;
+import com.xiao.blog.pojo.param.Params;
+import com.xiao.blog.vo.ArticleVO;
+
+import java.util.List;
 
 /**
  * @author wangmx
@@ -11,4 +14,5 @@ public interface ArticleService {
 
     public void save(Params params);
 
+    public List<ArticleVO> getArticleByUserId(int userId);
 }

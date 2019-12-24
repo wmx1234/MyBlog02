@@ -1,11 +1,18 @@
-package com.xiao.blog.model;
+package com.xiao.blog.vo;
 
+import com.xiao.blog.model.*;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.List;
 
+/**
+ * @author wangmx
+ * @date 2019-12-24 15:45
+ * @desc:
+ */
 @Data
-public class Article implements Serializable {
+public class ArticleVO implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -23,10 +30,6 @@ public class Article implements Serializable {
 
     private Integer readCount;
 
-    private Integer lastArticleId;
-
-    private Integer nextArticleId;
-
     private Integer top;
 
     private Integer editorType;
@@ -35,12 +38,20 @@ public class Article implements Serializable {
 
     private Integer privacy;
 
-    private Integer userId;
-
-    private Integer categories;
-
     private String articleContent;
 
     private String articleHtmlContent;
+
+    private Article lastArticle;
+
+    private Article nextArticle;
+
+    private User user;
+
+    private Categories categories;
+
+    private List<Tags> tagsList;
+
+    private List<Comment> commentList;
 
 }

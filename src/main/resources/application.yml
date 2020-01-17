@@ -16,7 +16,7 @@ server:
 #  http2https: true
 bloger:
     boy: 21
-    gril: 20
+    gril: 0
 file:
     staticAccessPath: /upload/**
     uploadFolder: /image/upload

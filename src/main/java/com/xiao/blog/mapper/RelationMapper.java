@@ -32,16 +32,12 @@ public interface RelationMapper {
     @Delete("delete from sys_role_permission where role_id = #{id}")
     void deleteRelationByRoleId(Integer id);
 
-    @Insert("insert into blog_article_categories (article_id, categories_id) values (#{aId,jdbcType=INTEGER}, #{bId,jdbcType=INTEGER})")
-    void insertArticleCategoriesRelation(Relation relation);
-
 
     int batchInsertArticleLabelRelation(List<Relation> list);
 
 
-    @Delete("delete from blog_article_label where article_id = #{id}")
+    @Delete("delete from blog_article_tags where article_id = #{id}")
     void deleteLabelsByArticleId(Integer id);
 
-    @Delete("delete from blog_article_categories where article_id = #{id}")
-    void deleteCategoriesByArticleId(Integer id);
+
 }

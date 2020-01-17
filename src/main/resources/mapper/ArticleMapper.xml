@@ -44,22 +44,35 @@
 
   </resultMap>
 
-
   <insert id="insert" parameterType="com.xiao.blog.model.Article" >
 
-    insert into blog_article (id, article_abstract,
+    insert into blog_article (id, article_digest,
       article_title, create_date, likes,
       read_count, update_date, last_article_id,
-      next_article_id, comment_count, istop,
-      editor_type, isdraft, isprivacy,
-      article_content, article_html_content
+      next_article_id, comment_count, top,
+      editor_type, draft, privacy,
+      article_content, article_html_content,user_id,categories_id
       )
-    values (#{id,jdbcType=INTEGER}, #{articleAbstract,jdbcType=VARCHAR},
-      #{articleTitle,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR}, #{likes,jdbcType=INTEGER},
-      #{readCount,jdbcType=INTEGER}, #{updateDate,jdbcType=VARCHAR}, #{lastArticleId,jdbcType=INTEGER},
-      #{nextArticleId,jdbcType=INTEGER}, #{commentCount,jdbcType=INTEGER}, #{istop,jdbcType=INTEGER},
-      #{editorType,jdbcType=INTEGER}, #{isdraft,jdbcType=INTEGER}, #{isprivacy,jdbcType=INTEGER},
-      #{articleContent,jdbcType=LONGVARCHAR}, #{articleHtmlContent,jdbcType=LONGVARCHAR}
+    values (
+        #{id,jdbcType=INTEGER},
+        #{articleDigest,jdbcType=VARCHAR},
+      #{articleTitle,jdbcType=VARCHAR},
+       #{createDate,jdbcType=VARCHAR},
+       #{likes,jdbcType=INTEGER},
+      #{readCount,jdbcType=INTEGER},
+      #{updateDate,jdbcType=VARCHAR},
+      #{lastArticleId,jdbcType=INTEGER},
+      #{nextArticleId,jdbcType=INTEGER},
+      #{commentCount,jdbcType=INTEGER},
+      #{top,jdbcType=INTEGER},
+      #{editorType,jdbcType=INTEGER},
+       #{draft,jdbcType=INTEGER},
+       #{privacy,jdbcType=INTEGER},
+      #{articleContent,jdbcType=LONGVARCHAR},
+      #{articleHtmlContent,jdbcType=LONGVARCHAR},
+      #{userId,jdbcType=INTEGER},
+       #{categoriesId,jdbcType=INTEGER}
+
       )
   </insert>
 
@@ -67,7 +80,7 @@
 
   <insert id="insertArticleLabelRelation"  >
 
-    insert into blog_article_label (article_id, label_id)
+    insert into blog_article_tags (article_id, tags_id)
     values
     <foreach collection="list" item="item" index="index" separator=",">
       ( #{item.articleId,jdbcType=INTEGER}, #{item.labelId,jdbcType=INTEGER} )
@@ -82,7 +95,7 @@
 
     update blog_article
     set
-      article_abstract = #{articleAbstract,jdbcType=VARCHAR},
+      article_digest = #{articleDigest,jdbcType=VARCHAR},
       article_title = #{articleTitle,jdbcType=VARCHAR},
       likes = #{likes,jdbcType=INTEGER},
       read_count = #{readCount,jdbcType=INTEGER},
@@ -146,7 +159,16 @@
     left join blog_categories categories on article.categories_id = categories.id
     left join blog_article_tags bat on article.id = bat.article_id
     left join blog_tags tags on tags.id = bat.tags_id
-    where
-    article.user_id = #{userId,jdbcType=INTEGER}
+    where 1=1
+      <if test="categoriesId != null and categoriesId != ''">
+          and article.categories_id = #{categoriesId,jdbcType=INTEGER}
+      </if>
+
+      <if test="userId != null and userId != ''">
+          and article.user_id = #{userId,jdbcType=INTEGER}
+      </if>
+
+
+
   </select>
 </mapper>

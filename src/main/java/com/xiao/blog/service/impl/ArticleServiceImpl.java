@@ -36,7 +36,7 @@ public class ArticleServiceImpl implements ArticleService {
 
         int isExist = articleMapper.articleIsExist(article.getId());
 
-        if(isExist > 0) insert(params);
+        if(isExist <= 0) insert(params);
 
         else update(params);
 
@@ -67,7 +67,7 @@ public class ArticleServiceImpl implements ArticleService {
 
         relationMapper.batchInsertArticleLabelRelation(params.getList("labels"));
 
-        relationMapper.insertArticleCategoriesRelation(params.getObject("categories", Relation.class));
+        //relationMapper.insertArticleCategoriesRelation(params.getObject("categories", Relation.class));
     }
 
     private void update(Params params){
@@ -84,8 +84,8 @@ public class ArticleServiceImpl implements ArticleService {
 
         relationMapper.batchInsertArticleLabelRelation(params.getList("labels"));
 
-        relationMapper.deleteCategoriesByArticleId(article.getId());
+        //relationMapper.deleteCategoriesByArticleId(article.getId());
 
-        relationMapper.insertArticleCategoriesRelation(params.getObject("categories", Relation.class));
+        //relationMapper.insertArticleCategoriesRelation(params.getObject("categories", Relation.class));
     }
 }

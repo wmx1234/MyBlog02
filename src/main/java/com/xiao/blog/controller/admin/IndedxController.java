@@ -12,6 +12,7 @@ import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,7 +52,7 @@ public class IndedxController {
 
 
     @PostMapping("/login")
-    public String login(User user, Model model){
+    public String login(User user){
 
         Subject subject = SecurityUtils.getSubject();
 
@@ -102,7 +103,7 @@ public class IndedxController {
 
     @RequestMapping("/categories")
     public String categories(Model model){
-        model.addAttribute("categoriesList",categoriesService.getAll());
+        model.addAttribute("categoriesList",categoriesService.getCategoriesByField(null));
         return "/admin/categories";
     }
 
@@ -117,7 +118,7 @@ public class IndedxController {
     public String write(Model model){
 
         model.addAttribute("articleId", DataBaseUtil.nextValue());
-        model.addAttribute("categoriesList",categoriesService.getAll());
+        model.addAttribute("categoriesList",categoriesService.getCategoriesByField(null));
         model.addAttribute("labels",labelService.getAll());
         return "/admin/mdeditor";
     }

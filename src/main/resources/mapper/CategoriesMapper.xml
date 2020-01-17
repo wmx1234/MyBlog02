@@ -5,40 +5,51 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
-    <result column="publish_date" jdbcType="VARCHAR" property="publishDate" />
+    <result column="create_date" jdbcType="VARCHAR" property="createDate" />
     <result column="update_date" jdbcType="VARCHAR" property="updateDate" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
   </resultMap>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from blog_categories
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xiao.blog.model.Categories">
     insert into blog_categories (id, `name`, icon, 
-      publish_date, update_date, user_id
+      create_date, update_date, user_id
       )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, 
-      #{publishDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}
+      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}
       )
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.xiao.blog.model.Categories">
     update blog_categories
     set `name` = #{name,jdbcType=VARCHAR},
       icon = #{icon,jdbcType=VARCHAR},
-      publish_date = #{publishDate,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=VARCHAR},
       update_date = #{updateDate,jdbcType=VARCHAR},
       user_id = #{userId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, `name`, icon, publish_date, update_date, user_id
+    select id, `name`, icon, create_date, update_date, user_id
     from blog_categories
     where id = #{id,jdbcType=INTEGER}
   </select>
-  <select id="selectAll" resultMap="BaseResultMap">
-    select id, `name`, icon, publish_date, update_date, user_id
+  <select id="getCategoriesByField" parameterType="com.xiao.blog.model.Categories" resultMap="BaseResultMap">
+    select
+    id,
+    `name`,
+    icon,
+    create_date,
+    update_date,
+    user_id
     from blog_categories
+    where
+    user_id = #{userId,jdbcType=INTEGER}
+
   </select>
+
 
 
 </mapper>

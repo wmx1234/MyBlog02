@@ -34,7 +34,7 @@ public class CategoriesController {
     @RequestMapping("/add")
     public String add(Categories categories, Model model){
         categoriesService.save(categories);
-        model.addAttribute("categoriesList",categoriesService.getAll());
+        model.addAttribute("categoriesList",categoriesService.getCategoriesByField(null));
         return "/admin/mdeditor::mdeditor_categories";
     }
 
@@ -43,7 +43,7 @@ public class CategoriesController {
     public CommonResponse<List<Categories>> getAll(){
         CommonResponse result = new CommonResponse();
         result.setCode(0);
-        result.setData(categoriesService.getAll());
+        result.setData(categoriesService.getCategoriesByField(null));
         return result;
     }
 }

@@ -1,6 +1,7 @@
 package com.xiao.blog.mapper;
 
 import com.xiao.blog.model.Categories;
+import com.xiao.blog.vo.Classify;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -13,7 +14,9 @@ public interface CategoriesMapper {
 
     Categories selectByPrimaryKey(Integer id);
 
-    List<Categories> selectAll();
+    List<Categories> getCategoriesByField(Categories categories);
 
     int updateByPrimaryKey(Categories record);
+
+
 }

@@ -37,10 +37,11 @@ public class Article implements Serializable {
 
     private Integer userId;
 
-    private Integer categories;
+    private Integer categoriesId;
 
     private String articleContent;
 
     private String articleHtmlContent;
 
+    private Integer commentCount;
 }

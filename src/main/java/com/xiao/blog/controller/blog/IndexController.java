@@ -1,19 +1,8 @@
 package com.xiao.blog.controller.blog;
 
-import com.xiao.blog.model.Categories;
-import com.xiao.blog.model.User;
-import com.xiao.blog.service.ArticleService;
-import com.xiao.blog.service.CategoriesService;
-import com.xiao.blog.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 /**
  * @author wangmx
@@ -33,6 +22,15 @@ public class IndexController {
     @RequestMapping({"/index","/"})
     public String index(){
         return "blog/index";
+    }
+
+    /**
+     * 访问博客主页
+     * @return
+     */
+    @RequestMapping({"/index4"})
+    public String index4(){
+        return "blog/index4";
     }
 
     /**

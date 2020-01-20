@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 /**
  * @author wangmx
@@ -21,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class BoyController {
 
-    @Value("${bloger.boy}")
+    @Value("${blog.boy}")
     private int boy;
 
 
@@ -34,13 +35,12 @@ public class BoyController {
     @Autowired
     CategoriesService categoriesService;
 
-    @RequestMapping("/")
+    @RequestMapping({"/",""})
     public String boy(Model model){
 
         model.addAttribute("title","男主专区");
         model.addAttribute("articles",articleService.getArticleByUserId(boy));
         model.addAttribute("user",userService.getUserById(boy));
-
 
         return "blog/prefecture";
     }
@@ -68,7 +68,7 @@ public class BoyController {
      */
     @RequestMapping("/archive")
     public String archive(Model model){
-
+        model.addAttribute("archives",articleService.archive(boy));
         return "blog/archive";
     }
 

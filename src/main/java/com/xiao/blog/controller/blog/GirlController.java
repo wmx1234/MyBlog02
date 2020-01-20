@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class GirlController {
 
-    @Value("${bloger.girl}")
+    @Value("${blog.girl}")
     private int girl;
 
 
@@ -33,7 +33,7 @@ public class GirlController {
     @Autowired
     CategoriesService categoriesService;
 
-    @RequestMapping("/")
+    @RequestMapping({"/",""})
     public String boy(Model model){
 
         model.addAttribute("title","女主专区");

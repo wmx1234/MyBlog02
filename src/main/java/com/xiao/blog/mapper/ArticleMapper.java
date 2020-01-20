@@ -1,6 +1,7 @@
 package com.xiao.blog.mapper;
 
 import com.xiao.blog.model.Article;
+import com.xiao.blog.vo.Archive;
 import com.xiao.blog.vo.ArticleVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -15,12 +16,7 @@ public interface ArticleMapper {
 
     int insert(Article article);
 
-    Article getArticleById(Integer id);
-
-
     int updateArticleById(Article article);
-
-
 
     List<ArticleVO> getArticles(Article article);
 
@@ -29,4 +25,5 @@ public interface ArticleMapper {
 
     @Select("select max(id) from blog_article")
     int getLastArticleId();
+
 }

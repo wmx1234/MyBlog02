@@ -1,6 +1,8 @@
 package com.xiao.blog.service.impl;
 
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.xiao.blog.mapper.ArticleMapper;
 import com.xiao.blog.mapper.RelationMapper;
 import com.xiao.blog.model.Article;
@@ -9,11 +11,12 @@ import com.xiao.blog.pojo.param.Params;
 import com.xiao.blog.service.ArticleService;
 import com.xiao.blog.shiro.ShiroKit;
 import com.xiao.blog.util.ArticleUtil;
+import com.xiao.blog.vo.Archive;
 import com.xiao.blog.vo.ArticleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * @author wangmx
@@ -44,10 +47,48 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleVO> getArticleByUserId(int userId) {
-        Article a =new Article();
-        a.setUserId(userId);
-        return articleMapper.getArticles(a);
 
+        return articleMapper.getArticles(new Article(userId));
+
+    }
+
+    @Override
+    public JSONObject archive(Integer userId) {
+
+        List<ArticleVO> articles = getArticleByUserId(userId);
+
+        //年份标识，用于前台取出数据
+        Set<String> flag = new HashSet<String>();
+
+        Map<String,Map<String,List<ArticleVO>>> result = new HashMap<String,Map<String,List<ArticleVO>>>();
+
+        for(ArticleVO article:articles){
+
+            String createDate = article.getCreateDate();
+
+            String year = createDate.substring(0,4);
+
+            if(result.get(year) != null){
+                Map<String,List<ArticleVO>> archive = result.get(year);
+                if(archive.get(createDate) != null){
+                    archive.get(createDate).add(article);
+                }else{
+                    List<ArticleVO> list = new ArrayList<ArticleVO>();
+                    list.add(article);
+                    archive.put(createDate,list);
+                }
+
+            }else{
+                Map<String,List<ArticleVO>> archive = new HashMap<String,List<ArticleVO>>();
+                List<ArticleVO> list = new ArrayList<ArticleVO>();
+                list.add(article);
+                archive.put(createDate,list);
+                result.put(year,archive);
+
+            }
+        }
+
+        return JSONUtil.parseFromMap(result);
     }
 
 

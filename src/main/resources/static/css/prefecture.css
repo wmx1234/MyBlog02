@@ -17,6 +17,8 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 
 .left {
 	width: 400px;
+	background-color: #eee!important;
+	color: #666!important;
 }
 
 .left-header {
@@ -27,7 +29,7 @@ html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockq
 	opacity: 0.7;
 }
 .left-content {
-	width: 76%;
+	width: 100%;
 	text-align: center;
 	margin: -64px auto 0;
 }

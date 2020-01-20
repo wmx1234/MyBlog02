@@ -8,10 +8,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" th:href="@{/admin/layui/css/layui.css}"  media="all">
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <link rel="stylesheet" th:href="@{/css/prefecture.css}">
 </head>
 <body>
-<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
-    <legend>常规时间线</legend>
+<div class="container">
+
+    <div th:replace="blog/fragment/left::left"></div>
+<div class="right" style="margin-left: 25px;">
+<div th:each="blogId,key : ${archives}">
+    <div th:text="${key.current.key}"></div>
+
+
+
+</div>
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+    <legend>2018</legend>
 </fieldset>
 <ul class="layui-timeline">
     <li class="layui-timeline-item">
@@ -52,13 +63,52 @@
     <li class="layui-timeline-item">
         <i class="layui-icon layui-timeline-axis"></i>
         <div class="layui-timeline-content layui-text">
+            <h3 class="layui-timeline-title">8月15日</h3>
+            <p>
+                中国人民抗日战争胜利日
+                <br>常常在想，尽管对这个国家有这样那样的抱怨，但我们的确生在了最好的时代
+                <br>铭记、感恩
+                <br>所有为中华民族浴血奋战的英雄将士
+                <br>永垂不朽
+            </p>
+        </div>
+    </li>
+    <li class="layui-timeline-item">
+        <i class="layui-icon layui-timeline-axis"></i>
+        <div class="layui-timeline-content layui-text">
+            <h3 class="layui-timeline-title">8月15日</h3>
+            <p>
+                中国人民抗日战争胜利日
+                <br>常常在想，尽管对这个国家有这样那样的抱怨，但我们的确生在了最好的时代
+                <br>铭记、感恩
+                <br>所有为中华民族浴血奋战的英雄将士
+                <br>永垂不朽
+            </p>
+        </div>
+    </li>
+    <li class="layui-timeline-item">
+        <i class="layui-icon layui-timeline-axis"></i>
+        <div class="layui-timeline-content layui-text">
+            <h3 class="layui-timeline-title">8月15日</h3>
+            <p>
+                中国人民抗日战争胜利日
+                <br>常常在想，尽管对这个国家有这样那样的抱怨，但我们的确生在了最好的时代
+                <br>铭记、感恩
+                <br>所有为中华民族浴血奋战的英雄将士
+                <br>永垂不朽
+            </p>
+        </div>
+    </li>
+    <li class="layui-timeline-item">
+        <i class="layui-icon layui-timeline-axis"></i>
+        <div class="layui-timeline-content layui-text">
             <div class="layui-timeline-title">过去</div>
         </div>
     </li>
 </ul>
 
-
-
+</div>
+</div>
 <script th:src="@{/admin/layui/layui.js}" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 <script>

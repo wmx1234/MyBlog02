@@ -44,4 +44,10 @@ public class Article implements Serializable {
     private String articleHtmlContent;
 
     private Integer commentCount;
+
+    public Article(){};
+
+    public Article(Integer userId){
+        this.userId = userId;
+    };
 }

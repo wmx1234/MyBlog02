@@ -14,7 +14,7 @@ server:
 #    key-store-type: PKCS12
 #condition:
 #  http2https: true
-bloger:
+blog:
     boy: 1
     girl: 0
 file:

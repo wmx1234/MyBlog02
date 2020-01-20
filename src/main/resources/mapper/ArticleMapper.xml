@@ -133,7 +133,7 @@
     where id = #{id,jdbcType=INTEGER}
   </select>
 
-  <select id="getArticles" resultMap="BaseResultMap" >
+  <select id="getArticles" resultMap="BaseResultMap" parameterType="com.xiao.blog.model.Article">
 
     select
         article.id,
@@ -160,13 +160,14 @@
     left join blog_article_tags bat on article.id = bat.article_id
     left join blog_tags tags on tags.id = bat.tags_id
     where 1=1
-      <if test="categoriesId != null and categoriesId != ''">
+      <if test="categoriesId != null">
           and article.categories_id = #{categoriesId,jdbcType=INTEGER}
       </if>
 
-      <if test="userId != null and userId != ''">
+      <if test="userId != null">
           and article.user_id = #{userId,jdbcType=INTEGER}
       </if>
+
 
 
 

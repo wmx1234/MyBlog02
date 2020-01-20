@@ -22,6 +22,11 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
 
     @Override
+    public User getUserById(Integer id) {
+        return userMapper.selectByPrimaryKey(id);
+    }
+
+    @Override
     public User getLoginUser(String userName) {
         return userMapper.getLoginUser(userName);
     }
@@ -31,12 +36,5 @@ public class UserServiceImpl implements UserService {
         return userMapper.selectAll();
     }
 
-    @Override
-    public List<User> getBloger() throws BusinessException {
 
-        List<User> users = userMapper.getBloger();
-
-
-        return users;
-    }
 }

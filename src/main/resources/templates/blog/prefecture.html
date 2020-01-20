@@ -2,64 +2,18 @@
 <html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="${title}"></title>
 
     <link rel="stylesheet" th:href="@{/css/prefecture.css}">
 </head>
 <body>
     <div class="container">
-        <div class="left">
-            <div class="left-header">
-                111
-            </div>
 
+        <div th:replace="blog/fragment/left::left"></div>
 
-            <div class="left-content">
-                    <div>
-                        <a href="/static" class="profilepic">
-                            <img th:src="@{/images/gallery/image-1.jpg}" class="animated zoomIn" >
-                        </a>
-                        <hgroup>
-                            <h1 class="header-author"><a href="#">晓</a></h1>
-                        </hgroup>
-                        <p class="header-subtitle">爱生活，爱编码</p>
-                        <input placeholder="search..." class="search">
-                        <nav class="header-menu">
-                            <ul>
-                                <li><a href="#">主页</a></li>
-                                <li><a href="/classify">分类3</a></li>
-                                <li><a href="#">归档</a></li>
-                                <li><a href="#">标签云</a></li>
-                                <li><a href="#">关于我</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-
-
-            </div>
-        </div>
         <div class="right" style="display:flex;flex-direction: row;width: 100%;margin-left:25px">
             <div class="content" >
-                <!--
-                <div >
-                    <div th:text="${article}"></div>
-                </div>
-                <div class="blogs" data-scroll-reveal="enter bottom over 1s" >
-                    <h3 class="blogtitle"><a href="/static" target="_blank">别让这些闹心的套路，毁了你的网页设计!</a></h3>
-                    <span class="blogpic"><a href="/static" title=""><img th:src="@{/images/1.jpg}" alt=""></a></span>
-                    <p class="blogtext">如图，要实现上图效果，我采用如下方法：1、首先在数据库模型，增加字段，分别是图片2，图片3。2、增加标签模板，用if，else if 来判断，输出。思路已打开，样式调用就可以多样化啦！... </p>
-                    <div class="bloginfo">
 
-                        <ul>
-                            <li class="author"><span class="iconfont icon-ai-user"></span>&nbspXXX</li>
-                            <li class="lmname"><span class="iconfont icon-fenlei"></span>&nbsp学无止境</li>
-                            <li class="timer"><span class="iconfont icon-shijian"></span>&nbsp2018-5-13</li>
-                            <li class="view"><span class="iconfont icon-yanjing"></span>&nbsp34567已阅读</li>
-                            <li class="like"><span class="iconfont icon-zan1"></span>&nbsp9999</li>
-                        </ul>
-                    </div>
-                </div>
-                 -->
                 <div class="blogs" data-scroll-reveal="enter bottom over 1s" th:each="article,stat:${articles}">
 
                     <h3 class="blogtitle"><a href="/static" target="_blank" th:text="${article.articleTitle}"></a></h3>

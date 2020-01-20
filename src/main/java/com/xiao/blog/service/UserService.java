@@ -11,9 +11,9 @@ import java.util.List;
  */
 public interface UserService {
 
+    public User getUserById(Integer id);
+
     public User getLoginUser(String userName);
 
     public List<User> getAll();
-
-    List<User> getBloger();
 }

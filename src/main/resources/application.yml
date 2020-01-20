@@ -15,8 +15,8 @@ server:
 #condition:
 #  http2https: true
 bloger:
-    boy: 21
-    gril: 0
+    boy: 1
+    girl: 0
 file:
     staticAccessPath: /upload/**
     uploadFolder: /image/upload
@@ -62,7 +62,8 @@ spring:
 mybatis:
   mapper-locations: classpath:mapper/*.xml  #注意：一定要对应mapper映射xml文件的所在路径
   type-aliases-package: com.xiao.blog.model  # 注意：对应实体类的路径
-
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 logging:
   path: logger
   level: 

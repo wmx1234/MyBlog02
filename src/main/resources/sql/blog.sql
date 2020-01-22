@@ -12,7 +12,8 @@ File Encoding         : 65001
 
 Date: 2019-12-24 17:31:28
 */
-
+create database blog;
+use blog;
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------

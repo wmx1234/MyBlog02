@@ -4,62 +4,41 @@
     <meta charset="UTF-8">
     <title>Title</title>
 
-    <link rel="stylesheet" th:href="@{/css/prefecture.css}">
+
     <style>
+        .content{
+            margin-top:50px;
+        }
+        .classify_model{
+            margin-bottom: 20px;
+        }
         .classify_name{
-            font-weight: 700;
-            font-size: 24px;
+            margin-bottom:10px;
+        }
+        .classify_article{
+            margin-left: 30px;
+            margin-top:8px;
         }
         .article_title{
-            font-size: 20px;
-            margin: 15px;
+            margin-top:10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="left">
-            <div class="left-header">
-                111
-            </div>
-
-
-            <div class="left-content">
-                    <div>
-                        <a href="/static" class="profilepic">
-                            <img th:src="@{/images/gallery/image-1.jpg}" class="animated zoomIn" >
-                        </a>
-                        <hgroup>
-                            <h1 class="header-author"><a href="#">晓</a></h1>
-                        </hgroup>
-                        <p class="header-subtitle">爱生活，爱编码</p>
-                        <input placeholder="search..." class="search">
-                        <nav class="header-menu">
-                            <ul>
-                                <li><a href="#">主页</a></li>
-                                <li><a href="./classify">分类</a></li>
-                                <li><a href="#">归档</a></li>
-                                <li><a href="#">标签云</a></li>
-                                <li><a href="#">关于我</a></li>
-                            </ul>
-                        </nav>
-                    </div>
-
-
-            </div>
-        </div>
+        <div th:replace="blog/fragment/left::left"></div>
         <div class="right" style="display:flex;flex-direction: row;width: 100%;margin-left:25px">
-            <div class="content" >
+            <div class="content">
 
-                <div  th:each="c,stat:${classify}" style="margin-top: 50px">
+                <div class="classify_model" th:each="classify,stat:${classifyList}" >
 
-                    <div class="classify_name" th:text="${c.name}" style="text-align: center;margin-bottom: 20px"></div>
+                    <div class="classify_name" th:text="${classify.categoriesName}" ></div>
 
-                    <div  th:each="article,stat:${c.articles}" >
-
-                        <a class="article_title" th:text="${article.articleTitle}" ></a>
-
-                    </div>
+                    <ul class="classify_article" th:each="article,stat:${classify.articles}" >
+                        <li>
+                            <a class="article_title" th:text="${article.articleTitle}" ></a>
+                        </li>
+                    </ul>
                 </div>
 
             </div>

@@ -20,6 +20,10 @@ public interface ArticleMapper {
 
     List<ArticleVO> getArticles(Article article);
 
+    List<Archive> archive(Integer userId);
+
+    List<Archive> classify(Integer userId);
+
     @Select("select count(id) from blog_article where id = #{id}")
     int articleIsExist(Integer id);
 

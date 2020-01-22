@@ -22,4 +22,9 @@ public class Categories implements Serializable {
 
     private Integer userId;
 
+    public Categories(){}
+
+    public Categories(Integer  userId){
+        this.userId = userId;
+    }
 }

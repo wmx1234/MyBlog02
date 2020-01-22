@@ -37,7 +37,7 @@ public class BoyController {
 
     @RequestMapping({"/",""})
     public String boy(Model model){
-
+        model.addAttribute("url","/boy");
         model.addAttribute("title","男主专区");
         model.addAttribute("articles",articleService.getArticleByUserId(boy));
         model.addAttribute("user",userService.getUserById(boy));
@@ -52,11 +52,10 @@ public class BoyController {
      */
     @RequestMapping("/classify")
     public String classify(Model model){
-        Categories categories = new Categories();
 
-        categories.setUserId(boy);
+        model.addAttribute("url","/boy");
 
-        model.addAttribute("classify",categoriesService.classify(categories));
+        model.addAttribute("classifyList",articleService.classify(boy));
 
         return "blog/classify";
     }
@@ -68,7 +67,8 @@ public class BoyController {
      */
     @RequestMapping("/archive")
     public String archive(Model model){
-        model.addAttribute("archives",articleService.archive(boy));
+        model.addAttribute("archiveVOList",articleService.archive(boy));
+        model.addAttribute("url","/boy");
         return "blog/archive";
     }
 
@@ -79,7 +79,7 @@ public class BoyController {
      */
     @RequestMapping("/tagsCloud")
     public String tagsCloud(Model model){
-
+        model.addAttribute("url","/boy");
         return "blog/tagsCloud";
     }
 }

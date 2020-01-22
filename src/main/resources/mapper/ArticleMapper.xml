@@ -149,7 +149,60 @@
 
   </select>
 
+    <resultMap id="Archive" type="com.xiao.blog.vo.ArchiveVO" >
+
+        <result column="createYear" property="year" jdbcType="VARCHAR" />
+
+        <collection property="archives" ofType="com.xiao.blog.vo.Archive">
+            <result column="create_date" property="createDate" jdbcType="VARCHAR" />
+            <collection property="articles" ofType="com.xiao.blog.model.Article">
+                <id column="id" property="id" jdbcType="INTEGER" />
+                <result column="article_title" property="articleTitle" jdbcType="VARCHAR" />
+            </collection>
+        </collection>
 
 
+    </resultMap>
+  <select id="archive" resultMap="Archive">
+      select
+      a.id,
+      a.article_title,
+      a.create_date,
+      a.user_id,
+      left(a.create_date,4) createYear
+      from blog_article a
+      left join (select create_date from blog_article GROUP BY create_date) g
+      on a.create_date = g.create_date
+      where a.user_id = #{userId,jdbcType=INTEGER}
+      order by createYear desc,a.create_date desc
+
+  </select>
+
+
+    <resultMap id="Classify" type="com.xiao.blog.vo.ClassifyVO" >
+
+        <result column="name" property="categoriesName" jdbcType="VARCHAR" />
+
+        <collection property="articles" ofType="com.xiao.blog.vo.ArticleVO">
+
+            <id column="id" property="id" jdbcType="INTEGER" />
+            <result column="article_title" property="articleTitle" jdbcType="VARCHAR" />
+
+        </collection>
+
+
+    </resultMap>
+    <select id="classify" resultMap="Classify">
+      select
+      a.id,
+      a.article_title,
+      c.name
+
+      from blog_article a
+      left join  blog_categories c on a.categories_id = c.id
+      where a.user_id = #{userId,jdbcType=INTEGER}
+
+
+  </select>
 
 </mapper>

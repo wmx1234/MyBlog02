@@ -1,17 +1,94 @@
-<!DOCTYPE html>
 <html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
-<head>
+<!-- 博客个人页面左侧展示栏 -->
+<style>
 
-    <title>Layui</title>
+    .left{
+        margin: 0;
+        width: 300px;
+        height: 100%;
+        background: #aaaaaa;
+    }
+    .left-header {
+        width: 100%;
+        height: 200px;
+        background-color: #000;
 
-</head>
-<body>
+        opacity: 0.7;
+    }
 
-<div class="container" style="display: flex;flex-direction: row;">
-    <div style="width: 300px;height: 500px;border: 1px solid #ee00ee">1</div>
-    <div>2</div>
-    <div>3</div>
+    .left-content {
+        width: 100%;
+        text-align: center;
+        margin: -64px auto 0;
+    }
+
+    .profilepic {
+        text-align: center;
+        display: block;
+        border: 5px solid #fff;
+        border-radius: 50%;
+        width: 128px;
+        height: 128px;
+        margin: 0 auto;
+        position: relative;
+        overflow: hidden;
+        background: #88acdb;
+        -webkit-box-orient: horizontal;
+        -webkit-box-pack: center;
+        -webkit-box-align: center;
+        text-align: center;
+    }
+
+    .profilepic img {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        -webkit-animation-duration: 0.4s;
+        -moz-animation-duration: 0.4s;
+        -ms-animation-duration: 0.4s;
+        animation-duration: 0.4s;
+        -webkit-animation-delay: 0.3s;
+        -moz-animation-delay: 0.3s;
+        -ms-animation-delay: 0.3s;
+        animation-delay: 0.3s;
+        -webkit-animation-duration: 0.4s;
+        -webkit-animation-delay: 0.3s;
+    }
+    .profilepic:hover {
+        background: #fff;
+        border: 5px solid #88acdb;
+        -webkit-box-shadow: 0 0 1.5em #88acdb;
+        box-shadow: 0 0 1.5em #88acdb;
+        -webkit-animation: profilepic 0.15s linear infinite alternate;
+        -moz-animation: profilepic 0.15s linear infinite alternate;
+        -ms-animation: profilepic 0.15s linear infinite alternate;
+        animation: profilepic 0.15s linear infinite alternate;
+        -webkit-animation: profilepic 0.15s linear infinite alternate;
+    }
+</style>
+<div class="left" th:fragment="left">
+
+    <div class="left-header"></div>
+    <div class="left-content" >
+        <div>
+            <a href="/static" class="profilepic">
+                <img th:src="@{/images/03.jpg}" class="animated zoomIn" >
+            </a>
+            <hgroup>
+                <h1 class="header-author"><a href="#">晓</a></h1>
+            </hgroup>
+            <p class="header-subtitle">爱生活，爱编码</p>
+            <input placeholder="search..." class="search">
+            <nav class="header-menu">
+                <ul>
+                    <li><a href="/">主页</a></li>
+                    <li><a th:href="${url}+'/classify'">分类</a></li>
+                    <li><a th:href="${url}+'/archive'">归档</a></li>
+                    <li><a th:href="${url}+'/tagsCloud'">标签云</a></li>
+                    <li><a th:href="${url}+'/aboutMe'">关于我</a></li>
+                </ul>
+            </nav>
+        </div>
+
+    </div>
 </div>
-
-</body>
-</html>

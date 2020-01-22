@@ -39,7 +39,7 @@ public class GirlController {
         model.addAttribute("title","女主专区");
         model.addAttribute("articles",articleService.getArticleByUserId(girl));
         model.addAttribute("user",userService.getUserById(girl));
-
+        model.addAttribute("url","girl");
 
         return "blog/prefecture";
     }
@@ -51,12 +51,9 @@ public class GirlController {
      */
     @RequestMapping("/classify")
     public String classify(Model model){
-        Categories categories = new Categories();
 
-        categories.setUserId(girl);
-
-        model.addAttribute("classify",categoriesService.classify(categories));
-
+        model.addAttribute("classify",articleService.classify(girl));
+        model.addAttribute("url","girl");
         return "blog/classify";
     }
 
@@ -67,7 +64,7 @@ public class GirlController {
      */
     @RequestMapping("/archive")
     public String archive(Model model){
-
+        model.addAttribute("url","girl");
         return "blog/archive";
     }
 
@@ -78,7 +75,7 @@ public class GirlController {
      */
     @RequestMapping("/tagsCloud")
     public String tagsCloud(Model model){
-
+        model.addAttribute("url","girl");
         return "blog/tagsCloud";
     }
 

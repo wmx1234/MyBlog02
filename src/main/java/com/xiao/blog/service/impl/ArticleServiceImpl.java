@@ -53,42 +53,17 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public JSONObject archive(Integer userId) {
+    public List archive(Integer userId) {
 
-        List<ArticleVO> articles = getArticleByUserId(userId);
+        return articleMapper.archive(userId);
 
-        //年份标识，用于前台取出数据
-        Set<String> flag = new HashSet<String>();
+    }
 
-        Map<String,Map<String,List<ArticleVO>>> result = new HashMap<String,Map<String,List<ArticleVO>>>();
+    @Override
+    public List classify(Integer userId) {
 
-        for(ArticleVO article:articles){
+        return articleMapper.classify(userId);
 
-            String createDate = article.getCreateDate();
-
-            String year = createDate.substring(0,4);
-
-            if(result.get(year) != null){
-                Map<String,List<ArticleVO>> archive = result.get(year);
-                if(archive.get(createDate) != null){
-                    archive.get(createDate).add(article);
-                }else{
-                    List<ArticleVO> list = new ArrayList<ArticleVO>();
-                    list.add(article);
-                    archive.put(createDate,list);
-                }
-
-            }else{
-                Map<String,List<ArticleVO>> archive = new HashMap<String,List<ArticleVO>>();
-                List<ArticleVO> list = new ArrayList<ArticleVO>();
-                list.add(article);
-                archive.put(createDate,list);
-                result.put(year,archive);
-
-            }
-        }
-
-        return JSONUtil.parseFromMap(result);
     }
 
 

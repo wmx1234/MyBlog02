@@ -18,5 +18,7 @@ public interface ArticleService {
 
     public List<ArticleVO> getArticleByUserId(int userId);
 
-    public JSONObject archive(Integer userId);
+    public List archive(Integer userId);
+
+    public List classify(Integer userId);
 }

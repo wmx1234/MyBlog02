@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragment/common::header"></head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+
+    <div th:replace="admin/fragment/common::top"></div>
+    <div th:replace="admin/fragment/common::left"></div>
+
+    <div class="layui-body" >
+
+        <div class="layui-content">
+            <h2>博客管理</h2>
+            <table class="layui-hide" id="admin_articles" lay-filter="admin_articles_filter"></table>
+        </div>
+    </div>
+
+</div>
+
+
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="iconfont icon-shanchu"></i></a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="iconfont icon-bianji"></i></a>
+    <a class="layui-btn layui-btn-xs" lay-event="show"><i class="iconfont icon-yanjing"></i></a>
+</script>
+
+<script type="text/html" id="switch_privary">
+    <!-- 这里的 checked 的状态只是演示 -->
+    <input type="checkbox" name="privacy" value="{{d.privacy}}"  lay-skin="switch" lay-text="私密|公开" lay-filter="sexDemo" {{ d.privacy == 0 ?'checked' : '' }}>
+</script>
+
+<script type="text/html" id="checkbox_draft">
+    <!-- 这里的 checked 的状态只是演示 -->
+    <input type="checkbox" name="draft" value="{{d.draft}}"  title="发布" lay-filter="lockDemo" {{ d.draft == 1 ? 'checked' : '' }}>
+</script>
+
+<script type="text/html" id="checkbox_draft2" >
+    <select name="interest" lay-filter="aihao" data-value={{d.categoriesId}}>
+        <option th:each="categories,stat:${categoriesList}" th:text="${categories.name}"
+                th:value="${categories.id}" th:selected="${categories.id} == data-value"></option>
+    </select>
+</script>
+
+
+
+
+<script th:inline="none">
+
+    layui.use(['table','form','layer'], function(){
+        let table = layui.table;
+        const form = layui.form,
+            layer = layui.layer;
+
+        const tableIns = table.render({
+            elem: '#admin_articles',
+            url:'/admin/article/getArticleVOList',
+            title: '博客列表',
+            cellMinWidth: 60,
+
+            done: function (res, curr, count) {
+                layui.each($('tbody select'), function (index, item) {
+                    let elem = $(item);
+                    elem.val(elem.data('value')).parents('div.layui-table-cell').css('overflow', 'visible');
+                });
+                form.render();
+            },
+            size: 'lg',
+            page: true,
+            cols: [[
+                {field:'id', title:'ID', width:80, fixed: 'center', unresize: true, sort: true,align: 'center'},
+                {field:'articleTitle', title:'标题', edit: 'text',unresize: true,align: 'center'},
+                {field:'categoriesId', title:'所属分类',templet: '#checkbox_draft2', align: 'center'},
+                {field:'privacy', width:110,title:'博客类型', templet: '#switch_privary',align: 'center'},
+                {field:'createDate', width:150,title:'创建时间', align: 'center'},
+                {field:'draft', width:130,title:'发布状态', templet: '#checkbox_draft', unresize: true,align: 'center'},
+                {field:'readCount',width:80, title:'浏览量', align: 'center'},
+                {title:'操作', width:150, toolbar: '#barDemo',align: 'center'}
+            ]]
+        });
+
+        //监听单元格编辑
+        table.on('edit(admin_tags_filter)', function(obj){
+
+            $.post("/admin/tags/save",obj.data,function(e){
+                layer.msg(e.msg);
+                tableIns.reload();
+            })
+        });
+        //监听行工具事件
+        table.on('tool(admin_tags_filter)', function(obj){
+            let data = obj.data;
+            if(obj.event === 'del'){
+                if(data.articleCount != 0){
+                    layer.msg("该标签下有博客，不允许删除！！！");
+                }else{
+                    layer.confirm('真的删除行么', function(index){
+                        $.post("/admin/tags/delete/"+data.id,{},function(e){
+                            layer.msg(e.msg);
+                            if(e.code == 0){
+
+                                tableIns.reload();
+                                layer.close(index);
+                            }
+
+                        })
+                    });
+                }
+            }
+        });
+
+        //监听表单提交事件
+        form.on('submit(add)', function(data){
+            $.post("/admin/tags/save",data.field,function(e){
+                layer.msg(e.msg);
+                if(e.code == 0){
+                    tableIns.reload({});
+                    $("#form_tags")[0].reset();
+                }
+
+            })
+            return false;
+        });
+
+    });
+
+</script>
+</body>
+</html>

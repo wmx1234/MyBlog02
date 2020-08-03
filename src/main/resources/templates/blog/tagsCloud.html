@@ -1,68 +1,146 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="utf-8">
-    <title>标签云</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>3D标签云</title>
-    <script type="text/javascript" th:src="@{/js/tagcloud.js}"></script>
-    <style type="text/css">
-        .fl{ float: left; }
-        .fr{ float: right; }
-        .wrapper{ width: 1200px; height: 300px; margin: 0 auto; }
-        .wrapper p{ padding-top: 150px; line-height: 27px; color: #999; font-size: 14px; text-align: center;  }
-        .tagcloud { position: relative; margin-top:-150px; }
-        .tagcloud a{ position: absolute;  top: 0; left: 0;  display: block; padding: 11px 30px; color: #333; font-size: 16px; border: 1px solid #e6e7e8; border-radius: 18px; background-color: #f2f4f8; text-decoration: none; white-space: nowrap;
-            -o-box-shadow: 6px 4px 8px 0 rgba(151,142,136,.34);
-            -ms-box-shadow: 6px 4px 8px 0 rgba(151,142,136,.34);
-            -moz-box-shadow: 6px 4px 8px 0 rgba(151,142,136,.34);
-            -webkit-box-shadow: 6px 4px 8px 0 rgba(151,142,136,.34);
-            box-shadow: 6px 4px 8px 0 rgba(151,142,136,.34);
-            -ms-filter:"progid:DXImageTransform.Microsoft.Shadow(Strength=4,Direction=135, Color='#000000')";/*兼容ie7/8*/
-            filter: progid:DXImageTransform.Microsoft.Shadow(color='#969696', Direction=125, Strength=9);
-            /*strength是阴影大小，direction是阴影方位，单位为度，可以为负数，color是阴影颜色 （尽量使用数字）使用IE滤镜实现盒子阴影的盒子必须是行元素或以行元素显示（block或inline-block;）*/
-        }
-        .tagcloud a:hover{ color: #3385cf; }
-    </style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>3D标签</title>
+
+<style type="text/css">
+.tagBall{width:800px;height:800px;margin:50px auto;position:relative;}
+.tag{display:block;position:absolute;left:0px;top:0px;color:#000;text-decoration:none;font-size:15px;font-family:"微软雅黑";font-weight:bold;}
+.tag:hover{border:1px solid #666;}
+</style>
+    
 </head>
 <body>
 
-<div class="wrapper">
-    <p>没有发现任何关注内容<br/>此处为您显示检索历史</p>
-    <div class="tagcloud fl">
-        <a href="#">文献综述</a>
-        <a href="#">对外投资</a>
-        <a href="#">机器人</a>
-        <a href="#">区块链</a>
-        <a href="#">科技创新</a>
-        <a href="#">计算机科学</a>
-        <a href="#">自动驾驶</a>
-        <a href="#">研究价值</a>
-        <a href="#">模式识别</a>
-        <a href="#">自然语言处理</a>
-    </div>
-    <div class="tagcloud fr">
-        <a href="#">大数据时代</a>
-        <a href="#">一带一路</a>
-        <a href="#">智能控制</a>
-        <a href="#">人工智能神经网络</a>
-        <a href="#">计算机科学</a>
-        <a href="#">自动驾驶</a>
-    </div>
-</div><!--wrapper-->
+<div class="tagBall" >
+    <a class="tag" href="#" th:each="tags,key : ${tagsList}" th:text="${tags.name}">item1</a>
+
+</div>
 
 <script type="text/javascript">
-    /*3D标签云*/
-    tagcloud({
-        selector: ".tagcloud",  //元素选择器
-        fontsize: 16,       //基本字体大小, 单位px
-        radius: 100,         //滚动半径, 单位px
-        mspeed: "normal",   //滚动最大速度, 取值: slow, normal(默认), fast
-        ispeed: "normal",   //滚动初速度, 取值: slow, normal(默认), fast
-        direction: 135,     //初始滚动方向, 取值角度(顺时针360): 0对应top, 90对应left, 135对应right-bottom(默认)...
-        keep: false          //鼠标移出组件后是否继续随鼠标滚动, 取值: false, true(默认) 对应 减速至初速度滚动, 随鼠标滚动
-    });
+const tagEle = "querySelectorAll" in document ? document.querySelectorAll(".tag") : getClass("tag"),
+	paper = "querySelectorAll" in document ? document.querySelector(".tagBall") : getClass("tagBall")[0];
+	RADIUS =300,
+	fallLength = 500,
+	tags=[],
+	angleX = Math.PI/500,
+	angleY = Math.PI/500,
+	CX = paper.offsetWidth/2,
+	CY = paper.offsetHeight/2,
+	EX = paper.offsetLeft + document.body.scrollLeft + document.documentElement.scrollLeft,
+	EY = paper.offsetTop + document.body.scrollTop + document.documentElement.scrollTop;
+
+function getClass(className){
+	let ele = document.getElementsByTagName("*");
+	let classEle = [];
+	for(let i=0;i < ele.length;i++){
+		let cn = ele[i].className;
+		if(cn === className){
+			classEle.push(ele[i]);
+		}
+	}
+	return classEle;
+}
+
+function innit(){
+	for(let i=0;i<tagEle.length;i++){
+		var a , b;
+		var k = (2*(i+1)-1)/tagEle.length - 1;
+		var a = Math.acos(k);
+		var b = a*Math.sqrt(tagEle.length*Math.PI);
+		// var a = Math.random()*2*Math.PI;
+		// var b = Math.random()*2*Math.PI;
+		var x = RADIUS * Math.sin(a) * Math.cos(b);
+		var y = RADIUS * Math.sin(a) * Math.sin(b); 
+		var z = RADIUS * Math.cos(a);
+		var t = new tag(tagEle[i] , x , y , z);
+		tagEle[i].style.color = "rgb("+parseInt(Math.random()*255)+","+parseInt(Math.random()*255)+","+parseInt(Math.random()*255)+")";
+		tags.push(t);
+		t.move();
+	}
+}
+
+Array.prototype.forEach = function(callback){
+	for(var i=0;i<this.length;i++){
+		callback.call(this[i]);
+	}
+}
+
+function animate(){
+	setInterval(function(){
+		rotateX();
+		rotateY();
+		tags.forEach(function(){
+			this.move();
+		})
+	} , 50)
+}
+
+if("addEventListener" in window){
+	paper.addEventListener("mousemove" , function(event){
+		var x = event.clientX - EX - CX;
+		var y = event.clientY - EY - CY;
+		// angleY = -x* (Math.sqrt(Math.pow(x , 2) + Math.pow(y , 2)) > RADIUS/4 ? 0.0002 : 0.0001);
+		// angleX = -y* (Math.sqrt(Math.pow(x , 2) + Math.pow(y , 2)) > RADIUS/4 ? 0.0002 : 0.0001);
+		angleY = x*0.0001;
+		angleX = y*0.0001;
+	});
+}
+else {
+	paper.attachEvent("onmousemove" , function(event){
+		var x = event.clientX - EX - CX;
+		var y = event.clientY - EY - CY;
+		angleY = x*0.0001;
+		angleX = y*0.0001;
+	});
+}
+
+function rotateX(){
+	var cos = Math.cos(angleX);
+	var sin = Math.sin(angleX);
+	tags.forEach(function(){
+		var y1 = this.y * cos - this.z * sin;
+		var z1 = this.z * cos + this.y * sin;
+		this.y = y1;
+		this.z = z1;
+	})
+	
+}
+
+function rotateY(){
+	var cos = Math.cos(angleY);
+	var sin = Math.sin(angleY);
+	tags.forEach(function(){
+		var x1 = this.x * cos - this.z * sin;
+		var z1 = this.z * cos + this.x * sin;
+		this.x = x1;
+		this.z = z1;
+	})
+}
+
+var tag = function(ele , x , y , z){
+	this.ele = ele;
+	this.x = x;
+	this.y = y;
+	this.z = z;
+}
+
+tag.prototype = {
+	move:function(){
+		var scale = fallLength/(fallLength-this.z);
+		var alpha = (this.z+RADIUS)/(2*RADIUS);
+		this.ele.style.fontSize = 15 * scale + "px";
+		this.ele.style.opacity = alpha+0.5;
+		this.ele.style.filter = "alpha(opacity = "+(alpha+0.5)*100+")";
+		this.ele.style.zIndex = parseInt(scale*100);
+		this.ele.style.left = this.x + CX - this.ele.offsetWidth/2 +"px";
+		this.ele.style.top = this.y + CY - this.ele.offsetHeight/2 +"px";
+	}
+}
+innit();
+animate();
 </script>
+
 </body>
 </html>

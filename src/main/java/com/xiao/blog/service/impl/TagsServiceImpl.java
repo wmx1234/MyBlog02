@@ -1,9 +1,14 @@
 package com.xiao.blog.service.impl;
 
+import cn.hutool.core.date.DateUtil;
+import com.xiao.blog.exception.BusinessException;
+import com.xiao.blog.exception.assertion.BusinessExceptionAssert;
 import com.xiao.blog.mapper.TagsMapper;
 import com.xiao.blog.model.Tags;
 import com.xiao.blog.service.TagsService;
 import com.xiao.blog.shiro.ShiroKit;
+import com.xiao.blog.util.DataBaseUtil;
+import com.xiao.blog.vo.TagsVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,16 +19,18 @@ import java.util.List;
  * @create 2019-11-30 10:04
  * @Desc
  */
-@Service
+@Service("TagsService")
 public class TagsServiceImpl implements TagsService {
 
     @Autowired
     TagsMapper tagsMapper;
 
     @Override
-    public int save(Tags tags) {
+    public int save(Tags tags) throws BusinessException {
 
-        tags.setUserId(ShiroKit.getUser().getId());
+        //校验标签是否已存在
+        BusinessExceptionAssert.assertTagsExist(tags);
+
         if(tags.getId() != null)
             return update(tags);
         else
@@ -32,25 +39,34 @@ public class TagsServiceImpl implements TagsService {
     }
 
     @Override
-    public List<Tags> getAll() {
-
-        return tagsMapper.selectAll();
+    public int delete(Integer id) {
+        return tagsMapper.deleteByPrimaryKey(id);
     }
 
     @Override
-    public int deleteBatch(List<Integer> ids) {
-        return 0;
+    public List<TagsVO> getTagsVOList(Integer userId) {
+        return tagsMapper.getTagsVOList(userId);
+    }
+
+    @Override
+    public List<Tags> getTagsList(Integer userId) {
+        return tagsMapper.getTagsList(userId);
     }
 
 
-    private int insert(Tags label){
-        //label.setPublishdate(DateUtil.today());
-        label.setUserId(ShiroKit.getUser().getId());
-        return tagsMapper.insert(label);
+
+
+
+    private int insert(Tags tags){
+
+        tags.setCreateDate(DateUtil.today());
+        tags.setId(DataBaseUtil.nextValue());
+        tags.setUserId(ShiroKit.getUser().getId());
+        return tagsMapper.insert(tags);
     }
 
-    private int update(Tags label){
-        //label.setUpdatedate(DateUtil.today());
-        return tagsMapper.updateByPrimaryKey(label);
+    private int update(Tags tags){
+        tags.setUpdateData(DateUtil.today());
+        return tagsMapper.updateByPrimaryKey(tags);
     }
 }

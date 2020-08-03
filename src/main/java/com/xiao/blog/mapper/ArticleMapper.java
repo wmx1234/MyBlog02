@@ -3,11 +3,11 @@ package com.xiao.blog.mapper;
 import com.xiao.blog.model.Article;
 import com.xiao.blog.vo.Archive;
 import com.xiao.blog.vo.ArticleVO;
+import com.xiao.blog.vo.ClassifyVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
-import java.util.Map;
 
 @Mapper
 public interface ArticleMapper {
@@ -22,7 +22,7 @@ public interface ArticleMapper {
 
     List<Archive> archive(Integer userId);
 
-    List<Archive> classify(Integer userId);
+    List<ClassifyVO> classify(Integer userId);
 
     @Select("select count(id) from blog_article where id = #{id}")
     int articleIsExist(Integer id);
@@ -30,4 +30,7 @@ public interface ArticleMapper {
     @Select("select max(id) from blog_article")
     int getLastArticleId();
 
+    List<Article> getArticleList(int userId);
+
+    ArticleVO getArticleById(Integer id);
 }

@@ -47,6 +47,7 @@ public class Article implements Serializable {
 
     public Article(){};
 
+
     public Article(Integer userId){
         this.userId = userId;
     };

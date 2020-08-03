@@ -3,7 +3,6 @@ package com.xiao.blog.vo;
 import com.xiao.blog.model.*;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,11 +11,8 @@ import java.util.List;
  * @desc:
  */
 @Data
-public class ArticleVO implements Serializable {
+public class ArticleVO extends Article {
 
-    private static final long serialVersionUID = 1L;
-
-    private Integer id;
 
     private String articleTitle;
 

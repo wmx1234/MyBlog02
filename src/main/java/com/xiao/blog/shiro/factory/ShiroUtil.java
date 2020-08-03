@@ -1,21 +1,18 @@
 package com.xiao.blog.shiro.factory;
 
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-
 import com.xiao.blog.mapper.PermissionMapper;
 import com.xiao.blog.mapper.RelationMapper;
+import com.xiao.blog.mapper.UserMapper;
 import com.xiao.blog.model.Permission;
 import com.xiao.blog.model.Role;
+import com.xiao.blog.vo.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.xiao.blog.mapper.UserMapper;
-import com.xiao.blog.model.User;
-
-import javax.management.relation.RelationService;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 
 @Component
@@ -32,7 +29,7 @@ public class ShiroUtil implements IShiro {
     private RelationMapper relationMapper;
 
     @Override
-    public User getUser(String userName) {
+    public LoginUser getUser(String userName) {
         
         return userMapper.getLoginUser(userName);
     }

@@ -21,6 +21,12 @@ public class CommonResponse<T> extends BaseResponse {
         super();
     }
 
+    public CommonResponse(Integer code,T data) {
+        super();
+        this.code = code;
+        this.data = data;
+    }
+
     public CommonResponse(T data) {
         super();
         this.data = data;

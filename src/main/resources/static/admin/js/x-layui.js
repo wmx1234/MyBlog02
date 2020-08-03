@@ -1,7 +1,7 @@
 
 
 function x_admin_show(type,title,url,w,h,data){
-	debugger;
+
 	if (title == null || title == '') {
 		title=false;
 	};

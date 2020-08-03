@@ -1,22 +1,19 @@
 package com.xiao.blog.service.impl;
 
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
 import com.xiao.blog.mapper.ArticleMapper;
 import com.xiao.blog.mapper.RelationMapper;
 import com.xiao.blog.model.Article;
-import com.xiao.blog.pojo.Relation;
 import com.xiao.blog.pojo.param.Params;
 import com.xiao.blog.service.ArticleService;
 import com.xiao.blog.shiro.ShiroKit;
 import com.xiao.blog.util.ArticleUtil;
-import com.xiao.blog.vo.Archive;
 import com.xiao.blog.vo.ArticleVO;
+import com.xiao.blog.vo.ClassifyVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * @author wangmx
@@ -46,9 +43,21 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<ArticleVO> getArticles(Article article) {
+        return articleMapper.getArticles(article);
+    }
+
+    @Override
     public List<ArticleVO> getArticleByUserId(int userId) {
 
         return articleMapper.getArticles(new Article(userId));
+
+    }
+
+    @Override
+    public List<Article> getArticleList(int userId) {
+
+        return articleMapper.getArticleList(userId);
 
     }
 
@@ -60,10 +69,15 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List classify(Integer userId) {
+    public List<ClassifyVO> classify(Integer userId) {
 
         return articleMapper.classify(userId);
 
+    }
+
+    @Override
+    public ArticleVO getArticleById(Integer id) {
+        return articleMapper.getArticleById(id);
     }
 
 
@@ -81,7 +95,7 @@ public class ArticleServiceImpl implements ArticleService {
 
         articleMapper.insert(article);
 
-        relationMapper.batchInsertArticleLabelRelation(params.getList("labels"));
+        relationMapper.batchInsertArticleLabelRelation(params.getList("tags"));
 
         //relationMapper.insertArticleCategoriesRelation(params.getObject("categories", Relation.class));
     }

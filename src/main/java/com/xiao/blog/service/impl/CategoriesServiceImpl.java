@@ -1,11 +1,14 @@
 package com.xiao.blog.service.impl;
 
 import cn.hutool.core.date.DateUtil;
+import com.xiao.blog.exception.BusinessException;
+import com.xiao.blog.exception.assertion.BusinessExceptionAssert;
 import com.xiao.blog.mapper.ArticleMapper;
 import com.xiao.blog.mapper.CategoriesMapper;
 import com.xiao.blog.model.Categories;
 import com.xiao.blog.service.CategoriesService;
 import com.xiao.blog.shiro.ShiroKit;
+import com.xiao.blog.vo.CategoriesVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +24,15 @@ public class CategoriesServiceImpl implements CategoriesService {
 
     @Autowired
     CategoriesMapper categoriesMapper;
+
     @Autowired
     ArticleMapper articleMapper;
+
     @Override
-    public int save(Categories categories) {
+    public int save(Categories categories) throws BusinessException {
+
+        BusinessExceptionAssert.assertCategoriesExist(categories);
+
         if(categories.getId() != null)
             return update(categories);
         else
@@ -41,6 +49,16 @@ public class CategoriesServiceImpl implements CategoriesService {
     public List<Categories> getCategoriesByField(Categories categories) {
 
         return categoriesMapper.getCategoriesByField(categories);
+    }
+
+    @Override
+    public List<CategoriesVO> getCategoriesVOList(Integer userId) {
+        return categoriesMapper.getCategoriesVOList(userId);
+    }
+
+    @Override
+    public int delete(Integer id) {
+        return categoriesMapper.deleteByPrimaryKey(id);
     }
 
     /**

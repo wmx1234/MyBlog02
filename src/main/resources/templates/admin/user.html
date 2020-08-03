@@ -1,49 +1,30 @@
 <!DOCTYPE html>
 <html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-    <link rel="stylesheet" th:href="@{/admin/css/x-admin.css}">
-    <link rel="icon" href="/favicon.ico">
-    <title>管理后台</title>
-</head>
+<head th:replace="admin/fragment/common::header"></head>
 <body class="layui-layout-body">
-<div class="layui-layout layui-layout-admin">
+    <div class="layui-layout layui-layout-admin">
 
-    <div th:replace="admin/fragment/menu::header"></div>
-    <div th:replace="admin/fragment/menu::left"></div>
-
-
+        <div th:replace="admin/fragment/common::top"></div>
+        <div th:replace="admin/fragment/common::left"></div>
 
 
 
-    <div class="layui-tab layui-tab-card site-demo-title x-main" lay-filter="x-tab" lay-allowclose="true" style="left: 200px;border-left: solid 2px #2299ee;">
 
-        <div class="layui-tab-content site-demo site-demo-body">
+        <div class="layui-body">
 
+            <div class="layui-tab-content site-demo site-demo-body">
 
-            <div class="layui-tab-item layui-show">
-                <table class="layui-hide" id="test" lay-filter="test"></table>
+                <h2>用户管理</h2>
+                <div class="layui-tab-item layui-show">
+                    <table class="layui-hide" id="test" lay-filter="test"></table>
+                </div>
             </div>
         </div>
-    </div>
 
 
 
 
 </div>
-<div th:replace="admin/fragment/common::add_permission"></div>
-
-
-
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">批量删除</button>
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">新增</button>
-    </div>
-</script>
 
 <script type="text/html" id="barDemo">
     <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i></a>
@@ -51,11 +32,6 @@
 </script>
 
 
-
-<script th:src="@{/admin/layui/layui.js}" charset="utf-8"></script>
-<script th:src="@{/admin/js/x-layui.js}"></script>
-<script th:src="@{/admin/js/x-admin.js}"></script>
-<script th:src="@{/js/jquery-2.0.3.min.js}"></script>
 <script th:inline="javascript">
 
 
@@ -80,32 +56,14 @@
             elem: '#test',
             //data: data,
             url:'/admin/user/getAll',
-            toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板
             defaultToolbar: ['filter'],
-            title: '权限表',
+            title: '用户表',
             cellMinWidth: 80,
             cols: cols,
-            page: true
+
         });
 
-        //头工具栏事件
-        table.on('toolbar(test)', function(obj){
-            var checkStatus = table.checkStatus(obj.config.id);
-            switch(obj.event){
-                case 'getCheckData':
-                    var data = checkStatus.data;
-                    layer.alert(JSON.stringify(data));
 
-                    break;
-                case 'getCheckLength':
-                    banner_add('添加用户',$("#add_permission"),'600','500');
-                    break;
-                //自定义头工具栏右侧图标 - 提示
-                case 'LAYTABLE_TIPS':
-                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
-                    break;
-            };
-        });
 
         //监听行工具事件
         table.on('tool(test)', function(obj){
@@ -145,7 +103,7 @@
             $.post("/admin/permission/insert",data.field,function(index){
 
                 layer.msg('新增成功');
-                x_admin_close();
+
                 tableIns.reload({
                     where: {},
                     page: {curr: 1 }
@@ -154,15 +112,7 @@
 
             return false;
         });
-        /*添加*/
-        function banner_add(title,url,w,h){
-            x_admin_show(1,title,url,w,h);
-        }
 
-        /*批量删除*/
-        function deleteAllCheck(){
-
-        }
     });
 
 

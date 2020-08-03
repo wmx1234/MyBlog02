@@ -1,0 +1,10 @@
+.classify .classify_name{
+	color: #fff;
+	font-size: 24px;
+	font-weight: 200;
+	font-family: cursive;
+
+}
+.page-right .classify .classify_name{
+	color: #333;
+}

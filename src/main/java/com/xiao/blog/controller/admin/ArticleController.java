@@ -1,8 +1,15 @@
 package com.xiao.blog.controller.admin;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.xiao.blog.pojo.param.Params;
+import com.xiao.blog.pojo.request.PageRequest;
 import com.xiao.blog.pojo.response.BaseResponse;
+import com.xiao.blog.pojo.response.PageResponse;
 import com.xiao.blog.service.ArticleService;
+import com.xiao.blog.service.CategoriesService;
+import com.xiao.blog.shiro.ShiroKit;
+import com.xiao.blog.vo.ArticleVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +28,9 @@ public class ArticleController {
     @Autowired
     ArticleService articleService;
 
+    @Autowired
+    CategoriesService categoriesService;
+
     @RequestMapping("/save")
     @ResponseBody
     public BaseResponse save(@RequestBody Params params){
@@ -28,6 +38,15 @@ public class ArticleController {
         articleService.save(params);
 
         return new BaseResponse();
+    }
+
+    @RequestMapping("/getArticleVOList")
+    @ResponseBody
+    public PageResponse<ArticleVO> getArticleVOList(PageRequest request){
+        PageHelper.startPage(request.getPage(),request.getLimit());
+        PageInfo info=new PageInfo(articleService.getArticleList(ShiroKit.getUser().getId()));//创建pageinfo，包含分页的信息
+
+        return new PageResponse<ArticleVO>(info);
     }
 
 }

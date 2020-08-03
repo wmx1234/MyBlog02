@@ -24,8 +24,7 @@ public interface PermissionService {
 
     int update(Permission permission);
 
-    int deleteBatch(List<Integer> ids);
+    List<TreeModel> getPermissionTree(Integer roleId);
 
-
-    List<TreeModel> getPermissionTree();
+    List<Permission> getMenu(Integer id);
 }

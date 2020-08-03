@@ -1,72 +1,109 @@
 <html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
 
-<div class="x-body" id="add_permission" th:fragment="add_permission" style="display: none">
-    <form class="layui-form" id="add_permission_form">
+<head th:fragment="header">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-        <input type="hidden"  name="id"  >
+    <link rel="stylesheet" th:href="@{/admin/layui/css/layui.css}"  media="all">
+    <link rel="stylesheet" th:href="@{/admin/layui/css/admin.css}" media="all">
+    <link rel="stylesheet" href="//at.alicdn.com/t/font_1624535_zjv03gn2omk.css">
 
-        <div class="layui-form-item">
-            <label for="name" class="layui-form-label">
-                <span class="x-red">*</span>名称
-            </label>
-            <div class="layui-input-inline">
-                <input type="text" id="name" name="name" required="" lay-verify="required"
-                       autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="url" class="layui-form-label">
-                <span class="x-red">*</span>路径
-            </label>
-            <div class="layui-input-inline">
-                <input type="text" id="url" name="url" required="" lay-verify="required"
-                       autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="icon" class="layui-form-label">
-                图标
-            </label>
-            <div class="layui-input-inline">
-                <input type="text" id="icon" name="icon" autocomplete="off" class="layui-input">
-            </div>
-        </div>
-        <div class="layui-form-item">
-            <label for="description" class="layui-form-label">
-                父权限
-            </label>
-            <div class="layui-input-inline" >
-                <select name="parentId" lay-verify="" >
-                    <option value="0">请选择</option>
-                    <div th:each="permission:${permissions}">
-                        <option th:value="${permission.id}" th:text="${permission.name}"></option>
-                    </div>
-                </select>
-            </div>
+    <script th:src="@{/js/jquery-2.0.3.min.js}"></script>
+    <script th:src="@{/admin/layui/layui.js}"></script>
+    <script th:src="@{/admin/js/index.js}" data-main="home"></script>
 
-        </div>
-        <div class="layui-form-item">
-            <label for="description" class="layui-form-label">
-                描述
-            </label>
-            <div class="layui-input-inline">
-                <textarea  id="description" name="description" autocomplete="off" class="layui-textarea"></textarea>
-            </div>
 
+    <title>管理后台</title>
+</head>
+
+<div class="layui-header custom-header" th:fragment="top">
+
+    <ul class="layui-nav layui-layout-left">
+        <li class="layui-nav-item slide-sidebar" lay-unselect>
+            <a href="javascript:;" class="icon-font"><i class="ai ai-menufold"></i></a>
+        </li>
+    </ul>
+
+    <ul class="layui-nav layui-layout-right">
+        <li class="layui-nav-item">
+            <p href="javascript:;" th:text="${session.user.name}">BieJun</p>
+            <dl class="layui-nav-child">
+                <dd><a href="/">返回前台</a></dd>
+                <dd><a href="">个人中心</a></dd>
+                <dd><a href="/admin/logout">退出</a></dd>
+            </dl>
+        </li>
+    </ul>
+
+</div>
+
+<div class="layui-side custom-admin" th:fragment="left">
+    <div class="layui-side-scroll">
+
+        <div class="custom-logo">
+            <img src="assets/images/logo.png" alt=""/>
+            <h1>Admin Pro</h1>
         </div>
 
-        <div class="layui-form-item" style="text-align: center;margin-top: 30px">
-            <button  class="layui-btn" lay-filter="save" lay-submit> 保存 </button>
-        </div>
-    </form>
+
+        <ul id="Nav" class="layui-nav layui-nav-tree" style="margin-top: 12px">
+            <li class="layui-nav-item"
+                th:each="menu,stat:${session.permissions}" th:id="${#strings.replace(menu.url,'/','')}">
+                <a th:href="${menu.url}">
+                    <i th:class="'iconfont '+${menu.icon}"></i>
+                    <em th:text="${menu.name}">机构管理</em>
+                </a>
+
+            </li>
+
+
+        </ul>
+
+    </div>
 </div>
 
 
-<div class="x-body" id="set_role" th:fragment="set_role" style="display: none">
-    <input name="id" type="hidden">
-    <div id="permission_tree" class="demo-tree-more"></div>
-    <div class="layui-form-item" style="text-align: center;margin-top: 30px">
-        <button  class="layui-btn" lay-filter="setPermission" lay-submit> 授权 </button>
+<div class="layui-header custom-header" >
+    <div class="layui-main">
+        <div class="admin-logo-box">
+            <a class="logo" href="http://www.kuxuebao.net" title="logo">晓&静博客</a>
+            <div class="larry-side-menu">
+                <i class="fa fa-th-large" aria-hidden="true"></i>
+            </div>
+        </div>
+
+
+        <ul class="layui-nav" lay-filter="">
+
+            <li class="layui-nav-item"><img src="./images/logo.png" class="layui-circle" style="border: 2px solid #A9B7B7;" width="35px" alt=""></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;" th:text="${session.user.userName}">admin</a>
+                <dl class="layui-nav-child">
+                    <!-- 二级菜单 -->
+                    <dd><a href="">个人信息</a></dd>
+                    <dd><a href="">切换帐号</a></dd>
+                    <dd><a th:href="@{/admin/logout}">退出</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item x-index"><a href="/">前台首页</a></li>
+        </ul>
     </div>
+</div>
+
+
+
+<div class="layui-side layui-bg-black x-side" >
+
+    <ul class="layui-nav layui-nav-tree site-demo-nav" lay-filter="side">
+
+        <li class="layui-nav-item" th:each="menu,stat:${session.permissions}" th:id="${#strings.replace(menu.url,'/','')}">
+            <a class="javascript:;" th:href="${menu.url}" >
+                <i th:class="${menu.icon}" style="top: 3px;"></i>
+                <cite th:text="${menu.name}">机构管理</cite>
+            </a>
+        </li>
+    </ul>
+
 </div>
 

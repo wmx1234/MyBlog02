@@ -1,6 +1,7 @@
 package com.xiao.blog.service;
 
 import com.xiao.blog.model.Tags;
+import com.xiao.blog.vo.TagsVO;
 
 import java.util.List;
 
@@ -11,9 +12,12 @@ import java.util.List;
  */
 public interface TagsService {
 
-    public int save(Tags label);
+    public int save(Tags tags);
 
-    List<Tags> getAll();
+    public int delete(Integer id);
 
-    int deleteBatch(List<Integer> ids);
+    List<TagsVO> getTagsVOList(Integer userId);
+
+    List<Tags> getTagsList(Integer userId);
+
 }

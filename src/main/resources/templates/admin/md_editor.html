@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragment/common::header"></head>
+<link th:href="@{/admin/mdeditor/css/editormd.css}" rel="stylesheet">
+<script th:src="@{/admin/mdeditor/js/editormd.min.js}"></script>
+
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+
+    <div th:replace="admin/fragment/common::top"></div>
+    <div th:replace="admin/fragment/common::left"></div>
+
+    <div class="layui-body" >
+        <div class="layui-content">
+
+            <form class="layui-form" action="">
+
+
+                <div class="layui-form-item">
+                    <div id="my-editormd">
+                        <textarea id="articleContent" name="articleContent" lay-verify="required" lay-reqtext="文章内容是必填项，岂能为空？"  style="display:none;"></textarea>
+                    </div>
+                </div>
+
+
+
+
+                <div class="layui-form-item">
+                    <label class="layui-form-label"></label>
+                    <div class="layui-input-block">
+                        <button type="button" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="save">立即提交</button>
+                        <button type="button" class="layui-btn layui-btn-warm" lay-submit="" lay-filter="draft">保存草稿</button>
+                        <button type="button" class="layui-btn layui-btn-danger" lay-submit="" lay-filter="demo1">返回列表</button>
+
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label"></label>
+                    <div class="layui-input-block">
+
+                    </div>
+                </div>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+</body>
+
+
+<script th:inline="javascript">
+
+    let articleVO = [[${articleVO}]];
+
+    $(function() {
+
+        //定义markdown编辑器
+        let md_edit = editormd("my-editormd", {//注意1：这里的就是上面的DIV的id属性值
+            width : "100%",
+            height : $(window).height()*(0.8),
+            syncScrolling : "single",
+            path : "../admin/mdeditor/lib/",//注意2：你的路径
+            emoji : true,
+            saveHTMLToTextarea : true,//注意3：这个配置，方便post提交表单
+            /* 上传图片配置 */
+            imageUpload : true,
+            /*imageFormats : [ "jpg", "jpeg", "gif", "png", "bmp", "webp" ],*/
+            imageUploadURL : "/upload2", //注意你后端的上传图片服务地址
+
+            onload: function() {
+                // 引入插件 执行监听方法
+                editormd.loadPlugin("../admin/mdeditor/plugins/image-dialog/image-handle-paste", function(){
+                    md_edit.imagePaste();
+                });
+            }
+        });
+
+
+        $("#articleContent").html(articleVO.articleContent);
+        $(".editormd-html-textarea").html(articleVO.articleHtmlContent);
+        layui.use(['form'], function(){
+            let form = layui.form;
+
+            //监听提交
+            form.on('submit(save)', function(data){
+
+                let params = {};
+
+                let field = data.field;
+                field['isDraft'] = 0;
+                field['articleHtmlContent'] = field['my-editormd-html-code'];
+                params['article'] = field;
+                let tags = [];
+                $("input:checkbox[name='tags']:checked").each(function () {
+                    tags.push({'aId':$("input[name='id']").val(),'bId':$(this).val()});
+                });
+                params['tags'] = tags;
+
+                save(params);
+                return false;
+            });
+
+
+            form.on('submit(draft)', function(data){
+                let field = data.field;
+                field['isDraft'] = 1;
+
+                return;
+                save(field);
+                return false;
+            });
+            form.on('checkbox(tagsList)', function(data){
+
+                let othis = (data.othis)[0];
+                let elem = data.elem;
+                if($(othis).parent('#article_tags_checked').length == 1){
+                    $(othis).removeClass();
+                    $(othis).addClass('layui-unselect layui-form-checkbox layui-form');
+                    $("#article_tags_all").append(elem);
+                    $("#article_tags_all").append(othis);
+                }else{
+                    if($("#article_labels_checked").children().length == 5){
+                        layer.msg("最多只能选5个标签");
+                    }else{
+                        $(othis).removeClass();
+                        $(othis).addClass('layui-unselect layui-form-checkbox layui-form-checked');
+                        $("#article_labels_checked").append(elem);
+                        $("#article_labels_checked").append(othis);
+                    }
+                }
+            });
+        });
+
+
+        function save(e){
+            let data = JSON.stringify({'fieldMap':e})
+            $.ajax({
+                method:'post',
+                contentType:'application/json',
+                url:'/admin/article/save',
+                data:data,
+                success:function(e){
+
+                }
+            })
+        }
+
+
+        //打开新增框
+        $(".open_button").on("click",function(e){
+
+            $(this).parents('.layui-inline').removeClass("close_add_model");
+
+        })
+
+        //关闭新增框
+        $(".close_button").on("click",function(e){
+
+            $(this).parents('.layui-inline').addClass("close_add_model");
+
+        })
+
+        //新增分类
+        $(".submit_categories_button").on("click",function(e){
+            let categoriesName = $("input[name='categoriesName']").val();
+            if(categoriesName == '' || categoriesName == undefined){
+                layer.msg("分类名称不能为空！！！");
+                return;
+            }else{
+                $.post('/admin/categories/add',{'name':categoriesName},function (data) {
+                    if(data.code == 1){
+                        layer.msg("该分类已存在！！！");
+                    }else{
+
+                        $("#md_editor_categories").html(data);
+                        $("#article_categories").addClass("close_add_model");
+                        layui.use('form', function() {
+                            let form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+                            form.render();
+                        });
+                        //选中最后新增的分类
+                        $($(".layui-form-select dl").children(":last-child")).click();
+                    }
+                });
+            }
+
+        });
+
+        $(".submit_tags_button").on("click",function(e){
+
+            if($("#article_labels_checked").find("input").length == 5){
+                layer.msg("最多只能选5个标签");
+                return;
+            }
+            let tagsName = $("input[name='tagsName']").val();
+
+            if(tagsName == '' || tagsName == undefined){
+                layer.msg("分类名称不能为空！！！");
+                return;
+            }else{
+                const checkedTags = [];
+                $($("#article_labels_checked").find("input")).each(function(){
+                    checkedTags.push(this.value);
+                });
+
+                let param = {'name':tagsName,'checkedTags':checkedTags};
+
+                $.post('/admin/tags/add',param,function (data) {
+
+                    $("#article_tags_all").html(data);
+                    $("#article_tags").addClass("close_add_model");
+
+                    layui.use('form', function() {
+                        let form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+                        form.render();
+                    });
+                    //选中最后新增的分类
+                    $($("#article_tags_all").children(":last-child")).click();
+                    let tags = $("#article_tags_all").children("input");
+
+                })
+            }
+
+        });
+
+    });
+
+
+</script>
+
+</html>

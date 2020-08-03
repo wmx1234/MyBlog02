@@ -5,6 +5,7 @@ import com.xiao.blog.exception.assertion.BusinessExceptionAssert;
 import com.xiao.blog.mapper.UserMapper;
 import com.xiao.blog.model.User;
 import com.xiao.blog.service.UserService;
+import com.xiao.blog.vo.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +28,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getLoginUser(String userName) {
+    public LoginUser getLoginUser(String userName) {
         return userMapper.getLoginUser(userName);
     }
 

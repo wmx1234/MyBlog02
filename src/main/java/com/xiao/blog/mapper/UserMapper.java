@@ -1,8 +1,8 @@
 package com.xiao.blog.mapper;
 
 import com.xiao.blog.model.User;
+import com.xiao.blog.vo.LoginUser;
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -19,7 +19,12 @@ public interface UserMapper {
 
     int updateByPrimaryKey(User record);
 
-    User getLoginUser(String userName);
+    /**
+     * 根据用户名获取登录用户信息
+     * @param userName
+     * @return
+     */
+    LoginUser getLoginUser(String userName);
 
-    List<User> getBloger();
+
 }

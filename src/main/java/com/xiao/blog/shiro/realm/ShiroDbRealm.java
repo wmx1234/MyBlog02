@@ -3,6 +3,7 @@ package com.xiao.blog.shiro.realm;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.xiao.blog.vo.LoginUser;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -32,7 +33,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
         //获取用户名
         String userName = (String)authcToken.getPrincipal();
         //根据用户名在数据库查询用户（shiroUtil是工具类，实际使用UserMapper访问数据库）
-        User user = shiroUtil.getUser(userName);  
+        LoginUser user = shiroUtil.getUser(userName);
         //认证
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user,user.getPassword(),super.getName());
         authenticationInfo.setCredentialsSalt(ByteSource.Util.bytes(user.getSalt()));
@@ -45,7 +46,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-        User user = (User)principals.getPrimaryPrincipal();
+        LoginUser user = (LoginUser)principals.getPrimaryPrincipal();
         Set<String> roles = new HashSet<String>();
         roles.add(user.getRole().getRoleName());
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();

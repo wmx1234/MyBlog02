@@ -10,10 +10,11 @@
     <result column="user_id" jdbcType="INTEGER" property="userId" />
   </resultMap>
 
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-    delete from blog_categories
-    where id = #{id,jdbcType=INTEGER}
+    delete from blog_categories where id = #{id,jdbcType=INTEGER}
   </delete>
+
   <insert id="insert" parameterType="com.xiao.blog.model.Categories">
     insert into blog_categories (id, `name`, icon, 
       create_date, update_date, user_id
@@ -26,9 +27,8 @@
     update blog_categories
     set `name` = #{name,jdbcType=VARCHAR},
       icon = #{icon,jdbcType=VARCHAR},
-      create_date = #{createDate,jdbcType=VARCHAR},
-      update_date = #{updateDate,jdbcType=VARCHAR},
-      user_id = #{userId,jdbcType=INTEGER}
+      update_date = #{updateDate,jdbcType=VARCHAR}
+
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
@@ -51,5 +51,26 @@
   </select>
 
 
+  <resultMap id="CategoriesVO" type="com.xiao.blog.vo.CategoriesVO" extends="BaseResultMap">
+    <result column="article_count" jdbcType="INTEGER" property="articleCount" />
+  </resultMap>
+  <select id="getCategoriesVOList" resultMap="CategoriesVO" parameterType="java.lang.Integer">
+    select
+    categories.id,
+    categories.name,
+    categories.icon,
+    categories.create_date,
+    (CASE WHEN
+            center_table.article_count is null THEN 0
+          ELSE center_table.article_count END ) article_count
+    from blog_categories categories
+    left join
+      (select count(article.id) article_count, article.categories_id
+        from blog_article article
+        group by article.categories_id) center_table on center_table.categories_id = categories.id
+    where
+    user_id = #{userId,jdbcType=INTEGER}
+    order by id
+  </select>
 
 </mapper>

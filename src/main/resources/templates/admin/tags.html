@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/fragment/common::header"></head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+
+    <div th:replace="admin/fragment/common::top"></div>
+    <div th:replace="admin/fragment/common::left"></div>
+
+
+    <div class="layui-body" >
+
+        <div class="layui-content">
+            <h2>标签管理</h2>
+            <form class="layui-form x-center" id="form_tags" style="width:50%">
+                <div class="layui-form-pane" style="margin-top: 15px;">
+                    <div class="layui-form-item">
+
+                        <div class="layui-input-inline" style="width:120px">
+                            <input type="text" name="name" lay-verify="required" lay-reqtext="标签名是必填项，岂能为空？"  placeholder="标签名" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-input-inline" style="width:80px">
+                            <button class="layui-btn"  lay-submit="" lay-filter="add"><i class="layui-icon">&#xe608;</i>增加</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <table class="layui-hide" id="admin_tags" lay-filter="admin_tags_filter"></table>
+        </div>
+    </div>
+
+</div>
+
+
+
+<script type="text/html" id="barDemo">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i></a>
+</script>
+
+
+
+<script th:inline="none">
+
+    layui.use(['table','form','layer'], function(){
+        let table = layui.table;
+        const form = layui.form,
+              layer = layui.layer;
+
+        const tableIns = table.render({
+            elem: '#admin_tags',
+            url:'/admin/tags/getTagsVOList',
+            title: '标签列表',
+            cellMinWidth: 80,
+            cols: [[
+                {field:'id', title:'ID', width:80, fixed: 'center', unresize: true, sort: true,align: 'center'},
+                {field:'name', title:'标签',  edit: 'text',align: 'center'},
+                {field:'articleCount', title:'博客数', align: 'center'},
+                {field:'createDate', title:'创建时间',  sort: true,align: 'center'},
+                {title:'操作', toolbar: '#barDemo', width:150,align: 'center'}
+            ]]
+        });
+
+        //监听单元格编辑
+        table.on('edit(admin_tags_filter)', function(obj){
+
+            $.post("/admin/tags/save",obj.data,function(e){
+                layer.msg(e.msg);
+                tableIns.reload();
+            })
+        });
+        //监听行工具事件
+        table.on('tool(admin_tags_filter)', function(obj){
+            let data = obj.data;
+            if(obj.event === 'del'){
+                if(data.articleCount != 0){
+                    layer.msg("该标签下有博客，不允许删除！！！");
+                }else{
+                    layer.confirm('真的删除行么', function(index){
+                        $.post("/admin/tags/delete/"+data.id,{},function(e){
+                            layer.msg(e.msg);
+                            if(e.code == 0){
+
+                                tableIns.reload();
+                                layer.close(index);
+                            }
+
+                        })
+                    });
+                }
+            }
+        });
+
+        //监听表单提交事件
+        form.on('submit(add)', function(data){
+            $.post("/admin/tags/save",data.field,function(e){
+                layer.msg(e.msg);
+                if(e.code == 0){
+                    tableIns.reload({});
+                    $("#form_tags")[0].reset();
+                }
+
+            })
+            return false;
+        });
+
+    });
+
+</script>
+</body>
+</html>

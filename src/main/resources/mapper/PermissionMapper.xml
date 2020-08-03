@@ -7,9 +7,7 @@
     <result column="url" property="url" jdbcType="VARCHAR" />
     <result column="icon" property="icon" jdbcType="VARCHAR" />
     <result column="description" property="description" jdbcType="VARCHAR" />
-    <result column="isleaf" property="isleaf" jdbcType="INTEGER" />
     <result column="parent_id" property="parentId" jdbcType="INTEGER" />
-
     <result column="open" property="open" jdbcType="VARCHAR" />
 
     <collection property="roles" ofType="com.xiao.blog.model.Role">
@@ -24,21 +22,17 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="title" jdbcType="VARCHAR" />
     <result column="checked" property="checked" jdbcType="VARCHAR" />
-    <collection property="children" ofType="com.xiao.blog.pojo.TreeModel">
-      <id column="permission_id" property="id" jdbcType="INTEGER" />
-      <result column="permission_name" property="title" jdbcType="VARCHAR" />
-    </collection>
 
   </resultMap>
   <!--新增权限-->
   <insert id="insert" parameterType="com.xiao.blog.model.Permission" >
 
     insert into sys_permission (id, `name`, url,
-      icon, description, isleaf,
+      icon, description,
       parent_id,  `open`
       )
     values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR},
-      #{icon,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{isleaf,jdbcType=INTEGER},
+      #{icon,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},
       #{parentId,jdbcType=INTEGER},  #{open,jdbcType=VARCHAR}
       )
   </insert>
@@ -66,17 +60,25 @@
       url = #{url,jdbcType=VARCHAR},
       icon = #{icon,jdbcType=VARCHAR},
       description = #{description,jdbcType=VARCHAR},
-      isleaf = #{isleaf,jdbcType=INTEGER},
       parent_id = #{parentId,jdbcType=INTEGER},
-
       `open` = #{open,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select id, `name`, url, icon, description, isleaf, parent_id,  `open`
+    select id, `name`, url, icon, description, parent_id,  `open`
     from sys_permission
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="getMenu" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select id, `name`, url, icon, description, parent_id,  `open`
+    from sys_permission permission
+    left join sys_role_permission srp on permission.id = srp.permission_id
+    where srp.role_id = #{roleId,jdbcType=INTEGER} and permission.parent_id = 0
+
+    order by id
+  </select>
+
   <select id="selectAll" resultMap="BaseResultMap" >
     select permission.*,role.*
     from sys_permission permission
@@ -89,11 +91,9 @@
     select * from sys_permission where parent_id = #{parentId,jdbcType=INTEGER}
   </select>
 
-
-
   <select id="getPermissionsByRole" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
 
-    select id, `name`, url, icon, description, isleaf, parent_id,  `open`
+    select id, `name`, url, icon, description, parent_id,  `open`
     from sys_permission p
     left join sys_role_permission rp on rp.permission_id = p.id
 
@@ -102,16 +102,17 @@
 
   <select id="getPermissionTree" resultMap="PermissionTreeMap">
 
-    select
-    p1.id,
-    p1.`name`,
-    'checked' checked,
-    p2.id permission_id,
-    p2.name permission_name
-
-    from sys_permission p1
-    left join sys_permission p2 on p1.id = p2.parent_id
-    where p1.parent_id = 0
+    SELECT
+        p1.id,
+	    p1.`name`,
+	    case when
+          p1.id in (select permission_id from sys_role_permission where role_id = #{roleId,jdbcType=INTEGER})
+          then 'checked'
+          else '' end checked
+    FROM
+	    sys_permission p1
+    WHERE
+	     p1.parent_id = #{parentId,jdbcType=INTEGER}
   </select>
 
 

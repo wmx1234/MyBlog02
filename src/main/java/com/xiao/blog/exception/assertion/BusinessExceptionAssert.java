@@ -1,12 +1,14 @@
 package com.xiao.blog.exception.assertion;
 
 
-import com.xiao.blog.exception.BaseException;
 import com.xiao.blog.exception.BusinessException;
-import com.xiao.blog.model.User;
+import com.xiao.blog.mapper.TagsMapper;
+import com.xiao.blog.model.Categories;
+import com.xiao.blog.model.Tags;
+import com.xiao.blog.util.DataBaseUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.text.MessageFormat;
-import java.util.List;
+import javax.annotation.PostConstruct;
 
 /**
  * <p>业务异常断言</p>
@@ -16,18 +18,35 @@ import java.util.List;
  */
 public class BusinessExceptionAssert{
 
+
+    @Autowired
+    TagsMapper tagsMapper;
+
+    private static BusinessExceptionAssert businessExceptionAssert;
+
+    @PostConstruct
+    public void init() {
+
+        businessExceptionAssert = this;
+        businessExceptionAssert.tagsMapper = this.tagsMapper;
+        System.out.println("businessExceptionAssert==========="+businessExceptionAssert);
+    }
+
     /**
-     * 本博客是情侣博客，只能有两个博主
-     * @param users
+     * 判断标签是否存在
+     * @param tags
      */
-    public static void assertBlogerNum(List<User> users){
-        if(users.size() > 2){
-            throw new BusinessException("本博客是情侣博客，搞那么多博主干毛");
-        }
-        if(users.size() < 2){
-            throw new BusinessException("本博客不适合单身狗，请找到情侣再来");
+    public static void assertTagsExist(Tags tags){
+
+        if(DataBaseUtil.tagsExist(tags) >= 1){
+            throw new BusinessException("该标签已存在");
         }
     }
 
+    public static void assertCategoriesExist(Categories categories){
 
+        if(DataBaseUtil.CategoriesExist(categories) >= 1){
+            throw new BusinessException("该分类已存在");
+        }
+    }
 }

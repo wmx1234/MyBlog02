@@ -60,13 +60,18 @@ public class PermissionServiceImpl implements PermissionService {
         return permissionMapper.updateByPrimaryKey(permission);
     }
 
+
     @Override
-    public int deleteBatch(List<Integer> ids) {
-        return permissionMapper.deleteBatch(ids);
+    public List<TreeModel> getPermissionTree(Integer roleId) {
+        List<TreeModel> permissionTree = permissionMapper.getPermissionTree(roleId,0);
+        for(TreeModel model:permissionTree){
+            model.setChildren(permissionMapper.getPermissionTree(roleId,model.getId()));
+        }
+        return permissionTree;
     }
 
     @Override
-    public List<TreeModel> getPermissionTree() {
-        return permissionMapper.getPermissionTree();
+    public List<Permission> getMenu(Integer id) {
+        return permissionMapper.getMenu(id);
     }
 }

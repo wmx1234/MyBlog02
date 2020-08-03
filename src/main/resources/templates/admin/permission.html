@@ -1,41 +1,20 @@
 <!DOCTYPE html>
 <html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-    <link rel="stylesheet" th:href="@{/admin/css/x-admin.css}">
-    <link rel="icon" href="/favicon.ico">
-    <title>管理后台</title>
-    <style>
-
-        .layui-table-fixed {
-            display: none !important;
-        }
-    </style>
-
-</head>
+<head th:replace="admin/fragment/common::header"></head>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
 
-    <div th:replace="admin/fragment/menu::header"></div>
-    <div th:replace="admin/fragment/menu::left"></div>
+    <div th:replace="admin/fragment/common::top"></div>
+    <div th:replace="admin/fragment/common::left"></div>
 
-    <div class="layui-tab layui-tab-card site-demo-title x-main" lay-filter="x-tab" lay-allowclose="true" style="left: 200px;border-left: solid 2px #2299ee;">
-        <div class="x-nav">
-            <span class="layui-breadcrumb">
-              <a><cite>首页</cite></a>
-              <a><cite>会员管理</cite></a>
-              <a><cite>权限规则</cite></a>
-            </span>
-            <a class="layui-btn layui-btn-small" style="line-height:1.6em;margin-top:3px;float:right"  href="javascript:location.replace(location.href);" title="刷新"><i class="layui-icon" style="line-height:30px">ဂ</i></a>
-        </div>
+
+    <div class="layui-body">
+
         <div class="layui-tab-content site-demo site-demo-body">
 
-
+            <h2>权限管理</h2>
             <div class="layui-tab-item layui-show">
-                <table class="layui-hide" id="test" lay-filter="test"></table>
+                <table class="layui-hide" id="admin_permission" lay-filter="admin_permission_filter"></table>
             </div>
         </div>
     </div>
@@ -44,67 +23,58 @@
 
 
 </div>
-<div th:replace="admin/fragment/common::add_permission"></div>
+<div th:replace="admin/fragment/model::permission_model"></div>
 
 
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckData">批量删除</button>
-        <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">新增</button>
+        <button class="layui-btn layui-btn-sm" lay-event="open_add_permission">新增</button>
     </div>
 </script>
 <!-- 父表操作栏 -->
 <script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i></a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i></a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="iconfont icon-bianji"></i></a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="iconfont icon-shanchu"></i></a>
 </script>
 <!-- 子表操作栏 -->
 <script type="text/html" id="childbarDemo">
-    <a class="layui-btn layui-btn-xs" lay-event="edit_children"><i class="layui-icon layui-icon-edit"></i></a>
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del_children"><i class="layui-icon layui-icon-delete"></i></a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit_children"><i class="iconfont icon-bianji"></i></a>
+    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del_children"><i class="iconfont icon-shanchu"></i></a>
 </script>
 
 
-<script th:src="@{/js/jquery-2.0.3.min.js}"></script>
-<script th:src="@{/admin/layui/layui.js}" charset="utf-8"></script>
-<script th:src="@{/admin/js/x-layui.js}"></script>
-<script th:src="@{/admin/js/utils.js}"></script>
-<script th:src="@{/admin/js/x-admin.js}"></script>
+
 
 <script th:inline="none">
 
 
-    layui.use(['table','form','layer'], function(){
-        let table = layui.table,
+    layui.use(['table','form','layer','tree'], function(){
+        const table = layui.table,
             form = layui.form,
             layer = layui.layer;
 
         let cols = [[//加个注释
-            {type: 'checkbox', fixed: 'left'},
+            {type: 'checkbox'},
             {field:'id',
                 title:'ID',
                 width:80,
                 sort: true,
                 event: 'collapse',
                 templet: function(d) {
-                    return '<div style="position: relative;\n' + '    padding: 0 10px 0 20px;">' + d.id + '<i style="left: 0px;" lay-tips="展开" class="layui-icon layui-colla-icon layui-icon-right"></i></div>'
+                    return '<div style="position: relative;\n' +
+                        '    padding: 0 10px 0 20px;">' + d.id +
+                        '<i style="left: 0px;" lay-tips="展开" class="layui-icon layui-colla-icon layui-icon-right"></i></div>'
                 }},
             {field:'name', title:'名称' ,  sort: true},
             {field:'icon', title:'图标'},
             {field:'url', title:'路径'},
             {field:'description', title:'描述'},
-
             {title:'操作', toolbar: '#barDemo', width:150}
         ]];
 
-        let childrencols = [[//加个注释
-            {type: 'checkbox', fixed: 'left'},
-            {field:'id',
-                title:'ID',
-                width:80,
-                sort: true
-            },
+        let child_cols = [[//加个注释
+            {field:'id',title:'ID',width:80,sort: true},
             {field:'name', title:'名称' ,  sort: true},
             {field:'icon', title:'图标'},
             {field:'url', title:'路径'},
@@ -113,8 +83,7 @@
             {title:'操作', toolbar: '#childbarDemo', width:150}
         ]];
         let tableIns = table.render({
-            elem: '#test',
-
+            elem: '#admin_permission',
             url:'/admin/permission/getPermissionsByParent/0',
             toolbar: '#toolbarDemo', //开启头部工具栏，并为其绑定左侧模板
             defaultToolbar: ['filter'],
@@ -123,122 +92,160 @@
             cols: cols,
             page: true
         });
-
+        let child_tableIns = null;
         //头工具栏事件
-        table.on('toolbar(test)', function(obj){
-            let checkStatus = table.checkStatus(obj.config.id);
-            switch(obj.event){
-                case 'getCheckData':
-                    let data = checkStatus.data;
-                    deleteBatch(data);
+        table.on('toolbar(admin_permission_filter)', function(obj){
+            //新增权限
+            if(obj.event == 'open_add_permission'){
+                let checked = table.checkStatus(obj.config.id).data;
+                let data = null;
+                if(checked.length == 1) data = checked[0];
 
-                    break;
-                case 'getCheckLength':
-                    permission_add('新增权限',$("#add_permission"),'600','500',null);
-                    break;
-                //自定义头工具栏右侧图标 - 提示
-                case 'LAYTABLE_TIPS':
-                    layer.alert('这是工具栏右侧自定义的一个图标按钮');
-                    break;
-            };
+                addRow('新增权限',data);
+            }
         });
 
         //监听工具条
-        table.on('tool(test)',
-            function(obj) {
+        table.on('tool(admin_permission_filter)',function(obj) {
+            //展开子表事件
+            if (obj.event === 'collapse') {
+                let trObj = layui.$(this).parent('tr'); //当前行
+                let accordion = true //开启手风琴，那么在进行折叠操作时，始终只会展现当前展开的表格。
+                let content = '<table lay-filter="test2"></table>' //内容
+                //表格行折叠方法
+                collapseTable({
+                    elem: trObj,
+                    accordion: accordion,
+                    content: content,
+                    success: function(trObjChildren, index) { //成功回调函数
+                        //trObjChildren 展开tr层DOM
+                        //index 当前层索引
+                        trObjChildren.find('table').attr("id", index);
+                        trObjChildren.find('table').attr("lay-filter", 'children');
 
-                var data = obj.data
-                console.log(data);
-                if (obj.event === 'collapse') {
-                    var trObj = layui.$(this).parent('tr'); //当前行
-                    var accordion = true //开启手风琴，那么在进行折叠操作时，始终只会展现当前展开的表格。
-                    var content = '<table lay-filter="test2"></table>' //内容
-                    //表格行折叠方法
-                    collapseTable({
-                        elem: trObj,
-                        accordion: accordion,
-                        content: content,
-                        success: function(trObjChildren, index) { //成功回调函数
-                            //trObjChildren 展开tr层DOM
-                            //index 当前层索引
-                            trObjChildren.find('table').attr("id", index);
-                            trObjChildren.find('table').attr("lay-filter", 'children');
+                        child_tableIns = table.render({
+                            elem: "#" + index,
+                            url:'/admin/permission/getPermissionsByParent/'+obj.data.id,
+                            cellMinWidth: 80,
+                            cols: child_cols
+                        });
+                    }
+                });
 
-                            table.render({
-                                elem: "#" + index,
-                                url:'/admin/permission/getPermissionsByParent/'+data.id,
-                                cellMinWidth: 80,
-                                cols: childrencols
-                            });
-
-                        }
-                    });
-
-                }else if(obj.event === 'del'){
-                    layer.confirm('真的删除行么', function(index){
-                        console.log(obj);
-                        $.post("/admin/permission/delete/"+data.id,{},function(){
-                            tableIns.reload({
-                                where: {},
-                                page: {curr: 1 }
-                            });
-                            layer.close(index);
-
-                        })
-
-                    });
-                } else if(obj.event === 'edit'){
-
-                    permission_add('修改权限',$("#add_permission"),'600','500',data);
-                }
-            });
-        table.on('tool(children)',
-            function(obj) {
-
-                let data = obj.data
-                if(obj.event === 'edit_children'){
-                    permission_add('修改权限',"#add_permission",'600','500',data);
-
-                }
-
-                if(obj.event === 'del_children'){
-                    layer.confirm('真的删除行么', function(index){
-                        $.post("/admin/permission/delete/"+data.id,{},function(){
-                            tableIns.reload({
-                                where: {},
-                                page: {curr: 1 }
-                            });
-                            layer.close(index);
-                        })
-
-                    });
-
-                }
+            }else if(obj.event === 'del'){
+                deleteRow(obj.data.id,tableIns)
+            } else if(obj.event === 'edit'){
+                editRow('修改权限',obj.data);
+            }
         });
+
+        table.on('tool(children)',function(obj) {
+            if(obj.event === 'edit_children'){
+                editRow('修改权限',obj.data);
+            }
+            if(obj.event === 'del_children'){
+                deleteRow(obj.data.id,child_tableIns)
+            }
+        });
+
+        //删除权限行方法
+        function deleteRow(id,obj) {
+            layer.confirm('真的删除行么', function (index) {
+                $.post("/admin/permission/delete/" + id, function (e) {
+
+                    if (e.code == 0) {
+                        obj.reload({where: {}});
+                    }
+                    layer.msg(e.msg);
+                    layer.close(index);
+                })
+
+            });
+        }
+
+        //新增权限
+        function addRow(title,data) {
+
+            openPermissionModel("新增权限");
+            if (data != null) {
+                $("option[value="+data.id+"]").attr("selected",true);
+                form.render(); //更新全部表单内容
+            } else {
+                $(':input', 'form')
+                    .not(':button,:submit,:reset,:hidden')   //将myform表单中input元素type为button、submit、reset、hidden排除
+                    .val('')  //将input元素的value设为空值
+                    .removeAttr('checked')
+            }
+        }
+
+        //新增权限
+        function editRow(title,data) {
+
+            openPermissionModel("新增权限");
+            if (data != null) {
+                jQuery.each(data, function(i, val) {
+                    $("input[name='"+ i +"']").val(val);
+                });
+                $("textarea").val(data.description);
+                $("option[value="+data.parentId+"]").attr("selected",true);
+                form.render(); //更新全部表单内容
+            }
+        }
+
+        //打开权限页面
+        function openPermissionModel(title){
+            layer.open({
+                type: 1,
+                area: ['800px', '650px'],
+                fix: false, //不固定
+                shadeClose: true,
+                shade: 0.4,
+                title: title,
+                content: $('#permission_model')
+            });
+        }
+
+        //监听提交
+        form.on('submit(save)', function(data){
+
+            $.post("/admin/permission/save",data.field,function(e){
+                if(e.code == 0){
+                    layer.closeAll('page'); //关闭所有页面层
+                    if(data.field.parentId == 0) tableIns.reload({where: {}});
+                        else child_tableIns.reload({where: {}});
+                }
+                layer.msg(e.msg);
+            })
+            return false;
+        });
+
+
+
+        //展开权限子表
         function collapseTable(options) {
-            var trObj = options.elem;
+            let trObj = options.elem;
             if (!trObj) return;
-            var accordion = options.accordion,
+            let accordion = options.accordion,
                 success = options.success,
                 content = options.content || '';
-            var tableView = trObj.parents('.layui-table-view'); //当前表格视图
-            var id = tableView.attr('lay-id'); //当前表格标识
-            var index = trObj.data('index'); //当前行索引
-            var leftTr = tableView.find('.layui-table-fixed.layui-table-fixed-l tr[data-index="' + index + '"]'); //左侧当前固定行
-            var rightTr = tableView.find('.layui-table-fixed.layui-table-fixed-r tr[data-index="' + index + '"]'); //右侧当前固定行
-            var colspan = trObj.find('td').length; //获取合并长度
-            var trObjChildren = trObj.next(); //展开行Dom
-            var indexChildren = id + '-' + index + '-children'; //展开行索引
-            var leftTrChildren = tableView.find('.layui-table-fixed.layui-table-fixed-l tr[data-index="' + indexChildren + '"]'); //左侧展开固定行
-            var rightTrChildren = tableView.find('.layui-table-fixed.layui-table-fixed-r tr[data-index="' + indexChildren + '"]'); //右侧展开固定行
-            var lw = leftTr.width() + 15; //左宽
-            var rw = rightTr.width() + 15; //右宽
+            let tableView = trObj.parents('.layui-table-view'); //当前表格视图
+            let id = tableView.attr('lay-id'); //当前表格标识
+            let index = trObj.data('index'); //当前行索引
+            let leftTr = tableView.find('.layui-table-fixed.layui-table-fixed-l tr[data-index="' + index + '"]'); //左侧当前固定行
+            let rightTr = tableView.find('.layui-table-fixed.layui-table-fixed-r tr[data-index="' + index + '"]'); //右侧当前固定行
+            let colspan = trObj.find('td').length; //获取合并长度
+            let trObjChildren = trObj.next(); //展开行Dom
+            let indexChildren = id + '-' + index + '-children'; //展开行索引
+            let leftTrChildren = tableView.find('.layui-table-fixed.layui-table-fixed-l tr[data-index="' + indexChildren + '"]'); //左侧展开固定行
+            let rightTrChildren = tableView.find('.layui-table-fixed.layui-table-fixed-r tr[data-index="' + indexChildren + '"]'); //右侧展开固定行
+            let lw = leftTr.width() + 15; //左宽
+            let rw = rightTr.width() + 15; //右宽
             //不存在就创建展开行
             if (trObjChildren.data('index') != indexChildren) {
                 //装载HTML元素
-                var tr = '<tr data-index="' + indexChildren + '"><td colspan="' + colspan + '"><div style="height: auto;padding-left:' + lw + 'px;padding-right:' + rw + 'px" class="layui-table-cell">' + content + '</div></td></tr>';
+                let tr = '<tr data-index="' + indexChildren + '"><td colspan="' + colspan + '"><div style="height: auto;padding-left:' + lw + 'px;padding-right:' + rw + 'px" class="layui-table-cell">' + content + '</div></td></tr>';
                 trObjChildren = trObj.after(tr).next().hide(); //隐藏展开行
-                var fixTr = '<tr data-index="' + indexChildren + '"></tr>';//固定行
+                let fixTr = '<tr data-index="' + indexChildren + '"></tr>';//固定行
                 leftTrChildren = leftTr.after(fixTr).next().hide(); //左固定
                 rightTrChildren = rightTr.after(fixTr).next().hide(); //右固定
             }
@@ -254,52 +261,11 @@
                 leftTrChildren.siblings('[data-index$="-children"]').hide(); //右固定
             }
             success(trObjChildren, indexChildren); //回调函数
-            heightChildren = trObjChildren.height(); //展开高度固定
+            let heightChildren = trObjChildren.height(); //展开高度固定
             rightTrChildren.height(heightChildren + 115).toggle(); //左固定
             leftTrChildren.height(heightChildren + 115).toggle(); //右固定
         }
 
-
-
-        //监听提交
-        form.on('submit(save)', function(data){
-
-            $.post("/admin/permission/save",data.field,function(index){
-
-                layer.msg('保存成功');
-                x_admin_close();
-                tableIns.reload({
-                    where: {},
-                    page: {curr: 1 }
-                });
-            })
-
-            return false;
-        });
-
-
-        /*添加*/
-        function permission_add(title,url,w,h,data){
-            businessUtils.showWindow(1,title,url,w,h,data);
-        }
-
-        /*批量删除*/
-        function  deleteBatch(data){
-            let ids = [];
-            for(let i=0;i<data.length;i++){
-                ids.push(data[i].id);
-            }
-            $.post("/admin/permission/deleteBatch",{'ids':ids},function(index){
-
-                layer.msg('保存成功');
-                x_admin_close();
-                tableIns.reload({
-                    where: {},
-                    page: {curr: 1 }
-                });
-            })
-
-        }
     });
 
 

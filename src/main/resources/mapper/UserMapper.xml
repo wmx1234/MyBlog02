@@ -81,28 +81,51 @@
   from sys_user
 </select>
 
-  <select id="getBloger" resultMap="BaseResultMap" >
 
-  select id, user_name, `password`, `name`, avatar, address, phone_num, birthday, email,
-  gender, description, last_login_time, login_count, login_time, registered_time, salt,
-  user_ip
-  from sys_user u
-  left join sys_user_role ur on u.id = ur.user_id
-  where ur.role_id = 2
-</select>
+  <resultMap id="LoginUser" type="com.xiao.blog.vo.LoginUser" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="phone_num" property="phoneNum" jdbcType="VARCHAR" />
+    <result column="birthday" property="birthday" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="INTEGER" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
+    <result column="login_count" property="loginCount" jdbcType="BIGINT" />
+    <result column="login_time" property="loginTime" jdbcType="TIMESTAMP" />
+    <result column="registered_time" property="registeredTime" jdbcType="TIMESTAMP" />
+    <result column="salt" property="salt" jdbcType="VARCHAR" />
+    <result column="user_ip" property="userIp" jdbcType="VARCHAR" />
+    <association property="role" javaType="com.xiao.blog.vo.RoleVO">
 
+      <id column="role_id" property="id" jdbcType="INTEGER" />
+      <result column="rName" property="name" jdbcType="VARCHAR" />
+      <result column="role_name" property="roleName" jdbcType="VARCHAR" />
+      <collection property="permissionList" ofType="com.xiao.blog.model.Permission">
+        <id column="permission_id" property="id" jdbcType="INTEGER" />
+        <result column="pName" property="name" jdbcType="VARCHAR" />
 
-  <select id="getLoginUser" resultMap="BaseResultMap" parameterType="java.lang.String">
+      </collection>
+    </association>
+
+  </resultMap>
+  <select id="getLoginUser" resultMap="LoginUser" parameterType="java.lang.String">
 
     select user.*,
     role.id role_id,
     role.name rName,
-    role.role_name
+    role.role_name,
+    permission.id permission_id,
+    permission.name pName
     from sys_user user
     left join sys_user_role sur on user.id = sur.user_id
     left join sys_role role on role.id = sur.role_id
+    left join sys_role_permission srp on role.id = srp.role_id
+    left join sys_permission permission on permission.id = srp.permission_id
     where user_name = #{userName,jdbcType=VARCHAR}
   </select>
-
-
 </mapper>

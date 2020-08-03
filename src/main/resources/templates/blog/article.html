@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+
+
+    <link rel="stylesheet" th:href="@{/css/matery.css}">
+    <div class="blog_content article">
+        <input type="hidden" name="input" th:value="${userId}">
+
+        <div class="blog_list" data-scroll-reveal="enter bottom over 1s" th:each="article,stat:${pageInfo.getList()}">
+
+            <h3 class="blog_title"><a th:href="'/blog/detail/'+${article.id}" target="_blank" th:text="${article.articleTitle}"></a></h3>
+            <div class="blog_tags">
+                <ul>
+                    <li th:each="tags,stat:${article.tagsList}">
+                        <i class="iconfont  icon-biaoqian"></i>&nbsp[[${tags.name}]]
+                    </li>
+                </ul>
+            </div>
+            <div class="blog_text" th:text="${article.articleDigest}"></div>
+            <div class="blog_info">
+                <ul>
+                    <li><i class="iconfont  icon-yonghu"></i>&nbsp[[${article.user.name}]]</li>
+                    <li><i class="iconfont  icon-shijian"></i>&nbsp[[${article.createDate}]]</li>
+                    <li><i class="iconfont  icon-yanjing"></i>&nbsp[[${article.readCount}]]</li>
+                    <li><i class="iconfont  icon-xin"></i>&nbsp[[${article.likes}]]</li>
+                </ul>
+            </div>
+        </div>
+        <div id="blog_article_page"></div>
+    </div>
+
+
+
+    <script th:inline="javascript">
+        let pageInfo = [[${pageInfo}]];
+
+        layui.use(['laypage'], function() {
+            let lay_page = layui.laypage;
+            lay_page.render({
+                elem: 'blog_article_page',
+                count: pageInfo.total, //数据总数
+                limit:7,
+                curr:pageInfo.pageNum,
+                jump: function (obj, first) {
+                    if(!first){
+                        loadContent('article',1,{'page':obj.curr,'limit':obj.limit});
+                    }
+                }
+            });
+        })
+
+
+    </script>
+
+</html>

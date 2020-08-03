@@ -1,0 +1,74 @@
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+
+<!--权限-->
+<div class="x-body" id="permission_model" th:fragment="permission_model" style="display: none">
+    <form class="layui-form" id="add_permission_form">
+
+        <input type="hidden"  name="id"  >
+
+        <div class="layui-form-item">
+            <label for="name" class="layui-form-label">
+                <span class="x-red">*</span>名称
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="name" name="name" required="" lay-verify="required"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="url" class="layui-form-label">
+                <span class="x-red">*</span>路径
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="url" name="url" required="" lay-verify="required"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="icon" class="layui-form-label">
+                图标
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="icon" name="icon" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="description" class="layui-form-label">
+                父权限
+            </label>
+            <div class="layui-input-inline" >
+                <select name="parentId" lay-verify="" >
+                    <option value="0">请选择</option>
+                    <div th:each="permission:${permissions}">
+                        <option th:value="${permission.id}" th:text="${permission.name}"></option>
+                    </div>
+                </select>
+            </div>
+
+        </div>
+        <div class="layui-form-item">
+            <label for="description" class="layui-form-label">
+                描述
+            </label>
+            <div class="layui-input-inline">
+                <textarea  id="description" name="description" autocomplete="off" class="layui-textarea"></textarea>
+            </div>
+
+        </div>
+
+        <div class="layui-form-item" style="text-align: center;margin-top: 30px">
+            <button  class="layui-btn" lay-filter="save" lay-submit> 保存 </button>
+        </div>
+    </form>
+</div>
+
+<!--角色授权模块-->
+<div class="x-body" id="model_set_permission" th:fragment="model_set_permission" style="display: none">
+    <!--角色id-->
+    <input name="id" type="hidden">
+    <div id="permission_tree" class="demo-tree-more"></div>
+    <div class="layui-form-item" style="text-align: center;margin-top: 30px">
+        <button  class="layui-btn" lay-filter="save" lay-submit> 授权 </button>
+    </div>
+</div>
+

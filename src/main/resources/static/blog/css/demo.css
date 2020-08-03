@@ -1,0 +1,318 @@
+*, *:after, *:before { -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; }
+body, html { font-size: 100%; padding: 0; margin: 0;}
+
+/* Clearfix hack by Nicolas Gallagher: http://nicolasgallagher.com/micro-clearfix-hack/ */
+.clearfix:before, .clearfix:after { content: " "; display: table; }
+.clearfix:after { clear: both; }
+
+body {
+    font-family: 'Lato', Calibri, Arial, sans-serif;
+    color: #fff;
+    background: #333;
+}
+
+a {
+	color:#01AAED;
+	text-decoration: none;
+}
+.page a:hover{
+	color: #5d6779;
+	text-decoration:none !important;
+}
+
+
+.codropsheader {
+	width: 100%;
+	margin: 0 auto;
+	text-align: left;
+	padding: 1.4em;
+	opacity: 0.7;
+	visibility: visible;
+	-webkit-transition: opacity 0.3s;
+	transition: opacity 0.3s;
+}
+
+.codropsheader h1 {
+	font-family: 楷体;
+	font-size: 2em;
+	line-height: 1.3;
+	margin: 0 0 0.6em 0;
+	float: left;
+	font-weight: 400;
+}
+
+.codropsheader > span {
+	display: block;
+	position: relative;
+	z-index: 9999;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.5em;
+	padding: 0 0 0.6em 0.1em;
+}
+
+
+
+.codropsheader > span span:hover:before {
+	content: attr(data-content);
+	text-transform: none;
+	text-indent: 0;
+	letter-spacing: 0;
+	font-weight: 300;
+	font-size: 110%;
+	padding: 0.8em 1em;
+	line-height: 1.2;
+	text-align: left;
+	left: auto;
+	margin-left: 4px;
+	position: absolute;
+	color: #47a3da;
+	background: #fff;
+}
+
+.codropsheader nav {
+	float: left;
+	text-align: center;
+	margin-left: 1.5em;
+	display: block;
+}
+
+.codropsheader nav a {
+	display: inline-block;
+	position: relative;
+	text-align: left;
+	width: 2.5em;
+	height: 2.5em;
+	background: #47a3da;
+	border-radius: 50%;
+	margin: 0 0.1em;
+	border: 3px solid #fff;
+}
+
+.codropsheader nav a > span {
+	display: none;
+}
+
+.codropsheader nav a:hover:before {
+	content: attr(data-info);
+	color: #fff;
+	position: absolute;
+	width: 600%;
+	top: 120%;
+	text-align: right;
+	right: 0;
+	pointer-events: none;
+}
+
+.codropsheader nav a:hover {
+	background: #fff;
+}
+
+.bp-icon:after {
+	font-family: 'bpicons';
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	text-align: center;
+	color: #fff;
+	-webkit-font-smoothing: antialiased;
+}
+
+.codropsheader nav .bp-icon:after {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	line-height: 2;
+	text-indent: 0;
+}
+
+.codropsheader nav a:hover:after {
+	color: #47a3da;
+}
+
+.blog_content{
+	margin: 50px;
+}
+
+.bp-icon-next:after {
+	content: "\e000";
+}
+.bp-icon-drop:after {
+	content: "\e001";
+}
+.bp-icon-archive:after {
+	content: "\e002";
+}
+.bp-icon-about:after {
+	content: "\e003";
+}
+.bp-icon-prev:after {
+	content: "\e004";
+}
+
+.demos {
+	display: inline-block;
+	line-height: 2.4em;
+	margin-left: 1em;
+	float: right;
+}
+
+.demos a {
+	display: inline-block;
+	color: #fff;
+	margin: 0 0.5em;
+}
+
+.demos a:hover,
+.demos a:focus,
+.demos a.current {
+	color: rgba(0,0,0,.4);
+}
+
+/*----------------------------------------按钮列表和社交图标列表展示------------------------------------------*/
+ul,li {
+	margin: 0;
+	padding: 0;
+}
+
+li {
+	list-style: none;
+}
+
+main {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100vw;
+	height: 100vh;
+	position: relative;
+	background: #2c3a47;
+	z-index: 25;
+}
+
+.social-btn ul {
+	display: flex;
+	justify-content:center;
+}
+
+.social-btn ul li {
+	margin: 0 18px;
+}
+
+.social-btn ul li a {
+	position: relative;
+	display: block;
+	color: white;
+	width: 64px;
+	height: 64px;
+	font-size: 36px;
+	text-align: center;
+	line-height: 66px;
+	border-radius: 50%;
+	background: #2c3a47;
+	transition: 0.6s;
+}
+
+.social-btn ul li a:hover {
+	text-shadow: 0 0 4px #25ccf7;
+}
+
+.social-btn ul li a::before {
+	content: "";
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	border-radius: 50%;
+	background: #25ccf7;
+	transition: 0.6s;
+	transform: scale(0.8);
+	z-index: -1;
+}
+
+.social-btn ul li a:hover::before {
+	box-shadow: 0 0 14px 2px #25ccf7;
+	transform: scale(1.05);
+}
+.social-btn .iconfont{
+	font-size: 32px !important;
+}
+.social-btn{
+	text-align: center;
+	margin: 0 auto;
+}
+.intro-menu ul li{
+	display: none;
+}
+
+.open-left .social-btn ,
+.open-right .social-btn {
+	display: none;
+}
+
+.open-left .intro-menu ul li,
+.open-right .intro-menu ul li{
+	display: block;
+	margin-top: 15px;
+
+}
+.open-left .intro-menu ul li a,
+.open-right .intro-menu ul li a{
+	color: #696969;
+	font-size: 24px;
+	font-family: inherit;
+	font-weight: 800;
+}
+.open-left .intro-menu ul li a{
+	color: #fff;
+}
+
+
+/*归档*/
+
+ .classify .content{
+	 margin-top:50px;
+ }
+.classify_model{
+	margin-bottom: 20px;
+}
+.classify_name{
+	margin-bottom:10px;
+}
+.classify_article{
+	margin-left: 30px;
+	margin-top:8px;
+}
+.article_title{
+	margin-top:10px;
+}
+
+.layui-text a{
+	margin-top: 8px !important;
+}
+
+@media screen and (max-width: 73.375em) {
+	.codropsheader {
+		text-align: center;
+	}
+	.codropsheader h1,
+	.codropsheader nav,
+	.demos {
+		float: none;
+		margin: 0 auto;
+		padding: 0.15em 0;
+	}
+	.codropsheader > span {
+		padding: 0;
+	}
+
+}
+
+@media screen and (max-height: 30.25em) {
+	.codropsheader nav { display: none; }
+}

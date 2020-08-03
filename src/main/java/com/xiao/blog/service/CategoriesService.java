@@ -1,6 +1,7 @@
 package com.xiao.blog.service;
 
 import com.xiao.blog.model.Categories;
+import com.xiao.blog.vo.CategoriesVO;
 
 import java.util.List;
 
@@ -15,4 +16,7 @@ public interface CategoriesService {
 
     List<Categories> getCategoriesByField(Categories categories);
 
+    List<CategoriesVO> getCategoriesVOList(Integer userId);
+
+    int delete(Integer id);
 }

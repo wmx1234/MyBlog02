@@ -34,11 +34,11 @@ public class PermissionController {
      */
     @RequestMapping("/save")
     @ResponseBody
-    public int insert(Permission permission){
+    public CommonResponse save(Permission permission){
         if(permission.getId() == null)
-            return permissionService.insert(permission);
+            return new CommonResponse<Integer>(permissionService.insert(permission));
         else
-           return permissionService.update(permission);
+           return new CommonResponse<Integer>(permissionService.update(permission));
     }
 
     /**
@@ -52,17 +52,6 @@ public class PermissionController {
         return new CommonResponse<Integer>(permissionService.delete(id));
     }
 
-    /**
-     * 批量删除权限
-     * @param ids
-     */
-    @RequestMapping("/deleteBatch")
-    @ResponseBody
-    public CommonResponse<Integer> delete(@RequestParam("ids[]") List<Integer> ids){
-
-        return new CommonResponse<Integer>(permissionService.deleteBatch(ids));
-
-    }
 
     /**
      * 根据父权限获取权限列表
@@ -86,9 +75,9 @@ public class PermissionController {
      * @param
      * @return
      */
-    @PostMapping("/getPermissionTree")
+    @PostMapping("/getPermissionTree/{roleId}")
     @ResponseBody
-    public List<TreeModel> getPermissionTree(){
-        return permissionService.getPermissionTree();
+    public List<TreeModel> getPermissionTree(@PathVariable("roleId") Integer roleId){
+        return permissionService.getPermissionTree(roleId);
     }
 }

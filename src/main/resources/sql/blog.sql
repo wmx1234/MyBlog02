@@ -13,7 +13,7 @@
 
  Date: 09/02/2020 18:06:48
 */
-
+create database blog;
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 

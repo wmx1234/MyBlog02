@@ -1,0 +1,539 @@
+<!DOCTYPE HTML>
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="标签, 晓&amp;静">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+    <title>标签 | 晓&amp;静</title>
+    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/favicon.png">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/css/my.css">
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/jquery/jquery.min.js"></script>
+
+    <meta name="generator" content="Hexo 4.2.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+
+
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/js/search.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            searchFunc("https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/search.xml", 'searchInput', 'searchResult');
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/materialize/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/aos/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/js/matery.js"></script>
+
+    <script>
+        (function () {
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            } else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/others/clicklove.js" async="async"></script>
+
+    <script async src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/others/busuanzi.pure.mini.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/instantpage/instantpage.js" type="module"></script>
+    <!-- 今日诗词 -->
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+</head>
+
+  
+<body>
+
+    <header th:replace="blog/fragment/header::header"></header>
+
+
+
+    <div class="bg-cover pd-header about-cover">
+        <div class="container">
+            <div class="row">
+                <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
+                    <div class="brand">
+                        <div class="title center-align" style="font-family: 楷体;">
+                                晓&静
+                        </div>
+                        <div class="description center-align">
+                            <span id="jinrishici-sentence" class="diy-font">正在加载今日诗词....</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                // 每天切换 banner 图.  Switch banner image every day.
+                var bannerUrl = "https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/banner/" + new Date().getDay() + '.jpg';
+                $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
+            </script>
+
+        </div>
+    </div>
+
+<main class="content">
+
+    <div id="tags" class="container chip-container">
+        <div class="card">
+            <div class="card-content">
+                <div class="tag-title center-align">
+                    <i class="fas fa-tags"></i>&nbsp;&nbsp;文章标签
+                </div>
+                <div class="tag-chips">
+
+                    <a href="/tags/%E8%99%9A%E6%8B%9F%E5%8C%96/" title="虚拟化: 1">
+                        <span class="chip center-align waves-effect waves-light
+                                 chip-default "
+                                data-tagname="虚拟化" style="background-color: #F9EBEA;">虚拟化
+                            <span class="tag-length">1</span>
+                        </span>
+                    </a>
+
+
+                    <a href="/tags/Docker/" title="Docker: 9">
+                        <span class="chip center-align waves-effect waves-light
+                                 chip-default "
+                                data-tagname="Docker" style="background-color: #F5EEF8;">Docker
+                            <span class="tag-length">9</span>
+                        </span>
+                    </a>
+
+
+                    <a href="/tags/Dockerfile/" title="Dockerfile: 1">
+                        <span class="chip center-align waves-effect waves-light
+                                 chip-default "
+                                data-tagname="Dockerfile" style="background-color: #D5F5E3;">Dockerfile
+                            <span class="tag-length">1</span>
+                        </span>
+                    </a>
+
+
+                    <a href="/tags/Nginx/" title="Nginx: 1">
+                        <span class="chip center-align waves-effect waves-light
+                                 chip-default "
+                                data-tagname="Nginx" style="background-color: #E8F8F5;">Nginx
+                            <span class="tag-length">1</span>
+                        </span>
+                    </a>
+
+
+                    <a href="/tags/%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1/" title="负载均衡: 1">
+                        <span class="chip center-align waves-effect waves-light
+                                 chip-default "
+                                data-tagname="负载均衡" style="background-color: #FEF9E7;">负载均衡
+                            <span class="tag-length">1</span>
+                        </span>
+                    </a>
+
+
+                    <a href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" title="反向代理: 1">
+                        <span class="chip center-align waves-effect waves-light
+                                 chip-default "
+                                data-tagname="反向代理" style="background-color: #F8F9F9;">反向代理
+                            <span class="tag-length">1</span>
+                        </span>
+                    </a>
+
+
+                    <a href="/tags/SpringBoot/" title="SpringBoot: 2">
+                        <span class="chip center-align waves-effect waves-light
+                                 chip-default "
+                                data-tagname="SpringBoot" style="background-color: #82E0AA;">SpringBoot
+                            <span class="tag-length">2</span>
+                        </span>
+                    </a>
+
+
+                    <a href="/tags/SpringCloud/" title="SpringCloud: 2">
+                        <span class="chip center-align waves-effect waves-light
+                                 chip-default "
+                                data-tagname="SpringCloud" style="background-color: #D7BDE2;">SpringCloud
+                            <span class="tag-length">2</span>
+                        </span>
+                    </a>
+
+
+                    <a href="/tags/Config/" title="Config: 2">
+                        <span class="chip center-align waves-effect waves-light
+                                 chip-default "
+                                data-tagname="Config" style="background-color: #A3E4D7;">Config
+                            <span class="tag-length">2</span>
+                        </span>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/jqcloud/jqcloud.css">
+    <style type="text/css">
+        #tag-wordcloud {
+            width: 100%;
+            height: 300px;
+        }
+    </style>
+
+    <div class="container" data-aos="fade-up">
+        <div class="card">
+            <div id="tag-wordcloud" class="card-content"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/jqcloud/jqcloud-1.0.4.min.js"></script>
+    <script type="text/javascript">
+
+        $('#tag-wordcloud').jQCloud([{"text":"虚拟化","weight":1,"link":"/tags/虚拟化/"},{"text":"Docker","weight":9,"link":"/tags/Docker/"},{"text":"Dockerfile","weight":1,"link":"/tags/Dockerfile/"},{"text":"Nginx","weight":1,"link":"/tags/Nginx/"},{"text":"负载均衡","weight":1,"link":"/tags/负载均衡/"},{"text":"反向代理","weight":1,"link":"/tags/反向代理/"},{"text":"SpringBoot","weight":2,"link":"/tags/SpringBoot/"},{"text":"SpringCloud","weight":2,"link":"/tags/SpringCloud/"},{"text":"Config","weight":2,"link":"/tags/Config/"}], {
+            autoResize: true
+        });
+    </script>
+
+
+    <article id="articles" class="container articles">
+        <div class="row tags-posts">
+
+
+            <div class="article tag-post col s12 m6 l4" data-tags="Docker, Dockerfile" data-aos="fade-up">
+                <div class="card">
+                    <a href="/2020/06/26/docker/docker-ru-men-liu-dockerfile/">
+                        <div class="card-image tag-image">
+
+
+                            <img src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/featureimages/1.jpg" class="responsive-img" alt="Docker入门：（六）Dockerfile">
+
+                            <span class="card-title">Docker入门：（六）Dockerfile</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-26
+                            </span>
+                            <span class="publish-author">
+
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+
+                                <a href="/categories/Docker/" class="post-category">
+                                Docker
+                                </a>
+
+
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="article tag-post col s12 m6 l4" data-tags="Docker" data-aos="fade-up">
+                <div class="card">
+                    <a href="/2020/06/26/docker/docker-ru-men-jiu-docker-ke-shi-hua-gong-ju/">
+                        <div class="card-image tag-image">
+
+
+                            <img src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/featureimages/20.jpg" class="responsive-img" alt="Docker入门：（九）Docker可视化工具">
+
+                            <span class="card-title">Docker入门：（九）Docker可视化工具</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-26
+                            </span>
+                            <span class="publish-author">
+
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+
+                                <a href="/categories/Docker/" class="post-category">
+                                Docker
+                                </a>
+
+
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="article tag-post col s12 m6 l4" data-tags="Docker" data-aos="fade-up">
+                <div class="card">
+                    <a href="/2020/06/26/docker/docker-ru-men-ba-ben-di-jing-xiang-fa-bu-dao-a-li-yun/">
+                        <div class="card-image tag-image">
+
+
+                            <img src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/featureimages/20.jpg" class="responsive-img" alt="Docker入门：（八）本地镜像发布到阿里云">
+
+                            <span class="card-title">Docker入门：（八）本地镜像发布到阿里云</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-26
+                            </span>
+                            <span class="publish-author">
+
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+
+                                <a href="/categories/Docker/" class="post-category">
+                                Docker
+                                </a>
+
+
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="article tag-post col s12 m6 l4" data-tags="Docker" data-aos="fade-up">
+                <div class="card">
+                    <a href="/2020/06/26/docker/docker-ru-men-qi-docker-an-zhuang-mysql/">
+                        <div class="card-image tag-image">
+
+
+                            <img src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/featureimages/17.jpg" class="responsive-img" alt="Docker入门：（七）Docker安装Mysql">
+
+                            <span class="card-title">Docker入门：（七）Docker安装Mysql</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-26
+                            </span>
+                            <span class="publish-author">
+
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+
+                                <a href="/categories/Docker/" class="post-category">
+                                Docker
+                                </a>
+
+
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="article tag-post col s12 m6 l4" data-tags="Docker" data-aos="fade-up">
+                <div class="card">
+                    <a href="/2020/06/26/docker/docker-ru-men-wu-rong-qi-shu-ju-quan/">
+                        <div class="card-image tag-image">
+
+
+                            <img src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/featureimages/21.jpg" class="responsive-img" alt="Docker入门：（五）容器数据券">
+
+                            <span class="card-title">Docker入门：（五）容器数据券</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-26
+                            </span>
+                            <span class="publish-author">
+
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+
+                                <a href="/categories/Docker/" class="post-category">
+                                Docker
+                                </a>
+
+
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="article tag-post col s12 m6 l4" data-tags="Docker" data-aos="fade-up">
+                <div class="card">
+                    <a href="/2020/06/26/docker/docker-ru-men-si-dokcer-chang-yong-ming-ling/">
+                        <div class="card-image tag-image">
+
+
+                            <img src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/featureimages/18.jpg" class="responsive-img" alt="Docker入门：（四）Dokcer常用命令">
+
+                            <span class="card-title">Docker入门：（四）Dokcer常用命令</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-26
+                            </span>
+                            <span class="publish-author">
+
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+
+                                <a href="/categories/Docker/" class="post-category">
+                                Docker
+                                </a>
+
+
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="article tag-post col s12 m6 l4" data-tags="Docker" data-aos="fade-up">
+                <div class="card">
+                    <a href="/2020/06/26/docker/docker-ru-men-san-dokcer-de-an-zhuang-yu-xie-zai/">
+                        <div class="card-image tag-image">
+
+
+                            <img src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/featureimages/4.jpg" class="responsive-img" alt="Docker入门：（三）Dokcer的安装与卸载">
+
+                            <span class="card-title">Docker入门：（三）Dokcer的安装与卸载</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-26
+                            </span>
+                            <span class="publish-author">
+
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+
+                                <a href="/categories/Docker/" class="post-category">
+                                Docker
+                                </a>
+
+
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="article tag-post col s12 m6 l4" data-tags="虚拟化, Docker" data-aos="fade-up">
+                <div class="card">
+                    <a href="/2020/06/26/docker/docker-ru-men-yi-xu-ni-hua-ji-zhu/">
+                        <div class="card-image tag-image">
+
+
+                            <img src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/featureimages/18.jpg" class="responsive-img" alt="Docker入门：（一）虚拟化技术">
+
+                            <span class="card-title">Docker入门：（一）虚拟化技术</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-26
+                            </span>
+                            <span class="publish-author">
+
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+
+                                <a href="/categories/Docker/" class="post-category">
+                                Docker
+                                </a>
+
+
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="article tag-post col s12 m6 l4" data-tags="Docker" data-aos="fade-up">
+                <div class="card">
+                    <a href="/2020/06/14/docker/docker-ru-men-er-docker-jie-shao/">
+                        <div class="card-image tag-image">
+
+
+                            <img src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/featureimages/0.jpg" class="responsive-img" alt="Docker入门：（二）Docker介绍">
+
+                            <span class="card-title">Docker入门：（二）Docker介绍</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-14
+                            </span>
+                            <span class="publish-author">
+
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+
+                                <a href="/categories/Docker/" class="post-category">
+                                Docker
+                                </a>
+
+
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </article>
+</main>
+
+    <header th:replace="blog/fragment/footer::footer"></header>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+</body>
+
+</html>

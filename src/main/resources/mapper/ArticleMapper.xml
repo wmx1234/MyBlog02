@@ -25,6 +25,7 @@
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="article_digest" property="articleDigest" jdbcType="VARCHAR" />
     <result column="article_title" property="articleTitle" jdbcType="VARCHAR" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
     <result column="article_content" property="articleContent" jdbcType="LONGVARCHAR" />
     <result column="article_html_content" property="articleHtmlContent" jdbcType="LONGVARCHAR" />
     <result column="create_date" property="createDate" jdbcType="VARCHAR" />
@@ -56,15 +57,13 @@
       <result column="categories_name" property="name" jdbcType="VARCHAR" />
     </association>
 
-    <collection property="tagsList" ofType="com.xiao.blog.model.Tags" select="getTagsList" column="id">
-<!--      <id column="tags_id" property="id" jdbcType="INTEGER" />-->
-<!--      <result column="tags_name" property="name" jdbcType="VARCHAR" />-->
+    <collection property="tagsList" ofType="com.xiao.blog.model.Tags"  column="id">
+       <id column="tags_id" property="id" jdbcType="INTEGER" />
+       <result column="tags_name" property="name" jdbcType="VARCHAR" />
     </collection>
 
   </resultMap>
-  <select id="getTagsList" resultType="com.xiao.blog.model.Tags">
-      select id,name from blog_tags where id = #{id}
-  </select>
+
 
   <!--新增博客-->
   <insert id="insert" parameterType="com.xiao.blog.model.Article" >
@@ -135,6 +134,7 @@
 
     select
         article.id,
+        article.image,
         article.article_content,
         article.article_html_content,
         article.article_digest,
@@ -150,13 +150,16 @@
         article.user_id,
         u.name name,
         article.categories_id,
-        categories.name categories_name
+        categories.name categories_name,
+        tags.id tags_id,
+        tags.name tags_name
 
 
     from blog_article article
     left join sys_user u on article.user_id = u.id
     left join blog_categories categories on article.categories_id = categories.id
-
+    left join blog_article_tags bat on bat.article_id = article.id
+    left join blog_tags tags on bat.tags_id = tags.id
     where 1=1
       <if test="id != null">
           and article.id = #{id,jdbcType=INTEGER}

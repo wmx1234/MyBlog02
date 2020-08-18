@@ -1,0 +1,80 @@
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
+
+<!-- 下拉标识 -->
+<div class="progress-bar"></div>
+
+<!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+
+
+<!-- 所有文章卡片 -->
+<article id="articles" class="container articles" th:fragment="blog_articles">
+    <div class="row article-row">
+
+        <div class="article col s12 m6 l4" data-aos="zoom-in" th:each="article,key : ${articles}">
+            <div class="card">
+                <a href="/2020/07/03/nginx/nginx-xue-xi-bi-ji/">
+                    <div class="card-image">
+                        <img th:src="${article.image}" class="responsive-img" th:alt="${article.articleTitle}">
+                        <span class="card-title" th:text="${article.articleTitle}">Nginx入门</span>
+                    </div>
+                </a>
+
+                <div class="card-content article-content">
+                    <div class="summary block-with-text" th:text="${article.articleDigest}"></div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>[[${article.createDate}]]
+                            </span>
+                        <span class="publish-author">
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                <a href="/categories/Nginx/" class="post-category">
+                                    [[${article.categories.name}]]
+                                </a>
+                            </span>
+                    </div>
+                </div>
+
+                <!-- 标签 -->
+                <div class="card-action article-tags">
+                    <a href="/tags/Nginx/" th:each="tags,key : ${article.tagsList}">
+                        <span class="chip bg-color" th:text="${tags.name}"></span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 分页 -->
+<div class="container paging" th:fragment="blog_paging">
+    <div class="row">
+        <div class="col s6 m4 l4">
+            <a class="left btn-floating btn-large disabled">
+                <i class="fas fa-angle-left"></i>
+            </a>
+        </div>
+        <div class="page-info col m4 l4 hide-on-small-only">
+            <div class="center-align b-text-gray">1 / 2</div>
+        </div>
+        <div class="col s6 m4 l4">
+            <a href="/page/2/"
+               class="right btn-floating btn-large waves-effect waves-light bg-color">
+                <i class="fas fa-angle-right"></i>
+            </a>
+        </div>
+    </div>
+</div>

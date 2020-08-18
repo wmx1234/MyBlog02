@@ -18,6 +18,8 @@ public class ArticleVO extends Article {
 
     private String articleDigest;
 
+    private String image;
+
     private String createDate;
 
     private String updateDate;

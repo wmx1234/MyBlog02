@@ -13,6 +13,7 @@ CREATE TABLE `sys_sequence` (
 INSERT INTO SYS_SEQUENCE(NAME,CURRENT_VALUE,INCREMENT) VALUES('TBL_FS', 1,1)
 ```
 ```
+SET GLOBAL log_bin_trust_function_creators = 1;
 DELIMITER $$
  
 DROP FUNCTION IF EXISTS `currval`$$

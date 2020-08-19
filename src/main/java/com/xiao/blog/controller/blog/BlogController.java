@@ -1,5 +1,8 @@
 package com.xiao.blog.controller.blog;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.xiao.blog.pojo.request.PageRequest;
 import com.xiao.blog.service.ArticleService;
 import com.xiao.blog.service.TagsService;
 import com.xiao.blog.service.UserService;
@@ -29,20 +32,23 @@ public class BlogController {
     @Resource
     TagsService tagsService;
 
-
     /**
      * 访问网站主页
      * @return
      */
     @RequestMapping({"/index","/"})
-    public String index(Model model){
-        List<ArticleVO> articles = articleService.getArticleByUserId(1);
-        model.addAttribute("articles",articles);
+    public String index(PageRequest<ArticleVO> request, Model model){
+
+        PageHelper.startPage(1,10);
+        //PageHelper.startPage(request.getPage(),request.getLimit());
+        List<ArticleVO> articles = articleService.getArticles(null);
+
+        PageInfo pageInfo = new PageInfo(articles);
+
+        model.addAttribute("pageInfo",pageInfo);
+
         return "blog/index";
     }
-
-
-
 
     /**
      * 分类
@@ -64,7 +70,6 @@ public class BlogController {
      */
     @RequestMapping("/archives")
     public String archive(Model model){
-
         return "blog/archives";
     }
 
@@ -115,14 +120,11 @@ public class BlogController {
     @RequestMapping("/friends")
     public String friends(Model model){
 
-
         return "blog/friends";
     }
 
-
     @RequestMapping("/article/{id}")
     public String article(@PathVariable("id") Integer id, Model model){
-
 
         ArticleVO article = articleService.getArticleById(id);
         model.addAttribute("article",article);

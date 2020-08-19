@@ -12,7 +12,9 @@ import com.xiao.blog.vo.ArticleVO;
 import com.xiao.blog.vo.ClassifyVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -23,10 +25,10 @@ import java.util.List;
 @Service("articleService")
 public class ArticleServiceImpl implements ArticleService {
 
-    @Autowired
+    @Resource
     ArticleMapper articleMapper;
 
-    @Autowired
+    @Resource
     RelationMapper relationMapper;
 
     @Override
@@ -36,15 +38,20 @@ public class ArticleServiceImpl implements ArticleService {
 
         int isExist = articleMapper.articleIsExist(article.getId());
 
-        if(isExist <= 0) insert(params);
-
-        else update(params);
+        if(isExist <= 0) {
+            insert(params);
+        } else{
+            update(params);
+        }
 
     }
 
     @Override
+    @Transactional
     public List<ArticleVO> getArticles(Article article) {
-        return articleMapper.getArticles(article);
+        List<ArticleVO> articles = articleMapper.getArticles(article);
+        System.out.println(articles.size()+"================================");
+        return articles;
     }
 
     @Override

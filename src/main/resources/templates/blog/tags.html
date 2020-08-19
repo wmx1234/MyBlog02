@@ -69,32 +69,8 @@
 <body>
 
     <header th:replace="blog/fragment/header::header"></header>
+    <div th:replace="blog/fragment/common::blog_bgcover"></div>
 
-
-
-    <div class="bg-cover pd-header about-cover">
-        <div class="container">
-            <div class="row">
-                <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
-                    <div class="brand">
-                        <div class="title center-align" style="font-family: 楷体;">
-                                晓&静
-                        </div>
-                        <div class="description center-align">
-                            <span id="jinrishici-sentence" class="diy-font">正在加载今日诗词....</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <script>
-                // 每天切换 banner 图.  Switch banner image every day.
-                var bannerUrl = "https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/banner/" + new Date().getDay() + '.jpg';
-                $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
-            </script>
-
-        </div>
-    </div>
 
 <main class="content">
 
@@ -509,7 +485,7 @@
     </article>
 </main>
 
-    <header th:replace="blog/fragment/footer::footer"></header>
+    <footer th:replace="blog/fragment/footer::footer"></footer>
 
 <div class="progress-bar"></div>
 

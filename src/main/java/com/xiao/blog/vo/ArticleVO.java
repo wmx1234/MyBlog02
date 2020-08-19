@@ -18,6 +18,12 @@ public class ArticleVO extends Article {
 
     private String articleDigest;
 
+    private String articleContent;
+
+    private String articleHtmlContent;
+
+    private String url;
+
     private String image;
 
     private String createDate;
@@ -35,10 +41,6 @@ public class ArticleVO extends Article {
     private Integer draft;
 
     private Integer privacy;
-
-    private String articleContent;
-
-    private String articleHtmlContent;
 
     private Article lastArticle;
 

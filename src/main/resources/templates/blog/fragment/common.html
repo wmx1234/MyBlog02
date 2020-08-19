@@ -1,5 +1,68 @@
 <html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
 
+<head th:fragment="blog_head">
+    <meta charset="utf-8">
+    <meta name="keywords" content="Docker入门：（二）Docker介绍, 晓&amp;静">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Docker入门：（二）Docker介绍 | 晓&amp;静</title>
+    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/favicon.png">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/css/my.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/jquery/jquery.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/others/clicklove.js" async="async"></script>
+    <!-- “不蒜子”是提供静态页面计数功能的一个第三方服务 -->
+    <script async src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/others/busuanzi.pure.mini.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/instantpage/instantpage.js" type="module"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/tocbot/tocbot.css">
+
+    <!-- 搜索 -->
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/js/search.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            searchFunc("https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/search.xml", 'searchInput', 'searchResult');
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/materialize/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/aos/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/js/matery.js"></script>
+
+
+    <script>
+        (function () {
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            } else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
+
+    <meta name="generator" content="Hexo 4.2.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
+</head>
+
 <!-- 下拉标识 -->
 <div class="progress-bar"></div>
 
@@ -15,7 +78,29 @@
     </div>
 </div>
 
+<div class="bg-cover pd-header about-cover" th:fragment="blog_bgcover">
+    <div class="container">
+        <div class="row">
+            <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
+                <div class="brand">
+                    <div class="title center-align" style="font-family: 楷体;">
+                        晓&静
+                    </div>
+                    <div class="description center-align">
+                        <span id="jinrishici-sentence" class="diy-font">正在加载今日诗词....</span>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <script>
+            // 每天切换 banner 图.  Switch banner image every day.
+            var bannerUrl = "https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/banner/" + new Date().getDay() + '.jpg';
+            $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
+        </script>
+
+    </div>
+</div>
 
 <!-- 所有文章卡片 -->
 <article id="articles" class="container articles" th:fragment="blog_articles">
@@ -23,7 +108,7 @@
 
         <div class="article col s12 m6 l4" data-aos="zoom-in" th:each="article,key : ${articles}">
             <div class="card">
-                <a href="/2020/07/03/nginx/nginx-xue-xi-bi-ji/">
+                <a th:href="${article.url}">
                     <div class="card-image">
                         <img th:src="${article.image}" class="responsive-img" th:alt="${article.articleTitle}">
                         <span class="card-title" th:text="${article.articleTitle}">Nginx入门</span>

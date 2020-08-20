@@ -1,190 +1,147 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
+
 <html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="ie=EmulateIE9,chrome=1">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>index</title>
-	<meta name="keywords" content="">
-	<meta name="description" content="">
-	<link rel="stylesheet" th:href="@{/css/base1.css}" />
-	<link rel="stylesheet" th:href="@{/css/index1.css}" />
-</head>
+
+<head th:replace="blog/fragment/common::head"></head>
+
 <body>
-<header id="header">
-	<nav class="header-nav clear">
-		<a class="logo fl" href="#"><img th:src="@{/images/lib/logo.png}"></a>
-		<ul class="fr">
-			<li><a class="active" href="index.html">首页</a></li></a>
-			<li><a href="/boy">男主专区</a></li>
-			<li><a href="/boy">女主专区</a></li>
-			<li><a href="/love_track">爱情足迹</a></li>
-			<li><a href="list_article.html">关于我们</a></li>
 
-		</ul>
-	</nav>
-	<!--nav end-->
-</header>
-<!--header end-->
-<div class="banner">
-	<span class="banner-title">Record  Our  Love  Story  With  Words</span>
-	<span class="banner-introduce">欢迎来到Mr.H与Mrs.C的情侣博客，这里是我们在互联网的“窝”，这里有技术的学习笔记，也有好看的博客模板，更有我们的爱情故事，如果你喜欢我们的情侣博客，记得留言与我们互动哟！</span>
-	<span class="banner-sign">——Mr.H&Mrs.C</span>
+<header th:replace="blog/fragment/header::header"></header>
+
+
+<!-- 首页展示 -->
+<div class="carousel carousel-slider center index-cover" data-indicators="true" style="margin-top: -64px;">
+    
+    <div class="carousel-item red white-text bg-cover about-cover">
+        <div class="container">
+            <div class="row">
+                <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
+                    <div class="brand">
+                        <div class="title center-align" style="font-family: 楷体;">
+                                晓&静
+                        </div>
+                        <div class="description center-align">
+                            <span id="jinrishici-sentence" class="diy-font">正在加载今日诗词....</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                // 每天切换 banner 图.  Switch banner image every day.
+                var bannerUrl = "https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/banner/" + new Date().getDay() + '.jpg';
+                $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
+            </script>
+
+            <div class="cover-btns">
+                <a href="#indexCard" class="waves-effect waves-light btn">
+                    <i class="fa fa-angle-double-down"></i>开始阅读
+                </a>
+            </div>
+            <!-- 社交 -->
+            <div class="cover-social-link"></div>
+        </div>
+    </div>
 </div>
-<!-- banner end -->
-<div class="wraper">
-	<div class="wrap">
-		<div class="cont-info clear">
-			<img class="cont-info-heart" th:src="@{/images/index/blog_heart.png}" />
-			<div class="cont-info-boy fl">
-				<img th:src="@{/images/index/blog_boy.png}" />
-				<h5>Mr.H</h5>
-				<p>因为未来谁也无法预料，总担心未来会怎样，只是庸人自扰，我们活在现在，就应该为现在实实在在的生活或者学习努力。不为模糊不清的未来担心，只为清清楚楚的现在努力。</p>
-			</div>
-			<div class="cont-info-girl fr">
-				<img th:src="@{/images/index/blog_girl.png}" />
-				<h5>Mrs.C</h5>
-				<p>因为未来谁也无法预料，总担心未来会怎样，只是庸人自扰，我们活在现在，就应该为现在实实在在的生活或者学习努力。不为模糊不清的未来担心，只为清清楚楚的现在努力。</p>
-			</div>
-		</div>
-		<div class="cont-article clear">
-			<div class="cont-article-line">&nbsp;</div>
-			<div class="cont-article-boy fl">
-				<ul class="cont-article-list">
-					<li>
-						<div class="cont-timeline-img"><i class="iconfont icon-img-icon"></i></div>
-						<a href="article_article.html" target="_blank">
-							<h2>HTML5+CSS3实现的响应式垂直时间轴</h2>
 
-							<p>网页时间轴一般用于展示以时间为主线的事件，如企业网站常见的公司发展历程等。本文将给大家介绍一款基于HTML5和CSS3的漂亮的垂直时间轴，它可以响应页面布局，适用于HTML5开发的PC和移动手机WEB应用。</p>
-						</a>
-						<div class="cont-article-info">
-							<span class="cont-article-time"><i class="iconfont info-icon">&#xe600;</i>2016-05-29</span>
-							<span class="cont-article-author"><i class="iconfont info-icon">&#xe603;</i>胡小刚</span>
-							<span class="cont-article-tag"><i class="iconfont info-icon">&#xe602;</i>HTML5、CSS3</span>
-							<span class="cont-article-classify"><i class="iconfont info-icon">&#xe601;</i>学习笔记</span>
-						</div>
-					</li>
-					<li>
-						<div class="cont-timeline-img"><i class="iconfont icon-img-icon"></i></div>
-						<a href="article_article.html" target="_blank">
-							<h2>HTML5+CSS3实现的响应式垂直时间轴</h2>
-							<p>网页时间轴一般用于展示以时间为主线的事件，如企业网站常见的公司发展历程等。本文将给大家介绍一款基于HTML5和CSS3的漂亮的垂直时间轴，它可以响应页面布局，适用于HTML5开发的PC和移动手机WEB应用。</p>
-						</a>
-						<div class="cont-article-info">
-							<span class="cont-article-time"><i class="iconfont info-icon">&#xe600;</i>2016-05-29</span>
-							<span class="cont-article-author"><i class="iconfont info-icon">&#xe603;</i>胡小刚</span>
-							<span class="cont-article-tag"><i class="iconfont info-icon">&#xe602;</i>HTML5、CSS3</span>
-							<span class="cont-article-classify"><i class="iconfont info-icon">&#xe601;</i>学习笔记</span>
-						</div>
-					</li>
-					<li>
-						<div class="cont-timeline-img"><i class="iconfont icon-img-icon"></i></div>
-						<a href="article_article.html" target="_blank">
-							<h2>HTML5+CSS3实现的响应式垂直时间轴</h2>
+<script>
+    $(function () {
+        let coverSlider = $('.carousel');
+        //用户触摸轮播自动 restartPlay 是否生效
+        let initUserPressedOrDraggedActive = false
+        //用户触摸轮播自动 restartPlay
+        function initUserPressedOrDragged(instance) {
+            setInterval(() => {
+                if (instance.pressed || instance.dragged) {
+                    restartPlay()
+                }
+            }, 1000)
+        }
 
-							<p>网页时间轴一般用于展示以时间为主线的事件，如企业网站常见的公司发展历程等。本文将给大家介绍一款基于HTML5和CSS3的漂亮的垂直时间轴，它可以响应页面布局，适用于HTML5开发的PC和移动手机WEB应用。</p>
-						</a>
-						<div class="cont-article-info">
-							<span class="cont-article-time"><i class="iconfont info-icon">&#xe600;</i>2016-05-29</span>
-							<span class="cont-article-author"><i class="iconfont info-icon">&#xe603;</i>胡小刚</span>
-							<span class="cont-article-tag"><i class="iconfont info-icon">&#xe602;</i>HTML5、CSS3</span>
-							<span class="cont-article-classify"><i class="iconfont info-icon">&#xe601;</i>学习笔记</span>
-						</div>
-					</li>
-				</ul>
-			</div>
-			<div class="cont-article-girl fr">
-				<ul class="cont-article-list">
-					<li>
-						<div class="cont-timeline-img"><i class="iconfont icon-img-icon"></i></div>
-						<a href="article_article.html" target="_blank">
-							<h2>HTML5+CSS3实现的响应式垂直时间轴</h2>
-							<p>网页时间轴一般用于展示以时间为主线的事件，如企业网站常见的公司发展历程等。本文将给大家介绍一款基于HTML5和CSS3的漂亮的垂直时间轴，它可以响应页面布局，适用于HTML5开发的PC和移动手机WEB应用。</p>
-						</a>
-						<div class="cont-article-info">
-							<span class="cont-article-time"><i class="iconfont info-icon">&#xe600;</i>2016-05-29</span>
-							<span class="cont-article-author"><i class="iconfont info-icon">&#xe603;</i>胡小刚</span>
-							<span class="cont-article-tag"><i class="iconfont info-icon">&#xe602;</i>HTML5、CSS3</span>
-							<span class="cont-article-classify"><i class="iconfont info-icon">&#xe601;</i>学习笔记</span>
-						</div>
-					</li>
-					<li>
-						<div class="cont-timeline-img"><i class="iconfont icon-img-icon"></i></div>
-						<a href="#" target="_blank">
-							<h2>HTML5+CSS3实现的响应式垂直时间轴</h2>
-							<p>网页时间轴一般用于展示以时间为主线的事件，如企业网站常见的公司发展历程等。本文将给大家介绍一款基于HTML5和CSS3的漂亮的垂直时间轴，它可以响应页面布局，适用于HTML5开发的PC和移动手机WEB应用。</p>
-						</a>
-						<div class="cont-article-info">
-							<span class="cont-article-time"><i class="iconfont info-icon">&#xe600;</i>2016-05-29</span>
-							<span class="cont-article-author"><i class="iconfont info-icon">&#xe603;</i>胡小刚</span>
-							<span class="cont-article-tag"><i class="iconfont info-icon">&#xe602;</i>HTML5、CSS3</span>
-							<span class="cont-article-classify"><i class="iconfont info-icon">&#xe601;</i>学习笔记</span>
-						</div>
-					</li>
-					<li>
-						<div class="cont-timeline-img"><i class="iconfont icon-img-icon"></i></div>
-						<a href="#" target="_blank">
-							<h2>HTML5+CSS3实现的响应式垂直时间轴</h2>
+        coverSlider.carousel({
+            duration: Number('120'),
+            fullWidth: true,
+            indicators: 'false' === 'true',
+            onCycleTo() {
+                if (!initUserPressedOrDraggedActive) {
+                    // console.log('initUserPressedOrDraggedActive')
+                    initUserPressedOrDragged(this)
+                    initUserPressedOrDraggedActive = true
+                }
+            },
+        })
 
-							<p>网页时间轴一般用于展示以时间为主线的事件，如企业网站常见的公司发展历程等。本文将给大家介绍一款基于HTML5和CSS3的漂亮的垂直时间轴，它可以响应页面布局，适用于HTML5开发的PC和移动手机WEB应用。</p>
-						</a>
-						<div class="cont-article-info">
-							<span class="cont-article-time"><i class="iconfont info-icon">&#xe600;</i>2016-05-29</span>
-							<span class="cont-article-author"><i class="iconfont info-icon">&#xe603;</i>胡小刚</span>
-							<span class="cont-article-tag"><i class="iconfont info-icon">&#xe602;</i>HTML5、CSS3</span>
-							<span class="cont-article-classify"><i class="iconfont info-icon">&#xe601;</i>学习笔记</span>
-						</div>
-					</li>
+        let carouselIntervalId;
+        
+        function restartPlay() {
+            
+        };
 
-				</ul>
-			</div>
-		</div>
-	</div>
+    });
+</script>
 
-</div>
-<div id="totop" style="display: block;"><i class="iconfont icon-xiangshang"></i></div>
-<footer id="footer">
-	<div class="wrap footer-fat">
-		<section class="about">
-			<ul>
-				<li>
-					<h5>关于我们</h5>
-					<a target="_blank" href="http://520.jzdlink.com">爱情告白</a>
-					<a href="http://www.jzdlink.com/about">博主档案</a>
-					<a href="">留言板</a>
-				</li>
-				<li>
-					<h5>网站赞助</h5>
-					<a href="">热点标签</a>
-					<a href="http://www.jzdlink.com/sitemap_baidu.xml">sitemap</a>
-				</li>
-			</ul>
-		</section>
-		<section class="links">
-			<h5>友情链接</h5>
-			<ul>
-				<li><a target="_blank" href="http://www.macrr.com">闲鱼博客</a></li>
-				<li><a target="_blank" href="http://wasds.com">大肥博客</a></li>
-			</ul>
-		</section>
-		<section class="contact">
-			<h5>我们一直在努力着...</h5>
-			<ul>
-				<li>2016-06-15：博客改版为《情侣博客》模板</li>
-				<li>2015-07-31：胡小呆表白曹小萌，成为情侣</li>
-				<li>2015-06:博客改版,启用《简单》模板</li>
-				<li>2014-11-24：第一篇文章被百度快照</li>
-				<li>2014-09-19：博客成立</li>
-			</ul>
-			<p>本站运行：<span id="htmer_time">1年274天21时21分48秒</span></p>
-		</section>
-	</div>
-	<section class="copy">
-		版权所有(c)2015-2016 · <a href="">晋ICP备14007273号</a> · 基于Wordpress · Designed By 胡小呆 · Cody By 曹小萌
-	</section>
-</footer>
-<script type="text/javascript" th:src="@{/js/jquery-1.10.1.min.js}"></script>
-<script type="text/javascript" th:src="@{/js/footer.js}"></script>
+
+    <main class="content">
+        <!-- 推荐文章 -->
+        <div id="indexCard" class="index-card">
+            <div class="container ">
+                <div class="card">
+                    <div class="card-content">
+                        <div id="recommend-sections" class="recommend">
+                            <div class="title"><i class="far fa-thumbs-up"></i>&nbsp;&nbsp;推荐文章</div>
+                            <div class="row">
+                                <div class="col s12" >
+                                    <div class="post-card">
+                                        <div class="post-body">
+                                            <div class="post-categories">
+                                                <a href="/categories/Docker/" class="category">Docker</a>
+                                            </div>
+                                            <a href="/2020/06/26/docker/docker-ru-men-yi-xu-ni-hua-ji-zhu/">
+                                                <h3 class="post-title">Docker入门：（一）虚拟化技术</h3>
+                                            </a>
+                                            <p class="post-description">什么是虚拟化虚拟化技术即Virtualization，是指通过虚拟化技术将一台计算机虚拟为多台逻辑计算机。在一台计算机上同时运行多个逻辑计算机，每个逻辑计算机可运行不同的</p>
+                                            <a href="/2020/06/26/docker/docker-ru-men-yi-xu-ni-hua-ji-zhu/" class="read-more btn waves-effect waves-light" style="background: linear-gradient(to right, #FF5E3A 0%, #FF2A68 100%)" target="_blank">
+                                                <i class="icon far fa-eye fa-fw"></i>阅读更多
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 文章列表 -->
+        <article th:replace="blog/fragment/common::blog_articles"></article>
+    </main>
+
+    <div th:replace="blog/fragment/common::blog_paging"></div>
+
+    <header th:replace="blog/fragment/footer::footer"></header>
+
+    <div class="progress-bar"></div>
+
+    <!-- 搜索遮罩框 -->
+    <div id="searchModal" class="modal">
+        <div class="modal-content">
+            <div class="search-header">
+                <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+                <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                       class="search-input">
+            </div>
+            <div id="searchResult"></div>
+        </div>
+    </div>
+
+
+    <!-- 回到顶部按钮 -->
+    <div id="backTop" class="top-scroll">
+        <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+            <i class="fas fa-arrow-up"></i>
+        </a>
+    </div>
+
 </body>
+
 </html>

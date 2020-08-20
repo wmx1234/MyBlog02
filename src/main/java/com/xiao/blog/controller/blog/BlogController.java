@@ -26,8 +26,6 @@ import java.util.List;
 public class BlogController {
 
     @Resource
-    UserService userService;
-    @Resource
     ArticleService articleService;
     @Resource
     TagsService tagsService;
@@ -37,11 +35,11 @@ public class BlogController {
      * @return
      */
     @RequestMapping({"/index","/"})
-    public String index(PageRequest<ArticleVO> request, Model model){
+    public String index(PageRequest<ArticleVO> request, ArticleVO article,Model model){
 
-        PageHelper.startPage(1,10);
-        //PageHelper.startPage(request.getPage(),request.getLimit());
-        List<ArticleVO> articles = articleService.getArticles(null);
+        PageHelper.startPage(request.getPage(), request.getLimit());
+
+        List<ArticleVO> articles = articleService.getArticleList(article);
 
         PageInfo pageInfo = new PageInfo(articles);
 
@@ -58,7 +56,7 @@ public class BlogController {
     @RequestMapping("/categories")
     public String classify(Model model){
 
-        model.addAttribute("classifyList",articleService.classify(1));
+        //model.addAttribute("classifyList",articleService.classify(1));
 
         return "blog/categories";
     }

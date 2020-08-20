@@ -30,8 +30,8 @@ public class UserController {
     public PageResponse<User> getAll(PageRequest request){
 
         PageHelper.startPage(request.getPage(),request.getLimit());
-
-        PageInfo info=new PageInfo(userService.getAll());//创建pageinfo，包含分页的信息
+        //创建pageinfo，包含分页的信息
+        PageInfo info=new PageInfo(userService.getAll());
 
         return new PageResponse<User>(info);
     }

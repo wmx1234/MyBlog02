@@ -1,6 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="zh-CN">
-
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -283,10 +282,8 @@
     </div>
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/echarts/echarts.min.js"></script>
-    <script type="text/javascript">
+    <script type="text/javascript" th:inline="none">
         let myChart = echarts.init(document.getElementById('post-calendar'));
-
-
 
         let option = {
             title: {

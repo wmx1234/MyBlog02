@@ -108,9 +108,9 @@
 
         <div class="article col s12 m6 l4" data-aos="zoom-in" th:each="article,key:${pageInfo.getList()}">
             <div class="card">
-                <a th:href="${article.url}">
+                <a th:href="${article.articleUrl}">
                     <div class="card-image">
-                        <img th:src="${article.image}" class="responsive-img" th:alt="${article.articleTitle}">
+                        <img th:src="${article.articleImage}" class="responsive-img" th:alt="${article.articleTitle}">
                         <span class="card-title" th:text="${article.articleTitle}">Nginx入门</span>
                     </div>
                 </a>

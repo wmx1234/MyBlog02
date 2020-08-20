@@ -3,7 +3,12 @@ package com.xiao.blog.model;
 import lombok.Data;
 
 import java.io.Serializable;
+import java.util.Date;
 
+/**
+ * 博客实体类
+ * @author 王明晓
+ */
 @Data
 public class Article implements Serializable {
 
@@ -15,13 +20,21 @@ public class Article implements Serializable {
 
     private String articleDigest;
 
-    private String createDate;
+    private String articleContent;
 
-    private String updateDate;
+    private String articleHtmlContent;
+
+    private String articleImage;
+
+    private String articleUrl;
+
+    private Integer userId;
+
+    private Date createDate;
+
+    private Date updateDate;
 
     private Integer likes;
-
-    private Integer readCount;
 
     private Integer lastArticleId;
 
@@ -29,26 +42,10 @@ public class Article implements Serializable {
 
     private Integer top;
 
-    private Integer editorType;
-
     private Integer draft;
 
     private Integer privacy;
 
-    private Integer userId;
-
     private Integer categoriesId;
 
-    private String articleContent;
-
-    private String articleHtmlContent;
-
-    private Integer commentCount;
-
-    public Article(){};
-
-
-    public Article(Integer userId){
-        this.userId = userId;
-    };
 }

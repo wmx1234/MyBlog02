@@ -22,5 +22,12 @@ public interface TagsMapper {
     @Select("select count(id) from blog_tags where name = #{name}")
     Integer exist(Tags tags);
 
+    /**
+     * 获取文章标签
+     * @param id
+     * @return
+     */
+    @Select("select * from blog_tags tags left join blog_article_tags bat on tags.id = bat.tags_id where bat.article_id = #{id}")
+    List<Tags> getTagsListByArticle(Integer id);
 
 }

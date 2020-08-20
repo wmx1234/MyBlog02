@@ -2,6 +2,7 @@ package com.xiao.blog.controller.admin;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xiao.blog.model.Article;
 import com.xiao.blog.pojo.param.Params;
 import com.xiao.blog.pojo.request.PageRequest;
 import com.xiao.blog.pojo.response.BaseResponse;
@@ -33,9 +34,9 @@ public class ArticleController {
 
     @RequestMapping("/save")
     @ResponseBody
-    public BaseResponse save(@RequestBody Params params){
+    public BaseResponse save(@RequestBody Article article){
 
-        articleService.save(params);
+        articleService.save(article);
 
         return new BaseResponse();
     }
@@ -44,7 +45,8 @@ public class ArticleController {
     @ResponseBody
     public PageResponse<ArticleVO> getArticleVOList(PageRequest request){
         PageHelper.startPage(request.getPage(),request.getLimit());
-        PageInfo info=new PageInfo(articleService.getArticleList(ShiroKit.getUser().getId()));//创建pageinfo，包含分页的信息
+        //创建pageinfo，包含分页的信息
+        PageInfo info=new PageInfo(articleService.getArticleList(new ArticleVO()));
 
         return new PageResponse<ArticleVO>(info);
     }

@@ -32,97 +32,65 @@ public class ArticleServiceImpl implements ArticleService {
     RelationMapper relationMapper;
 
     @Override
-    public void save(Params params) {
-
-        Article article = params.getObject("article",Article.class);
-
-        int isExist = articleMapper.articleIsExist(article.getId());
-
-        if(isExist <= 0) {
-            insert(params);
-        } else{
-            update(params);
-        }
+    public void save(Article article) {
 
     }
 
     @Override
-    @Transactional
-    public List<ArticleVO> getArticles(Article article) {
-        List<ArticleVO> articles = articleMapper.getArticles(article);
-        System.out.println(articles.size()+"================================");
-        return articles;
-    }
-
-    @Override
-    public List<ArticleVO> getArticleByUserId(int userId) {
-
-        return articleMapper.getArticles(new Article(userId));
+    public void delete(Integer id) {
 
     }
 
     @Override
-    public List<Article> getArticleList(int userId) {
-
-        return articleMapper.getArticleList(userId);
+    public void update(Article article) {
 
     }
 
     @Override
-    public List archive(Integer userId) {
-
-        return articleMapper.archive(userId);
-
+    public List<ArticleVO> getArticleList(ArticleVO article) {
+        return articleMapper.getArticleList(article);
     }
 
     @Override
-    public List<ClassifyVO> classify(Integer userId) {
-
-        return articleMapper.classify(userId);
-
+    public ArticleVO getArticleById(int userId) {
+        return null;
     }
 
-    @Override
-    public ArticleVO getArticleById(Integer id) {
-        return articleMapper.getArticleById(id);
-    }
-
-
-    private void insert(Params params){
-
-        Article article = params.getObject("article",Article.class);
-
-        article.setArticleDigest(ArticleUtil.buildArticleTabloid(article.getArticleHtmlContent()));
-
-        article.setCreateDate(DateUtil.today());
-
-        article.setUserId(ShiroKit.getUser().getId());
-
-        article.setLastArticleId(articleMapper.getLastArticleId());
-
-        articleMapper.insert(article);
-
-        relationMapper.batchInsertArticleLabelRelation(params.getList("tags"));
-
-        //relationMapper.insertArticleCategoriesRelation(params.getObject("categories", Relation.class));
-    }
-
-    private void update(Params params){
-
-        Article article = params.getObject("article",Article.class);
-
-        article.setArticleDigest(ArticleUtil.buildArticleTabloid(article.getArticleHtmlContent()));
-
-        article.setUpdateDate(DateUtil.today());
-
-        articleMapper.updateArticleById(article);
-
-        relationMapper.deleteLabelsByArticleId(article.getId());
-
-        relationMapper.batchInsertArticleLabelRelation(params.getList("labels"));
-
-        //relationMapper.deleteCategoriesByArticleId(article.getId());
-
-        //relationMapper.insertArticleCategoriesRelation(params.getObject("categories", Relation.class));
-    }
+//    private void insert(Params params){
+//
+//        Article article = params.getObject("article",Article.class);
+//
+//        article.setArticleDigest(ArticleUtil.buildArticleTabloid(article.getArticleHtmlContent()));
+//
+//        article.setCreateDate(DateUtil.today());
+//
+//        article.setUserId(ShiroKit.getUser().getId());
+//
+//        article.setLastArticleId(articleMapper.getLastArticleId());
+//
+//        articleMapper.insert(article);
+//
+//        relationMapper.batchInsertArticleLabelRelation(params.getList("tags"));
+//
+//        //relationMapper.insertArticleCategoriesRelation(params.getObject("categories", Relation.class));
+//    }
+//
+//    private void update(Params params){
+//
+//        Article article = params.getObject("article",Article.class);
+//
+//        article.setArticleDigest(ArticleUtil.buildArticleTabloid(article.getArticleHtmlContent()));
+//
+//        article.setUpdateDate(DateUtil.today());
+//
+//        articleMapper.updateArticleById(article);
+//
+//        relationMapper.deleteLabelsByArticleId(article.getId());
+//
+//        relationMapper.batchInsertArticleLabelRelation(params.getList("labels"));
+//
+//        //relationMapper.deleteCategoriesByArticleId(article.getId());
+//
+//        //relationMapper.insertArticleCategoriesRelation(params.getObject("categories", Relation.class));
+//    }
 }

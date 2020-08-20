@@ -12,25 +12,38 @@ import java.util.List;
 @Mapper
 public interface ArticleMapper {
 
-    int deleteArticleById(Integer id);
+    /**
+     * 新增博客
+     * @param article
+     * @return
+     */
+    int save(Article article);
 
-    int insert(Article article);
+    /**
+     * 删除博客
+     * @param id
+     * @return
+     */
+    int delete(int id);
 
-    int updateArticleById(Article article);
+    /**
+     * 修改博客
+     * @param article
+     * @return
+     */
+    int update(Article article);
 
-    List<ArticleVO> getArticles(Article article);
+    /**
+     * 获取博客列表
+     * @param article
+     * @return
+     */
+    List<ArticleVO> getArticleList(ArticleVO article);
 
-    List<Archive> archive(Integer userId);
-
-    List<ClassifyVO> classify(Integer userId);
-
-    @Select("select count(id) from blog_article where id = #{id}")
-    int articleIsExist(Integer id);
-
-    @Select("select max(id) from blog_article")
-    int getLastArticleId();
-
-    List<Article> getArticleList(int userId);
-
+    /**
+     * 根据id获取博客
+     * @param id
+     * @return
+     */
     ArticleVO getArticleById(Integer id);
 }

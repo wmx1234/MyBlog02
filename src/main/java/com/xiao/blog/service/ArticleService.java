@@ -14,17 +14,37 @@ import java.util.List;
  */
 public interface ArticleService {
 
-    public void save(Params params);
+    /**
+     * 保存博客
+     * @param article
+     */
+    public void save(Article article);
 
-    public List<ArticleVO> getArticles(Article article);
+    /**
+     * 删除博客
+     * @param id
+     */
+    public void delete(Integer id);
 
-    public List<ArticleVO> getArticleByUserId(int userId);
+    /**
+     * 删除博客
+     * @param article
+     */
+    public void update(Article article);
 
-    public List<Article> getArticleList(int userId);
+    /**
+     * 获取博客列表
+     * @param article
+     * @return
+     */
+    public List<ArticleVO> getArticleList(ArticleVO article);
 
-    public List archive(Integer userId);
+    /**
+     * 根据id获取博客
+     * @param userId
+     * @return
+     */
+    public ArticleVO getArticleById(int userId);
 
-    public List<ClassifyVO> classify(Integer userId);
 
-    ArticleVO getArticleById(Integer id);
 }

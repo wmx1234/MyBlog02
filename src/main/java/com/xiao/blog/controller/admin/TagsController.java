@@ -38,7 +38,7 @@ public class TagsController {
     @RequestMapping("/add")
     public String add(Params tags, Model model){
         //labelService.save(tags);
-        model.addAttribute("tagsList",tagsService.getTagsList(ShiroKit.getUser().getId()));
+        model.addAttribute("tagsList",tagsService.getTagsList());
         return "/admin/md_editor::md_editor_tags";
     }
 
@@ -52,7 +52,7 @@ public class TagsController {
     @RequestMapping("/getTagsList")
     @ResponseBody
     public CommonResponse<List<Tags>> getTagsList(Integer userId){
-        List<Tags> tagsList = tagsService.getTagsList(userId);
+        List<Tags> tagsList = tagsService.getTagsList();
         return new CommonResponse(tagsList);
     }
 
@@ -60,7 +60,7 @@ public class TagsController {
     @ResponseBody
     public CommonResponse<List<TagsVO>> getTagsVOList(){
         Integer id = ShiroKit.getUser().getId();
-        List<TagsVO> tagsVOList = tagsService.getTagsVOList(id);
+        List<TagsVO> tagsVOList = tagsService.getTagsVOList();
         return new CommonResponse(tagsVOList);
     }
 

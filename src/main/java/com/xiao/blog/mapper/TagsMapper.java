@@ -15,9 +15,13 @@ public interface TagsMapper {
 
     int updateByPrimaryKey(Tags tags);
 
-    List<TagsVO> getTagsVOList(Integer userId);
+    /**
+     * 获取页面展示标签
+     * @return
+     */
+    List<TagsVO> getTagsVOList();
 
-    List<Tags> getTagsList(Integer userId);
+    List<Tags> getTagsList();
 
     @Select("select count(id) from blog_tags where name = #{name}")
     Integer exist(Tags tags);

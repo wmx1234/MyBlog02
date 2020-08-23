@@ -46,7 +46,7 @@ public class ArticleController {
     public PageResponse<ArticleVO> getArticleVOList(PageRequest request){
         PageHelper.startPage(request.getPage(),request.getLimit());
         //创建pageinfo，包含分页的信息
-        PageInfo info=new PageInfo(articleService.getArticleList(new ArticleVO()));
+        PageInfo info=new PageInfo(articleService.getAllArticles());
 
         return new PageResponse<ArticleVO>(info);
     }

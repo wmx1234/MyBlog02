@@ -1,6 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="zh-CN">
-
+<html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
 
 <head>
     <meta charset="utf-8">
@@ -15,7 +14,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
-
     <title>分类 | 晓&amp;静</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/favicon.png">
 
@@ -28,323 +26,70 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/css/my.css">
 
     <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/jquery/jquery.min.js"></script>
+    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
+    <meta name="generator" content="Hexo 4.2.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+    <link rel="stylesheet" th:href="@{/css/categories.css}"  media="all">
+<style>
 
-<meta name="generator" content="Hexo 4.2.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
 
-
+</style>
 <body>
-    <header class="navbar-fixed">
-    <nav id="headNav" class="bg-color nav-transparent">
-        <div id="navContainer" class="nav-wrapper container">
-            <div class="brand-logo">
-                <a href="/" class="waves-effect waves-light">
-                    
-                    <img src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/logo.png" class="logo-img" alt="LOGO">
-                    
-                    <span class="logo-span" style="font-family: 楷体;">晓&amp;静</span>
-                </a>
-            </div>
-            
 
-<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
-<ul class="right nav-menu">
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/" class="waves-effect waves-light">
-      
-      <i class="fas fa-home" style="zoom: 0.6;"></i>
-      
-      <span>首页</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/tags" class="waves-effect waves-light">
-      
-      <i class="fas fa-tags" style="zoom: 0.6;"></i>
-      
-      <span>标签</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/categories" class="waves-effect waves-light">
-      
-      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
-      
-      <span>分类</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/archives" class="waves-effect waves-light">
-      
-      <i class="fas fa-archive" style="zoom: 0.6;"></i>
-      
-      <span>归档</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/about" class="waves-effect waves-light">
-      
-      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
-      
-      <span>关于</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/contact" class="waves-effect waves-light">
-      
-      <i class="fas fa-comments" style="zoom: 0.6;"></i>
-      
-      <span>留言板</span>
-    </a>
-    
-  </li>
-  
-  <li class="hide-on-med-and-down nav-item">
-    
-    <a href="/friends" class="waves-effect waves-light">
-      
-      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
-      
-      <span>友情链接</span>
-    </a>
-    
-  </li>
-  
-  <li>
-    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
-      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
-    </a>
-  </li>
-</ul>
+<header th:replace="blog/fragment/header::header"></header>
 
+<div th:replace="blog/fragment/common::blog_bgcover"></div>
 
-<div id="mobile-nav" class="side-nav sidenav">
-
-    <div class="mobile-head bg-color">
-        
-        <img src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/logo.png" class="logo-img circle responsive-img">
-        
-        <div class="logo-name">晓&amp;静</div>
-        <div class="logo-desc">
-            
-            Never really desperate, only the lost of the soul.
-            
-        </div>
-    </div>
-
-    
-
-    <ul class="menu-list mobile-menu-list">
-        
-        <li class="m-nav-item">
-	  
-		<a href="/" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-home"></i>
-			
-			首页
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/tags" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-tags"></i>
-			
-			标签
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/categories" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-bookmark"></i>
-			
-			分类
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/archives" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-archive"></i>
-			
-			归档
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/about" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-user-circle"></i>
-			
-			关于
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/contact" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-comments"></i>
-			
-			留言板
-		</a>
-          
-        </li>
-        
-        <li class="m-nav-item">
-	  
-		<a href="/friends" class="waves-effect waves-light">
-			
-			    <i class="fa-fw fas fa-address-book"></i>
-			
-			友情链接
-		</a>
-          
-        </li>
-        
-        
-    </ul>
-</div>
-
-
-        </div>
-
-        
-    </nav>
-
-</header>
-<script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
-
-    <div class="bg-cover pd-header about-cover">
-    <div class="container">
-    <div class="row">
-    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
-        <div class="brand">
-            <div class="title center-align" style="font-family: 楷体;">
-                
-                    晓&静
-                
-            </div>
-
-            <div class="description center-align">
-                
-                    <span id="jinrishici-sentence" class="diy-font">正在加载今日诗词....</span>
-                
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<script>
-    // 每天切换 banner 图.  Switch banner image every day.
-    var bannerUrl = "https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/banner/" + new Date().getDay() + '.jpg';
-    $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
-</script>
-
-
-    </div>
-</div>
 
 <main class="content">
 
-    
 
-<div id="category-cloud" class="container chip-container">
-    <div class="card">
-        <div class="card-content">
-            <div class="tag-title center-align">
-                <i class="fas fa-bookmark"></i>&nbsp;&nbsp;文章分类
-            </div>
-            <div class="tag-chips">
-                
-                
-                
-                
-                
-                <a href="/categories/Docker/" title="Docker: 9">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F9EBEA;">Docker
-                        <span class="tag-length">9</span>
-                    </span>
-                </a>
-                
-                
-                
-                <a href="/categories/Nginx/" title="Nginx: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #F5EEF8;">Nginx
-                        <span class="tag-length">1</span>
-                    </span>
-                </a>
-                
-                
-                
-                <a href="/categories/Spring/" title="Spring: 4">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #D5F5E3;">Spring
-                        <span class="tag-length">4</span>
-                    </span>
-                </a>
-                
-                
-                
-                <a href="/categories/Spring/SpringCloud/" title="SpringCloud: 2">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #E8F8F5;">SpringCloud
-                        <span class="tag-length">2</span>
-                    </span>
-                </a>
-                
-                
-                
-                <a href="/categories/Spring/SpringBoot/" title="SpringBoot: 2">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                            style="background-color: #FEF9E7;">SpringBoot
-                        <span class="tag-length">2</span>
-                    </span>
-                </a>
-                
-                
+    <div id="category-cloud" class="container chip-container">
+        <div class="card">
+            <div class="card-content">
+                <div class="tag-title center-align">
+                    <i class="fas fa-bookmark"></i>&nbsp;&nbsp;文章分类
+                </div>
+                <div class="category-content">
+                    <div class="category-lists">
+                        <div>
+                            <ul class="category-list">
+                                <li class="category-list-item"><a class="category-list-link"
+                                                                  href="/categories/Hexo%E5%8D%9A%E5%AE%A2/">Hexo博客</a><span
+                                        class="category-list-count">23</span></li>
+                                <li class="category-list-item"><a class="category-list-link"
+                                                                  href="/categories/Web%E5%89%8D%E7%AB%AF/">Web前端</a><span
+                                        class="category-list-count">7</span>
+                                    <ul class="category-list-child">
+                                        <li class="category-list-item"><a class="category-list-link"
+                                                                          href="/categories/Web%E5%89%8D%E7%AB%AF/CSS3/">CSS3</a><span
+                                                class="category-list-count">1</span></li>
+                                        <li class="category-list-item"><a class="category-list-link"
+                                                                          href="/categories/Web%E5%89%8D%E7%AB%AF/HTML/">HTML</a><span
+                                                class="category-list-count">1</span></li>
+                                        <li class="category-list-item"><a class="category-list-link"
+                                                                          href="/categories/Web%E5%89%8D%E7%AB%AF/JavaScript/">JavaScript</a><span
+                                                class="category-list-count">2</span></li>
+                                        <li class="category-list-item"><a class="category-list-link"
+                                                                          href="/categories/Web%E5%89%8D%E7%AB%AF/Node-js/">Node.js</a><span
+                                                class="category-list-count">1</span></li>
+                                    </ul>
+                                </li>
+                                <li class="category-list-item"><a class="category-list-link"
+                                                                  href="/categories/%E5%A5%87%E6%B7%AB%E6%8A%80%E5%B7%A7/">奇淫技巧</a><span
+                                        class="category-list-count">1</span></li>
+                                <li class="category-list-item"><a class="category-list-link"
+                                                                  href="/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E9%9B%86%E5%90%88/">实用工具集合</a><span
+                                        class="category-list-count">1</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
 
-    
+
     <style type="text/css">
     #category-radar {
         width: 100%;
@@ -352,161 +97,22 @@
     }
 </style>
 
-<div class="container" data-aos="fade-up">
-    <div class="card">
-        <div id="category-radar" class="card-content"></div>
+    <div class="container" data-aos="fade-up">
+        <div class="card">
+
+        </div>
     </div>
-</div>
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/echarts/echarts.min.js"></script>
-<script type="text/javascript">
-    let radarChart = echarts.init(document.getElementById('category-radar'));
 
-    
 
-    let option = {
-        title: {
-            left: 'center',
-            text: '文章分类雷达图',
-            textStyle: {
-                fontWeight: 500,
-                fontSize: 22
-            }
-        },
-        tooltip: {},
-        radar: {
-            name: {
-                textStyle: {
-                    color: '#3C4858'
-                }
-            },
-            indicator: [{"name":"Docker","max":10},{"name":"Nginx","max":10},{"name":"Spring","max":10},{"name":"SpringCloud","max":10},{"name":"SpringBoot","max":10}],
-            nameGap: 5,
-            center: ['50%','55%'],
-            radius: '66%'
-        },
-        series: [{
-            type: 'radar',
-            color: ['#3ecf8e'],
-            itemStyle: {normal: {areaStyle: {type: 'default'}}},
-            data : [
-                {
-                    value : [9,1,4,2,2],
-                    name : '文章分类数量'
-                }
-            ]
-        }]
-    };
-
-    radarChart.setOption(option);
-</script>
-
-    
 
 </main>
 
 
-    <footer class="page-footer bg-color">
-    
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/aplayer/APlayer.min.css">
-<style>
-    .aplayer .aplayer-lrc p {
-        
-        display: none;
-        
-        font-size: 12px;
-        font-weight: 700;
-        line-height: 16px !important;
-    }
-
-    .aplayer .aplayer-lrc p.aplayer-lrc-current {
-        
-        display: none;
-        
-        font-size: 15px;
-        color: #42b983;
-    }
-
-    
-    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
-        left: -66px !important;
-    }
-
-    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
-        left: 0px !important;
-    }
-
-    
-</style>
-<div class="">
-    
-    <div class="row">
-        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
-                   server="netease"
-                   type="playlist"
-                   id="3205260158"
-                   fixed='true'
-                   autoplay='false'
-                   theme='#42b983'
-                   loop='all'
-                   order='random'
-                   preload='auto'
-                   volume='0.7'
-                   list-folded='true'
-        >
-        </meting-js>
-    </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/aplayer/APlayer.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
-
-    
-    <div class="container row center-align" style="margin-bottom: 0px !important;">
-        <div class="col s12 copy-right">
-            Copyright&nbsp;&copy;
-            <span id="year">2020</span>
-            <a href="/about" target="_blank">王明晓</a>
-            
-            
-            
-            
-            
-            
-            <span id="busuanzi_container_site_pv">
-                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
-                    class="white-color"></span>&nbsp;次
-            </span>
-            
-            
-            <span id="busuanzi_container_site_uv">
-                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
-                    class="white-color"></span>&nbsp;人
-            </span>
-            
-            <br>
-            
-            <br>
-            
-        </div>
-      
-    </div>
-</footer>
-
-<div class="progress-bar"></div>
+    <footer th:replace="blog/fragment/footer::footer"></footer>
 
 
-    <!-- 搜索遮罩框 -->
-<div id="searchModal" class="modal">
-    <div class="modal-content">
-        <div class="search-header">
-            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
-            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
-                   class="search-input">
-        </div>
-        <div id="searchResult"></div>
-    </div>
-</div>
+    <div th:replace="blog/fragment/common::blog_tools"></div>
 
 <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/js/search.js"></script>
 <script type="text/javascript">
@@ -515,12 +121,7 @@ $(function () {
 });
 </script>
 
-    <!-- 回到顶部按钮 -->
-<div id="backTop" class="top-scroll">
-    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
-        <i class="fas fa-arrow-up"></i>
-    </a>
-</div>
+
 
 
     <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/materialize/materialize.min.js"></script>
@@ -548,23 +149,9 @@ $(function () {
     })();
 </script>
 
-    
     <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/others/clicklove.js" async="async"></script>
-    
-    
+
     <script async src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/others/busuanzi.pure.mini.js"></script>
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
     
     <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/instantpage/instantpage.js" type="module"></script>
     

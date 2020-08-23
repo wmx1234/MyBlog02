@@ -7,7 +7,6 @@
     <result column="name" property="name" jdbcType="VARCHAR" />
     <result column="create_date" property="createDate" jdbcType="VARCHAR" />
     <result column="update_data" property="updateData" jdbcType="VARCHAR" />
-    <result column="user_id" property="userId" jdbcType="INTEGER" />
   </resultMap>
 
   <insert id="insert" parameterType="com.xiao.blog.model.Tags" >
@@ -32,30 +31,24 @@
 
 
   <select id="getTagsList" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select id, `name`
-    from blog_tags
-    where user_id = #{userId,jdbcType=INTEGER}
+    select id, `name` from blog_tags
   </select>
 
+
   <resultMap id="TagsVO" type="com.xiao.blog.vo.TagsVO" extends="BaseResultMap">
-    <result column="article_count" property="articleCount" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="text" property="text" jdbcType="VARCHAR" />
+    <result column="weight" property="weight" jdbcType="INTEGER" />
   </resultMap>
-  <select id="getTagsVOList" resultMap="TagsVO" parameterType="java.lang.Integer">
+  <select id="getTagsVOList" resultMap="TagsVO">
     select
        tags.id,
-       tags.name,
-       tags.create_date,
-       (CASE WHEN
-       center_table.article_count is null THEN 0
-       ELSE center_table.article_count END ) article_count
+       tags.name text,
+       temp.weight
     from blog_tags tags
     left join
-        (select count(article.id) article_count, bat.tags_id
-            from blog_article article
-            left join blog_article_tags bat on bat.article_id = article.id
-            group by bat.tags_id) center_table on center_table.tags_id = tags.id
-    where
-    user_id = #{userId,jdbcType=INTEGER}
-    order by id
+        (select tags_id,count(tags_id) weight from blog_article_tags GROUP BY tags_id) temp
+	    on tags.id = temp.tags_id
+    where temp.weight > 0
   </select>
 </mapper>

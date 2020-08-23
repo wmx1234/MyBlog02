@@ -16,8 +16,12 @@ public interface TagsService {
 
     public int delete(Integer id);
 
-    List<TagsVO> getTagsVOList(Integer userId);
+    /**
+     * 获取TagsVO列表
+     * @return
+     */
+    List<TagsVO> getTagsVOList();
 
-    List<Tags> getTagsList(Integer userId);
+    List<Tags> getTagsList();
 
 }

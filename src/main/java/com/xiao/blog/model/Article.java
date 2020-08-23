@@ -30,9 +30,9 @@ public class Article implements Serializable {
 
     private Integer userId;
 
-    private Date createDate;
+    private String createDate;
 
-    private Date updateDate;
+    private String updateDate;
 
     private Integer likes;
 

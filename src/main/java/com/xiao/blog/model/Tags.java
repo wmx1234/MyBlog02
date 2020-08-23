@@ -10,6 +10,8 @@ import java.io.Serializable;
 @Data
 public class Tags implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     private Integer id;
 
     private String name;
@@ -17,10 +19,5 @@ public class Tags implements Serializable {
     private String createDate;
 
     private String updateData;
-
-    private Integer userId;
-
-    private static final long serialVersionUID = 1L;
-
 
 }

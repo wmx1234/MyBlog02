@@ -6,6 +6,7 @@ import com.xiao.blog.vo.ArticleVO;
 import com.xiao.blog.vo.ClassifyVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wangmx
@@ -33,11 +34,17 @@ public interface ArticleService {
     public void update(Article article);
 
     /**
-     * 获取博客列表
-     * @param article
+     * 获取所有博客列表
      * @return
      */
-    public List<ArticleVO> getArticleList(ArticleVO article);
+    public List<ArticleVO> getAllArticles();
+
+    /**
+     * 获取博客列表
+     * @param id
+     * @return
+     */
+    public List<ArticleVO> getArticleListByTagsId(Integer id);
 
     /**
      * 根据id获取博客

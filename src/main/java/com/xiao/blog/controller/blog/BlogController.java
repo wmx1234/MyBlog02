@@ -1,5 +1,7 @@
 package com.xiao.blog.controller.blog;
 
+import cn.hutool.json.JSON;
+import cn.hutool.json.JSONUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xiao.blog.pojo.request.PageRequest;
@@ -7,10 +9,12 @@ import com.xiao.blog.service.ArticleService;
 import com.xiao.blog.service.TagsService;
 import com.xiao.blog.service.UserService;
 import com.xiao.blog.vo.ArticleVO;
+import com.xiao.blog.vo.TagsVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -32,14 +36,16 @@ public class BlogController {
 
     /**
      * 访问网站主页
+     * @param pageNum 当前页
+     * @param model
      * @return
      */
     @RequestMapping({"/index","/"})
-    public String index(PageRequest<ArticleVO> request, ArticleVO article,Model model){
+    public String index(@RequestParam(required = false,defaultValue = "1")Integer pageNum,Model model){
 
-        PageHelper.startPage(request.getPage(), request.getLimit());
+        PageHelper.startPage(pageNum, 9);
 
-        List<ArticleVO> articles = articleService.getArticleList(article);
+        List<ArticleVO> articles = articleService.getAllArticles();
 
         PageInfo pageInfo = new PageInfo(articles);
 
@@ -55,8 +61,6 @@ public class BlogController {
      */
     @RequestMapping("/categories")
     public String classify(Model model){
-
-        //model.addAttribute("classifyList",articleService.classify(1));
 
         return "blog/categories";
     }
@@ -79,11 +83,38 @@ public class BlogController {
     @RequestMapping("/tags")
     public String tagsCloud(Model model){
 
-        model.addAttribute("tagsList",tagsService.getTagsList(1));
+        List<TagsVO> tagsVOList = tagsService.getTagsVOList();
+
+        model.addAttribute("tagsList", tagsVOList);
+
+        model.addAttribute("flag", false);
 
         return "blog/tags";
     }
 
+    /**
+     * 根据标签获取博客
+     * @param id
+     * @param model
+     * @return
+     */
+    @RequestMapping("/tags/{id}")
+    public String getArticleListByTagsId(@PathVariable("id") Integer id, Model model){
+
+        List<TagsVO> tagsVOList = tagsService.getTagsVOList();
+
+        List<ArticleVO> articleList = articleService.getArticleListByTagsId(id);
+        System.out.println("========================================================================");
+        System.out.println(articleList);
+        System.out.println("========================================================================");
+        model.addAttribute("flag", true);
+
+        model.addAttribute("tagsList", tagsVOList);
+
+        model.addAttribute("articleList",articleList);
+
+        return "blog/tags";
+    }
     /**
      * 标签
      * @param model
@@ -91,8 +122,6 @@ public class BlogController {
      */
     @RequestMapping("/about")
     public String about(Model model){
-
-        model.addAttribute("tagsList",tagsService.getTagsList(1));
 
         return "blog/about";
     }
@@ -104,8 +133,6 @@ public class BlogController {
      */
     @RequestMapping("/contact")
     public String contact(Model model){
-
-        model.addAttribute("tagsList",tagsService.getTagsList(1));
 
         return "blog/contact";
     }

@@ -63,20 +63,7 @@
     <meta name="generator" content="Hexo 4.2.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css">
 </head>
 
-<!-- 下拉标识 -->
-<div class="progress-bar"></div>
 
-<!-- 搜索遮罩框 -->
-<div id="searchModal" class="modal">
-    <div class="modal-content">
-        <div class="search-header">
-            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
-            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
-                   class="search-input">
-        </div>
-        <div id="searchResult"></div>
-    </div>
-</div>
 
 <div class="bg-cover pd-header about-cover" th:fragment="blog_bgcover">
     <div class="container">
@@ -148,7 +135,8 @@
 <div class="container paging" th:fragment="blog_paging">
     <div class="row">
         <div class="col s6 m4 l4">
-            <a class="left btn-floating btn-large disabled">
+            <a th:href="@{'/index?pageNum='+${pageInfo.getPrePage()}}"
+               th:class="'left btn-floating btn-large' + ${pageInfo.isHasPreviousPage()?' bg-color':' disabled'}">
                 <i class="fas fa-angle-left"></i>
             </a>
         </div>
@@ -157,10 +145,33 @@
 
         </div>
         <div class="col s6 m4 l4">
-            <a href="/page/2/"
-               class="right btn-floating btn-large waves-effect waves-light bg-color">
+            <a th:href="@{'/index?pageNum='+${pageInfo.getNextPage()}}"
+               th:class="'right btn-floating btn-large' + ${pageInfo.isHasNextPage()?' bg-color':' disabled'}">
                 <i class="fas fa-angle-right"></i>
             </a>
         </div>
+    </div>
+</div>
+
+
+<div class="blog_tools" th:fragment="blog_tools">
+    <div class="progress-bar"></div>
+    <!-- 搜索遮罩框 -->
+    <div id="searchModal" class="modal">
+        <div class="modal-content">
+            <div class="search-header">
+                <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+                <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                       class="search-input">
+            </div>
+            <div id="searchResult"></div>
+        </div>
+    </div>
+
+    <!-- 回到顶部按钮 -->
+    <div id="backTop" class="top-scroll">
+        <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+            <i class="fas fa-arrow-up"></i>
+        </a>
     </div>
 </div>

@@ -1,18 +1,21 @@
 package com.xiao.blog.service.impl;
 
 import cn.hutool.core.date.DateUtil;
+import com.xiao.blog.common.Constant;
+import com.xiao.blog.model.Comment;
+import com.xiao.blog.util.CommonUtils;
 import com.xiao.blog.exception.BusinessException;
 import com.xiao.blog.exception.assertion.BusinessExceptionAssert;
 import com.xiao.blog.mapper.TagsMapper;
 import com.xiao.blog.model.Tags;
 import com.xiao.blog.service.TagsService;
-import com.xiao.blog.shiro.ShiroKit;
 import com.xiao.blog.util.DataBaseUtil;
 import com.xiao.blog.vo.TagsVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author wangmx
@@ -22,7 +25,7 @@ import java.util.List;
 @Service("TagsService")
 public class TagsServiceImpl implements TagsService {
 
-    @Autowired
+    @Resource
     TagsMapper tagsMapper;
 
     @Override
@@ -44,13 +47,21 @@ public class TagsServiceImpl implements TagsService {
     }
 
     @Override
-    public List<TagsVO> getTagsVOList(Integer userId) {
-        return tagsMapper.getTagsVOList(userId);
+    public List<TagsVO> getTagsVOList() {
+
+        List<TagsVO> tagsVOList = tagsMapper.getTagsVOList();
+
+        tagsVOList.forEach(tags->{
+            tags.setLink("/tags/"+tags.getId());
+            tags.setColor(Constant.COLORS[new Random().nextInt(9)]);
+        });
+
+        return tagsVOList;
     }
 
     @Override
-    public List<Tags> getTagsList(Integer userId) {
-        return tagsMapper.getTagsList(userId);
+    public List<Tags> getTagsList() {
+        return tagsMapper.getTagsList();
     }
 
 
@@ -61,7 +72,6 @@ public class TagsServiceImpl implements TagsService {
 
         tags.setCreateDate(DateUtil.today());
         tags.setId(DataBaseUtil.nextValue());
-        tags.setUserId(ShiroKit.getUser().getId());
         return tagsMapper.insert(tags);
     }
 

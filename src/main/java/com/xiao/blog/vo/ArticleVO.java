@@ -23,4 +23,9 @@ public class ArticleVO extends Article {
 
     private List<Tags> tagsList;
 
+    /**
+     * 查询特定标签下所有博客时使用
+     */
+    private Integer tagsId;
+
 }

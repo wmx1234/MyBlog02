@@ -15,7 +15,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wangmx
@@ -47,8 +49,13 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<ArticleVO> getArticleList(ArticleVO article) {
-        return articleMapper.getArticleList(article);
+    public List<ArticleVO> getArticleListByTagsId(Integer id) {
+        return articleMapper.getArticleListByTagsId(id);
+    }
+
+    @Override
+    public List<ArticleVO> getAllArticles() {
+        return articleMapper.getAllArticles();
     }
 
     @Override

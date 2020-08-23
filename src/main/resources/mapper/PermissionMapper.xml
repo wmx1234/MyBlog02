@@ -41,7 +41,7 @@
     delete from sys_permission where id = #{id,jdbcType=INTEGER}
   </delete>
 
-
+  <!--
   <delete id="deleteBatch" parameterType="java.util.List">
     delete from
     sys_permission
@@ -51,7 +51,7 @@
       #{item}
     </foreach>
   </delete>
-
+-->
 
   <update id="updateByPrimaryKey" parameterType="com.xiao.blog.model.Permission" >
 

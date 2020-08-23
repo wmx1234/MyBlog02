@@ -48,7 +48,6 @@ public interface RoleMapper {
      */
     int updateByPrimaryKey(Role record);
 
-    Role getRoleByUser(Integer userId);
 
     int insertRolePermissionRelation(List<Map> list);
 }

@@ -1,23 +1,23 @@
 package com.xiao.blog.mapper;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.xiao.blog.model.Permission;
 import com.xiao.blog.pojo.TreeModel;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+/**
+ * @author wangmx
+ */
 @Mapper
-public interface PermissionMapper {
+public interface PermissionMapper extends BaseMapper<Permission> {
 
     int deleteByPrimaryKey(Integer id);
-
-    int insert(Permission record);
-
 
     Permission selectByPrimaryKey(Integer id);
 
     List<Permission> selectAll();
-
 
     int updateByPrimaryKey(Permission record);
 

@@ -104,9 +104,7 @@ public class BlogController {
         List<TagsVO> tagsVOList = tagsService.getTagsVOList();
 
         List<ArticleVO> articleList = articleService.getArticleListByTagsId(id);
-        System.out.println("========================================================================");
-        System.out.println(articleList);
-        System.out.println("========================================================================");
+
         model.addAttribute("flag", true);
 
         model.addAttribute("tagsList", tagsVOList);
@@ -152,7 +150,9 @@ public class BlogController {
     public String article(@PathVariable("id") Integer id, Model model){
 
         ArticleVO article = articleService.getArticleById(id);
+
         model.addAttribute("article",article);
+
         return "blog/article";
     }
 

@@ -34,10 +34,11 @@ public class TagsServiceImpl implements TagsService {
         //校验标签是否已存在
         BusinessExceptionAssert.assertTagsExist(tags);
 
-        if(tags.getId() != null)
+        if(tags.getId() != null){
             return update(tags);
-        else
+        } else{
             return insert(tags);
+        }
 
     }
 
@@ -61,7 +62,7 @@ public class TagsServiceImpl implements TagsService {
 
     @Override
     public List<Tags> getTagsList() {
-        return tagsMapper.getTagsList();
+        return tagsMapper.getAllTags();
     }
 
 

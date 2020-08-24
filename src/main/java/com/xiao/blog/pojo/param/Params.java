@@ -81,9 +81,8 @@ public class Params {
 
         String s = JSONUtil.toJsonStr(get(name));
 
-
-        T per = (T)JSONUtil.toBean(s,clazz);; //将json转成需要的对象
-
+        //将json转成需要的对象
+        T per = (T)JSONUtil.toBean(s,clazz);
 
         return per;
     }

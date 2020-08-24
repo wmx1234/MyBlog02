@@ -34,9 +34,8 @@ public class ArticleController {
 
     @RequestMapping("/save")
     @ResponseBody
-    public BaseResponse save(@RequestBody Article article){
-
-        articleService.save(article);
+    public BaseResponse save(@RequestBody Params params){
+        articleService.save(params.getObject("article",Article.class));
 
         return new BaseResponse();
     }

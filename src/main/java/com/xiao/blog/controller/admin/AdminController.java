@@ -1,10 +1,13 @@
 package com.xiao.blog.controller.admin;
 
 import com.xiao.blog.mapper.RelationMapper;
+import com.xiao.blog.model.Categories;
 import com.xiao.blog.model.Permission;
 import com.xiao.blog.model.User;
 import com.xiao.blog.service.*;
 import com.xiao.blog.shiro.ShiroKit;
+import com.xiao.blog.util.DataBaseUtil;
+import com.xiao.blog.vo.ArticleVO;
 import com.xiao.blog.vo.LoginUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 
@@ -30,25 +34,25 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @Autowired
+    @Resource
     UserService userService;
 
-    @Autowired
+    @Resource
     RoleService roleService;
 
-    @Autowired
+    @Resource
     PermissionService permissionService;
 
-    @Autowired
+    @Resource
     TagsService tagsService;
 
-    @Autowired
+    @Resource
     CategoriesService categoriesService;
 
-    @Autowired
+    @Resource
     RelationMapper relationMapper;
 
-    @Autowired
+    @Resource
     ArticleService articleService;
 
     @GetMapping("/login")
@@ -138,11 +142,11 @@ public class AdminController {
     public String write(Model model){
 
 
-//        ArticleVO articleVO = new ArticleVO();
-//        articleVO.setId(DataBaseUtil.nextValue());
-//        model.addAttribute("articleVO", articleVO);
-//        model.addAttribute("categoriesList",categoriesService.getCategoriesByField(new Categories(ShiroKit.getUser().getId())));
-//        model.addAttribute("tagsList",tagsService.getTagsList(ShiroKit.getUser().getId()));
+        ArticleVO articleVO = new ArticleVO();
+        articleVO.setId(DataBaseUtil.nextValue());
+        model.addAttribute("articleVO", articleVO);
+        model.addAttribute("categoriesList",categoriesService.getCategoriesByField(new Categories(ShiroKit.getUser().getId())));
+        model.addAttribute("tagsList",tagsService.getTagsList());
 
 
         return "/admin/md_editor";

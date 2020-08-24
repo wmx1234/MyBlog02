@@ -72,7 +72,7 @@
         last_article_id,
         next_article_id,
         top,
-        editor_type,
+
         draft,
         privacy,
         article_content,
@@ -88,7 +88,7 @@
         #{lastArticleId,jdbcType=INTEGER},
         #{nextArticleId,jdbcType=INTEGER},
         #{top,jdbcType=INTEGER},
-        #{editorType,jdbcType=INTEGER},
+
         #{draft,jdbcType=INTEGER},
         #{privacy,jdbcType=INTEGER},
         #{articleContent,jdbcType=LONGVARCHAR},
@@ -117,7 +117,7 @@
       last_article_id = #{lastArticleId,jdbcType=INTEGER},
       next_article_id = #{nextArticleId,jdbcType=INTEGER},
       top = #{top,jdbcType=INTEGER},
-      editor_type = #{editorType,jdbcType=INTEGER},
+
       draft = #{draft,jdbcType=INTEGER},
       privacy = #{privacy,jdbcType=INTEGER},
       article_content = #{articleContent,jdbcType=LONGVARCHAR},

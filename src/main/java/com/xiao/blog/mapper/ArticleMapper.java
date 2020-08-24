@@ -14,7 +14,7 @@ import java.util.List;
  * @author wangmx
  */
 @Mapper
-public interface ArticleMapper extends BaseMapper<ArticleVO> {
+public interface ArticleMapper extends BaseMapper<ArticleVO>{
 
     /**
      * 新增博客

@@ -1,17 +1,23 @@
 package com.xiao.blog.mapper;
 
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.xiao.blog.model.Tags;
 import com.xiao.blog.vo.TagsVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+
+/**
+ * 标签
+ * @author Wangmx
+ * @Date 2020-08-24
+ */
 @Mapper
-public interface TagsMapper {
+public interface TagsMapper extends BaseMapper<Tags> {
 
     int deleteByPrimaryKey(Integer id);
 
-    int insert(Tags record);
 
     int updateByPrimaryKey(Tags tags);
 
@@ -21,7 +27,11 @@ public interface TagsMapper {
      */
     List<TagsVO> getTagsVOList();
 
-    List<Tags> getTagsList();
+    /**
+     *
+     * @return
+     */
+    List<Tags> getAllTags();
 
     @Select("select count(id) from blog_tags where name = #{name}")
     Integer exist(Tags tags);

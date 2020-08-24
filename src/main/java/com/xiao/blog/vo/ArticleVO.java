@@ -27,5 +27,37 @@ public class ArticleVO extends Article {
      * 查询特定标签下所有博客时使用
      */
     private Integer tagsId;
+    public ArticleVO(){}
+    public ArticleVO(Article article){
+        super.setId(article.getId());
+        super.setArticleTitle(article.getArticleTitle());
+        super.setArticleDigest(article.getArticleDigest());
+        super.setArticleContent(article.getArticleContent());
+        super.setArticleHtmlContent(article.getArticleHtmlContent());
+        super.setUserId(article.getUserId());
+        super.setLikes(article.getLikes());
+        //private String articleImage;
+
+        //private String articleUrl;
+
+
+//        private String createDate;
+//
+//        private String updateDate;
+//
+//        private Integer likes;
+//
+//        private Integer lastArticleId;
+//
+//        private Integer nextArticleId;
+//
+//        private Integer top;
+//
+//        private Integer draft;
+//
+//        private Integer privacy;
+//
+//        private Integer categoriesId;
+    }
 
 }

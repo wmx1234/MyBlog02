@@ -35,7 +35,8 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public void save(Article article) {
-
+        System.out.println(article);
+        articleMapper.save(article);
     }
 
     @Override

@@ -17,9 +17,9 @@ public interface ArticleService {
 
     /**
      * 保存博客
-     * @param article
+     * @param params
      */
-    public void save(Article article);
+    public void save(Params params);
 
     /**
      * 删除博客

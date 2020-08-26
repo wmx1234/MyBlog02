@@ -34,14 +34,16 @@ public class ArticleServiceImpl implements ArticleService {
     RelationMapper relationMapper;
 
     @Override
-    public void save(Article article) {
-        System.out.println(article);
-        articleMapper.save(article);
+
+    public void save(Params params) {
+        //保存博客
+        articleMapper.save(params.getObject("article",Article.class));
+
     }
 
     @Override
     public void delete(Integer id) {
-
+        articleMapper.delete(id);
     }
 
     @Override

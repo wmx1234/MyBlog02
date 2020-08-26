@@ -5,6 +5,7 @@ import com.xiao.blog.model.Article;
 import com.xiao.blog.vo.Archive;
 import com.xiao.blog.vo.ArticleVO;
 import com.xiao.blog.vo.ClassifyVO;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
@@ -28,6 +29,7 @@ public interface ArticleMapper extends BaseMapper<ArticleVO>{
      * @param id
      * @return
      */
+    @Delete("delete from blog_article where id = #{id}")
     int delete(int id);
 
     /**

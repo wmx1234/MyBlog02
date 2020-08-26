@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
+
 /**
  * @author wangmx
  * @create 2019-11-28 20:15
@@ -26,16 +28,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/admin/article")
 public class ArticleController {
 
-    @Autowired
+    @Resource
     ArticleService articleService;
 
-    @Autowired
+    @Resource
     CategoriesService categoriesService;
 
+    /**
+     * 保存博客
+     * @param params
+     * @return
+     */
     @RequestMapping("/save")
     @ResponseBody
     public BaseResponse save(@RequestBody Params params){
-        articleService.save(params.getObject("article",Article.class));
+
+        articleService.save(params);
 
         return new BaseResponse();
     }

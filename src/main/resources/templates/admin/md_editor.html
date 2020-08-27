@@ -3,7 +3,18 @@
 <head th:replace="admin/fragment/common::header"></head>
 <link th:href="@{/admin/mdeditor/css/editormd.css}" rel="stylesheet">
 <script th:src="@{/admin/mdeditor/js/editormd.min.js}"></script>
+<style>
 
+    .tag__name {
+        margin-right: 8px;
+        padding: 5px;
+        font-size: 14px;
+        height: 28px;
+        background: rgba(38,125,204,.05);
+        border-radius: 4px;
+        border: 1px solid rgba(38,125,204,.2);
+    }
+</style>
 <body class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">
 
@@ -48,6 +59,10 @@
 
                         <label class="layui-form-label">文章标签</label>
                         <div class="layui-input-block">
+                            <span contenteditable="false" class="tag__name">
+                                设计模式
+                                <i class="layui-icon ">&#x1006;</i>
+                            </span>
                             <button type="button" class="layui-btn layui-btn-radius layui-btn-primary"><i class="layui-icon">&#xe654;</i>流体按钮（最大化适应）</button>
                         </div>
                     </div>

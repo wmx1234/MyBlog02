@@ -199,7 +199,7 @@
         left join blog_categories categories on article.categories_id = categories.id
         where article.draft = 0
         and article.privacy = 0
-
+        order by create_date desc
 
     </select>
     <!--根据条件查询博客 -->
@@ -210,13 +210,9 @@
             article.article_html_content,
             article.article_title,
             article.likes,
-            article.read_count,
             article.create_date,
-            article.update_date,
-            article.editor_type,
             article.draft,
             article.privacy,
-            article.user_id,
             u.name name,
             article.categories_id,
             categories.name categories_name
@@ -228,34 +224,6 @@
         where article.id = #{id,jdbcType=INTEGER}
 
     </select>
-
-
-    <resultMap id="Archive" type="com.xiao.blog.vo.ArchiveVO" >
-        <result column="createYear" property="year" jdbcType="VARCHAR" />
-        <collection property="archives" ofType="com.xiao.blog.vo.Archive">
-            <result column="create_date" property="createDate" jdbcType="VARCHAR" />
-            <collection property="articles" ofType="com.xiao.blog.model.Article">
-                <id column="id" property="id" jdbcType="INTEGER" />
-                <result column="article_title" property="articleTitle" jdbcType="VARCHAR" />
-            </collection>
-        </collection>
-
-    </resultMap>
-  <select id="archive" resultMap="Archive">
-      select
-      a.id,
-      a.article_title,
-      a.create_date,
-      a.user_id,
-      left(a.create_date,4) createYear
-      from blog_article a
-      left join (select create_date from blog_article GROUP BY create_date) g
-      on a.create_date = g.create_date
-      where a.user_id = #{userId,jdbcType=INTEGER}
-      order by createYear desc,a.create_date desc
-
-  </select>
-
 
     <resultMap id="Classify" type="com.xiao.blog.vo.ClassifyVO" >
 

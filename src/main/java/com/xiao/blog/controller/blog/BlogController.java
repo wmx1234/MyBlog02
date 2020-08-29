@@ -8,6 +8,7 @@ import com.xiao.blog.pojo.request.PageRequest;
 import com.xiao.blog.service.ArticleService;
 import com.xiao.blog.service.TagsService;
 import com.xiao.blog.service.UserService;
+import com.xiao.blog.vo.ArchiveVO;
 import com.xiao.blog.vo.ArticleVO;
 import com.xiao.blog.vo.TagsVO;
 import org.springframework.stereotype.Controller;
@@ -31,6 +32,7 @@ public class BlogController {
 
     @Resource
     ArticleService articleService;
+
     @Resource
     TagsService tagsService;
 
@@ -71,7 +73,16 @@ public class BlogController {
      * @return
      */
     @RequestMapping("/archives")
-    public String archive(Model model){
+    public String archive(@RequestParam(required = false,defaultValue = "1")Integer pageNum,Model model){
+
+        PageHelper.startPage(pageNum, 9);
+
+        List<ArchiveVO> archive = articleService.archive();
+
+        PageInfo pageInfo = new PageInfo(archive);
+
+        model.addAttribute("pageInfo",pageInfo);
+
         return "blog/archives";
     }
 

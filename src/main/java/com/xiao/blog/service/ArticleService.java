@@ -2,6 +2,7 @@ package com.xiao.blog.service;
 
 import com.xiao.blog.model.Article;
 import com.xiao.blog.pojo.param.Params;
+import com.xiao.blog.vo.ArchiveVO;
 import com.xiao.blog.vo.ArticleVO;
 import com.xiao.blog.vo.ClassifyVO;
 
@@ -48,10 +49,14 @@ public interface ArticleService {
 
     /**
      * 根据id获取博客
-     * @param userId
+     * @param id
      * @return
      */
-    public ArticleVO getArticleById(int userId);
+    public ArticleVO getArticleById(int id);
 
-
+    /**
+     * 获取归档数据
+     * @return
+     */
+    public List<ArchiveVO> archive();
 }

@@ -3,6 +3,7 @@ package com.xiao.blog.mapper;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.xiao.blog.model.Article;
 import com.xiao.blog.vo.Archive;
+import com.xiao.blog.vo.ArchiveVO;
 import com.xiao.blog.vo.ArticleVO;
 import com.xiao.blog.vo.ClassifyVO;
 import org.apache.ibatis.annotations.Delete;
@@ -65,7 +66,6 @@ public interface ArticleMapper extends BaseMapper<ArticleVO>{
      * @return
      */
     ArticleVO getArticleById(Integer id);
-
 
 
 }

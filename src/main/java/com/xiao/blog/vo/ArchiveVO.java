@@ -14,5 +14,9 @@ public class ArchiveVO {
 
     private String year;
 
-    private List<Archive> archives;
+    private String month;
+
+    private String day;
+
+    private ArticleVO articleVO;
 }

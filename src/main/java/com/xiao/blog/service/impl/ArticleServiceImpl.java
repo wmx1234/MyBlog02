@@ -1,6 +1,7 @@
 package com.xiao.blog.service.impl;
 
 import cn.hutool.core.date.DateUtil;
+import com.github.pagehelper.PageHelper;
 import com.xiao.blog.mapper.ArticleMapper;
 import com.xiao.blog.mapper.RelationMapper;
 import com.xiao.blog.model.Article;
@@ -8,6 +9,7 @@ import com.xiao.blog.pojo.param.Params;
 import com.xiao.blog.service.ArticleService;
 import com.xiao.blog.shiro.ShiroKit;
 import com.xiao.blog.util.ArticleUtil;
+import com.xiao.blog.vo.ArchiveVO;
 import com.xiao.blog.vo.ArticleVO;
 import com.xiao.blog.vo.ClassifyVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @author wangmx
@@ -62,8 +62,46 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public ArticleVO getArticleById(int userId) {
-        return null;
+    public ArticleVO getArticleById(int id) {
+        return articleMapper.getArticleById(id);
+    }
+
+    @Override
+    public List<ArchiveVO> archive(){
+
+        List<ArticleVO> allArticles = articleMapper.getAllArticles();
+
+        List<ArchiveVO> archiveVOList = new ArrayList<ArchiveVO>();
+
+        Set<String> yearSet = new HashSet<String>();
+
+        Set<String> yearMonthSet = new HashSet<String>();
+
+        allArticles.forEach(article->{
+
+            ArchiveVO archiveVO = new ArchiveVO();
+
+            Date createDate = DateUtil.parse(article.getCreateDate());
+
+            String year = DateUtil.format(createDate, "yyyy");
+
+            if(yearSet.add(year)){
+                archiveVO.setYear(year);
+            }
+
+            String year_month = DateUtil.format(createDate, "yyyy-MM");
+
+            if(yearMonthSet.add(year_month)){
+                archiveVO.setMonth(DateUtil.format(createDate, "MM"));
+            }
+
+            archiveVO.setDay(DateUtil.format(createDate, "dd"));
+
+            archiveVO.setArticleVO(article);
+
+            archiveVOList.add(archiveVO);
+        });
+        return archiveVOList;
     }
 
 //    private void insert(Params params){

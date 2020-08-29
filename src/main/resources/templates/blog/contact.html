@@ -1,67 +1,12 @@
 <!DOCTYPE HTML>
 <html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
 
-<head>
-    <meta charset="utf-8">
-    <meta name="keywords" content="contact, 晓&amp;静">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="renderer" content="webkit|ie-stand|ie-comp">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-
-
-    <title>contact | 晓&amp;静</title>
-    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/favicon.png">
-
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/awesome/css/all.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/css/my.css">
-
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/jquery/jquery.min.js"></script>
-
-<meta name="generator" content="Hexo 4.2.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
-
-
+<head th:replace="blog/fragment/common::head"></head>
 <body>
 
-<header th:replace="blog/fragment/header::header"></header>
+    <header th:replace="blog/fragment/header::header"></header>
 
-<script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
-
-<div class="bg-cover pd-header about-cover">
-    <div class="container">
-        <div class="row">
-            <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
-                <div class="brand">
-                    <div class="title center-align" style="font-family: 楷体;">
-                        晓&静
-                    </div>
-
-                    <div class="description center-align">
-                        <span id="jinrishici-sentence" class="diy-font">正在加载今日诗词....</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <script>
-            // 每天切换 banner 图.  Switch banner image every day.
-            var bannerUrl = "https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/banner/" + new Date().getDay() + '.jpg';
-            $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
-        </script>
-
-
-    </div>
-</div>
+    <div th:replace="blog/fragment/common::blog_bgcover"></div>
 
 <main class="content">
     <div id="contact" class="container chip-container">
@@ -121,80 +66,23 @@
     });
 </script>
 -->
-<script src ="https://unpkg.com/minivaline/dist/MiniValine.min.js"> </script> 
-<script> 
-      new  MiniValine({ 
-        el:'#mvcomments',
-        appId: 'EV0i5nPN3uLt0RQIfKFRKG26-gzGzoHsz',
-        appKey: 'zfeOL0VKn6spX8tCSXNJBp66',
-        mode: 'DesertsP'
-      })
-</script> 
+        <script src ="https://unpkg.com/minivaline/dist/MiniValine.min.js"> </script>
+        <script>
+              new  MiniValine({
+                el:'#mvcomments',
+                appId: 'EV0i5nPN3uLt0RQIfKFRKG26-gzGzoHsz',
+                appKey: 'zfeOL0VKn6spX8tCSXNJBp66',
+                mode: 'DesertsP'
+              })
+        </script>
             
         </div>
     </div>
 </main>
 
 
-<footer th:replace="blog/fragment/footer::footer"></footer>
-
-<div class="progress-bar"></div>
-
-
-    <!-- 搜索遮罩框 -->
-<div id="searchModal" class="modal">
-    <div class="modal-content">
-        <div class="search-header">
-            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
-            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
-                   class="search-input">
-        </div>
-        <div id="searchResult"></div>
-    </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/js/search.js"></script>
-<script type="text/javascript">
-$(function () {
-    searchFunc("https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/search.xml", 'searchInput', 'searchResult');
-});
-</script>
-
-    <!-- 回到顶部按钮 -->
-<div id="backTop" class="top-scroll">
-    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
-        <i class="fas fa-arrow-up"></i>
-    </a>
-</div>
-
-
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/materialize/materialize.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/aos/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/lightGallery/js/lightgallery-all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/js/matery.js"></script>
-
-    <!-- Baidu Analytics -->
-
-    <!-- Baidu Push -->
-
-<script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        } else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/others/clicklove.js" async="async"></script>
-    <script async src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/others/busuanzi.pure.mini.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/instantpage/instantpage.js" type="module"></script>
+    <footer th:replace="blog/fragment/footer::footer"></footer>
+    <div th:replace="blog/fragment/common::blog_tools"></div>
 </body>
 
 </html>

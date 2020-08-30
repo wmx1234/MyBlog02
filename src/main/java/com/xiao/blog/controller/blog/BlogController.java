@@ -1,14 +1,10 @@
 package com.xiao.blog.controller.blog;
 
-import cn.hutool.json.JSON;
 import cn.hutool.json.JSONUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import com.xiao.blog.pojo.request.PageRequest;
 import com.xiao.blog.service.ArticleService;
 import com.xiao.blog.service.TagsService;
-import com.xiao.blog.service.UserService;
-import com.xiao.blog.vo.ArchiveVO;
 import com.xiao.blog.vo.ArticleVO;
 import com.xiao.blog.vo.TagsVO;
 import org.springframework.stereotype.Controller;
@@ -16,9 +12,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 博客首页
@@ -77,13 +75,20 @@ public class BlogController {
 
         PageHelper.startPage(pageNum, 9);
 
-        List<ArchiveVO> archive = articleService.archive();
+        List<ArticleVO> archive = articleService.archive();
 
         PageInfo pageInfo = new PageInfo(archive);
 
         model.addAttribute("pageInfo",pageInfo);
 
+        model.addAttribute("blogCalendar", JSONUtil.parseObj(articleService.getCalendar()));
         return "blog/archives";
+    }
+
+    @RequestMapping("/getCalendar")
+    @ResponseBody
+    public Map<String,Object> getCalendar(){
+        return articleService.getCalendar();
     }
 
     /**

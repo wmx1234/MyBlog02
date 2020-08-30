@@ -43,8 +43,9 @@
     <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/aos/aos.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/scrollprogress/scrollProgress.min.js"></script>
     <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <!--
     <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/js/matery.js"></script>
-
+-->
 
     <script>
         (function () {
@@ -135,7 +136,7 @@
 <div class="container paging" th:fragment="blog_paging">
     <div class="row">
         <div class="col s6 m4 l4">
-            <a th:href="@{'/index?pageNum='+${pageInfo.getPrePage()}}"
+            <a th:href="@{${#httpServletRequest.requestURL}+'?pageNum='+${pageInfo.getPrePage()}}"
                th:class="'left btn-floating btn-large' + ${pageInfo.isHasPreviousPage()?' bg-color':' disabled'}">
                 <i class="fas fa-angle-left"></i>
             </a>
@@ -145,11 +146,12 @@
 
         </div>
         <div class="col s6 m4 l4">
-            <a th:href="@{'/index?pageNum='+${pageInfo.getNextPage()}}"
+            <a th:href="@{${#httpServletRequest.requestURL}+'?pageNum='+${pageInfo.getNextPage()}}"
                th:class="'right btn-floating btn-large' + ${pageInfo.isHasNextPage()?' bg-color':' disabled'}">
                 <i class="fas fa-angle-right"></i>
             </a>
         </div>
+
     </div>
 </div>
 

@@ -1,9 +1,9 @@
 <!DOCTYPE HTML>
 <html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
 
-<head>
+<head th:fragment="blog_head">
     <meta charset="utf-8">
-    <meta name="keywords" content="分类, 晓&amp;静">
+    <meta name="keywords" content="Docker入门：（二）Docker介绍, 晓&amp;静">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -12,11 +12,8 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-
-    <title>分类 | 晓&amp;静</title>
+    <title>Docker入门：（二）Docker介绍 | 晓&amp;静</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/favicon.png">
-
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/awesome/css/all.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/materialize/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/aos/aos.css">
@@ -27,12 +24,53 @@
 
     <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/jquery/jquery.min.js"></script>
     <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
-    <meta name="generator" content="Hexo 4.2.1"><link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
-    <link rel="stylesheet" th:href="@{/css/categories.css}"  media="all">
-<style>
+
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/others/clicklove.js" async="async"></script>
+    <!-- “不蒜子”是提供静态页面计数功能的一个第三方服务 -->
+    <script async src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/others/busuanzi.pure.mini.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/instantpage/instantpage.js" type="module"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/tocbot/tocbot.css">
+
+    <!-- 搜索 -->
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/js/search.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            searchFunc("https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/search.xml", 'searchInput', 'searchResult');
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/materialize/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/aos/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <!--
+    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/js/matery.js"></script>
+-->
+    <link rel="stylesheet" th:href="@{/css/bootstrap-treeview.min.css}">
+    <link href="http://www.jq22.com/jquery/bootstrap-3.3.4.css" rel="stylesheet">
+    <style type="text/css">
+        .jq22-header{margin-bottom: 15px;font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3", "FontAwesome", sans-serif;}
+        .jq22-icon{color: #fff;}
+    </style>
+    <script>
+        (function () {
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            } else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();
+    </script>
 
 
-</style>
+</head>
+
+
 <body>
 
 <header th:replace="blog/fragment/header::header"></header>
@@ -48,58 +86,17 @@
                 <div class="tag-title center-align">
                     <i class="fas fa-bookmark"></i>&nbsp;&nbsp;文章分类
                 </div>
-                <div class="category-content">
-                    <div class="category-lists">
-                        <div>
-                            <ul class="category-list">
-                                <li class="category-list-item">
-                                    <a class="category-list-link" href="/categories/Hexo%E5%8D%9A%E5%AE%A2/">Hexo博客</a>
-                                    <span class="category-list-count">23</span>
-                                </li>
-                                <li class="category-list-item"><a class="category-list-link"
-                                                                  href="/categories/Web%E5%89%8D%E7%AB%AF/">Web前端</a>
-                                    <span class="category-list-count">7</span>
-                                    <ul class="category-list-child">
-                                        <li class="category-list-item"><a class="category-list-link"
-                                                                          href="/categories/Web%E5%89%8D%E7%AB%AF/CSS3/">CSS3</a><span
-                                                class="category-list-count">1</span></li>
-                                        <li class="category-list-item"><a class="category-list-link"
-                                                                          href="/categories/Web%E5%89%8D%E7%AB%AF/HTML/">HTML</a><span
-                                                class="category-list-count">1</span></li>
-                                        <li class="category-list-item"><a class="category-list-link"
-                                                                          href="/categories/Web%E5%89%8D%E7%AB%AF/JavaScript/">JavaScript</a><span
-                                                class="category-list-count">2</span></li>
-                                        <li class="category-list-item"><a class="category-list-link"
-                                                                          href="/categories/Web%E5%89%8D%E7%AB%AF/Node-js/">Node.js</a><span
-                                                class="category-list-count">1</span></li>
-                                    </ul>
-                                </li>
-                                <li class="category-list-item"><a class="category-list-link"
-                                                                  href="/categories/%E5%A5%87%E6%B7%AB%E6%8A%80%E5%B7%A7/">奇淫技巧</a><span
-                                        class="category-list-count">1</span></li>
-                                <li class="category-list-item"><a class="category-list-link"
-                                                                  href="/categories/%E5%AE%9E%E7%94%A8%E5%B7%A5%E5%85%B7%E9%9B%86%E5%90%88/">实用工具集合</a><span
-                                        class="category-list-count">1</span></li>
-                            </ul>
+
+
+
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div id="treeview5" class=""></div>
+                            </div>
                         </div>
-                    </div>
-                </div>
+
+
             </div>
-        </div>
-    </div>
-
-
-
-    <style type="text/css">
-    #category-radar {
-        width: 100%;
-        height: 360px;
-    }
-</style>
-
-    <div class="container" data-aos="fade-up">
-        <div class="card">
-
         </div>
     </div>
 
@@ -110,7 +107,6 @@
                 <div class="card">
                     <a href="/2020/06/21/spring/springcloud/springcloud-xue-xi-bi-ji-liu-config-fen-bu-shi-pei-zhi-zhong-xin/">
                         <div class="card-image tag-image">
-
 
                             <img src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/featureimages/2.jpg" class="responsive-img" alt="SpringCloud笔记 | 第一篇：服务注册与发现（Eureka）">
 
@@ -131,11 +127,11 @@
 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
 
-                                <a href="/categories/Spring/" class="post-category">
+                                <a href="/categories/Spring/categorieswww.html" class="post-category">
                                     Spring
                                 </a>
 
-                                <a href="/categories/Spring/SpringCloud/" class="post-category">
+                                <a href="/categories/Spring/SpringCloud/categorieswww.html" class="post-category">
                                     SpringCloud
                                 </a>
 
@@ -185,11 +181,11 @@
 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
 
-                                <a href="/categories/Spring/" class="post-category">
+                                <a href="/categories/Spring/categorieswww.html" class="post-category">
                                     Spring
                                 </a>
 
-                                <a href="/categories/Spring/SpringCloud/" class="post-category">
+                                <a href="/categories/Spring/SpringCloud/categorieswww.html" class="post-category">
                                     SpringCloud
                                 </a>
 
@@ -242,11 +238,11 @@
 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
 
-                                <a href="/categories/Spring/" class="post-category">
+                                <a href="/categories/Spring/categorieswww.html" class="post-category">
                                     Spring
                                 </a>
 
-                                <a href="/categories/Spring/SpringBoot/" class="post-category">
+                                <a href="/categories/Spring/SpringBoot/categorieswww.html" class="post-category">
                                     SpringBoot
                                 </a>
 
@@ -294,11 +290,11 @@
 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
 
-                                <a href="/categories/Spring/" class="post-category">
+                                <a href="/categories/Spring/categorieswww.html" class="post-category">
                                     Spring
                                 </a>
 
-                                <a href="/categories/Spring/SpringBoot/" class="post-category">
+                                <a href="/categories/Spring/SpringBoot/categorieswww.html" class="post-category">
                                     SpringBoot
                                 </a>
 
@@ -323,54 +319,305 @@
 
 </main>
 
-
     <footer th:replace="blog/fragment/footer::footer"></footer>
-
-
     <div th:replace="blog/fragment/common::blog_tools"></div>
 
-<script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/js/search.js"></script>
-<script type="text/javascript">
-$(function () {
-    searchFunc("https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/search.xml", 'searchInput', 'searchResult');
-});
-</script>
-
-
-
-
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/materialize/materialize.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/aos/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/lightGallery/js/lightgallery-all.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/js/matery.js"></script>
-
-    <!-- Baidu Analytics -->
-
-    <!-- Baidu Push -->
-
-<script>
-    (function () {
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        } else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-</script>
-
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/others/clicklove.js" async="async"></script>
-
-    <script async src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/others/busuanzi.pure.mini.js"></script>
-    
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/instantpage/instantpage.js" type="module"></script>
-    
 
 </body>
 
+<script th:src="@{/js/bootstrap-treeview.js}"></script>
+<script type="text/javascript">
+
+    $(function() {
+
+        var defaultData = [
+            {
+                text: 'Parent 1',
+                href: '#parent1',
+                tags: ['4'],
+                nodes: [
+                    {
+                        text: 'Child 1',
+                        href: '#child1',
+                        tags: ['2'],
+                        nodes: [
+                            {
+                                text: 'Grandchild 1',
+                                href: '#grandchild1',
+                                tags: ['0']
+                            },
+                            {
+                                text: 'Grandchild 2',
+                                href: '#grandchild2',
+                                tags: ['0']
+                            }
+                        ]
+                    },
+                    {
+                        text: 'Child 2',
+                        href: '#child2',
+                        tags: ['0']
+                    }
+                ]
+            },
+            {
+                text: 'Parent 2',
+                href: '#parent2',
+                tags: ['0']
+            },
+            {
+                text: 'Parent 3',
+                href: '#parent3',
+                tags: ['0']
+            },
+            {
+                text: 'Parent 4',
+                href: '#parent4',
+                tags: ['0']
+            },
+            {
+                text: 'Parent 5',
+                href: '#parent5'  ,
+                tags: ['0']
+            }
+        ];
+
+
+
+
+        $('#treeview5').treeview({
+            color: "#428bca",
+            expandIcon: 'glyphicon glyphicon-chevron-right',
+            collapseIcon: 'glyphicon glyphicon-chevron-down',
+            nodeIcon: 'glyphicon glyphicon-bookmark',
+            data: defaultData
+        });
+
+
+
+
+
+        var $searchableTree = $('#treeview-searchable').treeview({
+            data: defaultData,
+        });
+
+        var search = function(e) {
+            var pattern = $('#input-search').val();
+            var options = {
+                ignoreCase: $('#chk-ignore-case').is(':checked'),
+                exactMatch: $('#chk-exact-match').is(':checked'),
+                revealResults: $('#chk-reveal-results').is(':checked')
+            };
+            var results = $searchableTree.treeview('search', [ pattern, options ]);
+
+            var output = '<p>' + results.length + ' matches found</p>';
+            $.each(results, function (index, result) {
+                output += '<p>- ' + result.text + '</p>';
+            });
+            $('#search-output').html(output);
+        }
+
+
+        $('#input-search').on('keyup', search);
+
+        $('#btn-clear-search').on('click', function (e) {
+            $searchableTree.treeview('clearSearch');
+            $('#input-search').val('');
+            $('#search-output').html('');
+        });
+
+
+        var initSelectableTree = function() {
+            return $('#treeview-selectable').treeview({
+                data: defaultData,
+                multiSelect: $('#chk-select-multi').is(':checked'),
+                onNodeSelected: function(event, node) {
+                    $('#selectable-output').prepend('<p>' + node.text + ' was selected</p>');
+                },
+                onNodeUnselected: function (event, node) {
+                    $('#selectable-output').prepend('<p>' + node.text + ' was unselected</p>');
+                }
+            });
+        };
+        var $selectableTree = initSelectableTree();
+
+        var findSelectableNodes = function() {
+            return $selectableTree.treeview('search', [ $('#input-select-node').val(), { ignoreCase: false, exactMatch: false } ]);
+        };
+        var selectableNodes = findSelectableNodes();
+
+        $('#chk-select-multi:checkbox').on('change', function () {
+            console.log('multi-select change');
+            $selectableTree = initSelectableTree();
+            selectableNodes = findSelectableNodes();
+        });
+
+        // Select/unselect/toggle nodes
+        $('#input-select-node').on('keyup', function (e) {
+            selectableNodes = findSelectableNodes();
+            $('.select-node').prop('disabled', !(selectableNodes.length >= 1));
+        });
+
+        $('#btn-select-node.select-node').on('click', function (e) {
+            $selectableTree.treeview('selectNode', [ selectableNodes, { silent: $('#chk-select-silent').is(':checked') }]);
+        });
+
+        $('#btn-unselect-node.select-node').on('click', function (e) {
+            $selectableTree.treeview('unselectNode', [ selectableNodes, { silent: $('#chk-select-silent').is(':checked') }]);
+        });
+
+        $('#btn-toggle-selected.select-node').on('click', function (e) {
+            $selectableTree.treeview('toggleNodeSelected', [ selectableNodes, { silent: $('#chk-select-silent').is(':checked') }]);
+        });
+
+
+
+        var $expandibleTree = $('#treeview-expandible').treeview({
+            data: defaultData,
+            onNodeCollapsed: function(event, node) {
+                $('#expandible-output').prepend('<p>' + node.text + ' was collapsed</p>');
+            },
+            onNodeExpanded: function (event, node) {
+                $('#expandible-output').prepend('<p>' + node.text + ' was expanded</p>');
+            }
+        });
+
+        var findExpandibleNodess = function() {
+            return $expandibleTree.treeview('search', [ $('#input-expand-node').val(), { ignoreCase: false, exactMatch: false } ]);
+        };
+        var expandibleNodes = findExpandibleNodess();
+
+        // Expand/collapse/toggle nodes
+        $('#input-expand-node').on('keyup', function (e) {
+            expandibleNodes = findExpandibleNodess();
+            $('.expand-node').prop('disabled', !(expandibleNodes.length >= 1));
+        });
+
+        $('#btn-expand-node.expand-node').on('click', function (e) {
+            var levels = $('#select-expand-node-levels').val();
+            $expandibleTree.treeview('expandNode', [ expandibleNodes, { levels: levels, silent: $('#chk-expand-silent').is(':checked') }]);
+        });
+
+        $('#btn-collapse-node.expand-node').on('click', function (e) {
+            $expandibleTree.treeview('collapseNode', [ expandibleNodes, { silent: $('#chk-expand-silent').is(':checked') }]);
+        });
+
+        $('#btn-toggle-expanded.expand-node').on('click', function (e) {
+            $expandibleTree.treeview('toggleNodeExpanded', [ expandibleNodes, { silent: $('#chk-expand-silent').is(':checked') }]);
+        });
+
+        // Expand/collapse all
+        $('#btn-expand-all').on('click', function (e) {
+            var levels = $('#select-expand-all-levels').val();
+            $expandibleTree.treeview('expandAll', { levels: levels, silent: $('#chk-expand-silent').is(':checked') });
+        });
+
+        $('#btn-collapse-all').on('click', function (e) {
+            $expandibleTree.treeview('collapseAll', { silent: $('#chk-expand-silent').is(':checked') });
+        });
+
+
+
+        var $checkableTree = $('#treeview-checkable').treeview({
+            data: defaultData,
+            showIcon: false,
+            showCheckbox: true,
+            onNodeChecked: function(event, node) {
+                $('#checkable-output').prepend('<p>' + node.text + ' was checked</p>');
+            },
+            onNodeUnchecked: function (event, node) {
+                $('#checkable-output').prepend('<p>' + node.text + ' was unchecked</p>');
+            }
+        });
+
+        var findCheckableNodess = function() {
+            return $checkableTree.treeview('search', [ $('#input-check-node').val(), { ignoreCase: false, exactMatch: false } ]);
+        };
+        var checkableNodes = findCheckableNodess();
+
+        // Check/uncheck/toggle nodes
+        $('#input-check-node').on('keyup', function (e) {
+            checkableNodes = findCheckableNodess();
+            $('.check-node').prop('disabled', !(checkableNodes.length >= 1));
+        });
+
+        $('#btn-check-node.check-node').on('click', function (e) {
+            $checkableTree.treeview('checkNode', [ checkableNodes, { silent: $('#chk-check-silent').is(':checked') }]);
+        });
+
+        $('#btn-uncheck-node.check-node').on('click', function (e) {
+            $checkableTree.treeview('uncheckNode', [ checkableNodes, { silent: $('#chk-check-silent').is(':checked') }]);
+        });
+
+        $('#btn-toggle-checked.check-node').on('click', function (e) {
+            $checkableTree.treeview('toggleNodeChecked', [ checkableNodes, { silent: $('#chk-check-silent').is(':checked') }]);
+        });
+
+        // Check/uncheck all
+        $('#btn-check-all').on('click', function (e) {
+            $checkableTree.treeview('checkAll', { silent: $('#chk-check-silent').is(':checked') });
+        });
+
+        $('#btn-uncheck-all').on('click', function (e) {
+            $checkableTree.treeview('uncheckAll', { silent: $('#chk-check-silent').is(':checked') });
+        });
+
+
+
+        var $disabledTree = $('#treeview-disabled').treeview({
+            data: defaultData,
+            onNodeDisabled: function(event, node) {
+                $('#disabled-output').prepend('<p>' + node.text + ' was disabled</p>');
+            },
+            onNodeEnabled: function (event, node) {
+                $('#disabled-output').prepend('<p>' + node.text + ' was enabled</p>');
+            },
+            onNodeCollapsed: function(event, node) {
+                $('#disabled-output').prepend('<p>' + node.text + ' was collapsed</p>');
+            },
+            onNodeUnchecked: function (event, node) {
+                $('#disabled-output').prepend('<p>' + node.text + ' was unchecked</p>');
+            },
+            onNodeUnselected: function (event, node) {
+                $('#disabled-output').prepend('<p>' + node.text + ' was unselected</p>');
+            }
+        });
+
+        var findDisabledNodes = function() {
+            return $disabledTree.treeview('search', [ $('#input-disable-node').val(), { ignoreCase: false, exactMatch: false } ]);
+        };
+        var disabledNodes = findDisabledNodes();
+
+        // Expand/collapse/toggle nodes
+        $('#input-disable-node').on('keyup', function (e) {
+            disabledNodes = findDisabledNodes();
+            $('.disable-node').prop('disabled', !(disabledNodes.length >= 1));
+        });
+
+        $('#btn-disable-node.disable-node').on('click', function (e) {
+            $disabledTree.treeview('disableNode', [ disabledNodes, { silent: $('#chk-disable-silent').is(':checked') }]);
+        });
+
+        $('#btn-enable-node.disable-node').on('click', function (e) {
+            $disabledTree.treeview('enableNode', [ disabledNodes, { silent: $('#chk-disable-silent').is(':checked') }]);
+        });
+
+        $('#btn-toggle-disabled.disable-node').on('click', function (e) {
+            $disabledTree.treeview('toggleNodeDisabled', [ disabledNodes, { silent: $('#chk-disable-silent').is(':checked') }]);
+        });
+
+        // Expand/collapse all
+        $('#btn-disable-all').on('click', function (e) {
+            $disabledTree.treeview('disableAll', { silent: $('#chk-disable-silent').is(':checked') });
+        });
+
+        $('#btn-enable-all').on('click', function (e) {
+            $disabledTree.treeview('enableAll', { silent: $('#chk-disable-silent').is(':checked') });
+        });
+
+
+
+
+    });
+</script>
 </html>

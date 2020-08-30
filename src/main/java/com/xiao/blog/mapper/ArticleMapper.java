@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wangmx
@@ -67,5 +68,10 @@ public interface ArticleMapper extends BaseMapper<ArticleVO>{
      */
     ArticleVO getArticleById(Integer id);
 
-
+    /**
+     * 获取创建日期下的文章数
+     * @return
+     */
+    @Select("select create_date,count(id) count from blog_article where draft = 0 and privacy = 0 group by create_date")
+    List<Map> getBlogCountByCreateDate();
 }

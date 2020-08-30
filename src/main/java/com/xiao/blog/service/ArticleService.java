@@ -1,5 +1,6 @@
 package com.xiao.blog.service;
 
+import cn.hutool.json.JSONObject;
 import com.xiao.blog.model.Article;
 import com.xiao.blog.pojo.param.Params;
 import com.xiao.blog.vo.ArchiveVO;
@@ -58,5 +59,7 @@ public interface ArticleService {
      * 获取归档数据
      * @return
      */
-    public List<ArchiveVO> archive();
+    public List<ArticleVO> archive();
+
+    public Map<String,Object> getCalendar();
 }

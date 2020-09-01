@@ -141,13 +141,11 @@ public class AdminController {
     @RequestMapping("/editor")
     public String write(Model model){
 
-
-        ArticleVO articleVO = new ArticleVO();
-        articleVO.setId(DataBaseUtil.nextValue());
-        model.addAttribute("articleVO", articleVO);
+        //model.addAttribute("articleVO", new ArticleVO(DataBaseUtil.nextValue()));
+        //获取分类列表
         model.addAttribute("categoriesList",categoriesService.getCategoriesByField(new Categories(ShiroKit.getUser().getId())));
+        //获取标签列表
         model.addAttribute("tagsList",tagsService.getTagsList());
-
 
         return "/admin/md_editor";
     }

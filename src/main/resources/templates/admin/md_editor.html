@@ -28,7 +28,7 @@
 
                     <div class="layui-form-item">
                         <div id="">
-                            <input id="id" name="id" type="text" placeholder="博客id">
+                            <input id="id" name="id" type="hidden" placeholder="博客id">
                             <input id="articleTitle" name="articleTitle" type="text" class="layui-input"
                                    lay-verify="required" lay-reqtext="文章内容是必填项，岂能为空？" placeholder="请输入标题"></input>
                         </div>
@@ -149,14 +149,13 @@
 
                 let field = data.field;
                 field['isDraft'] = 0;
-                field['articleHtmlContent'] = field['my-editormd-html-code'];
+                field['articleHtmlContent'] = field['editor-md-html-code'];
                 params['article'] = field;
                 let tags = [];
                 $("input:checkbox[name='tags']:checked").each(function () {
                     tags.push({'aId':$("input[name='id']").val(),'bId':$(this).val()});
                 });
                 params['tags'] = tags;
-
                 save(params);
                 return false;
             });

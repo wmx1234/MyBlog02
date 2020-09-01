@@ -1,82 +1,13 @@
 <!DOCTYPE HTML>
 <html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
 
-<head th:fragment="blog_head">
-    <meta charset="utf-8">
-    <meta name="keywords" content="Docker入门：（二）Docker介绍, 晓&amp;静">
-    <meta name="description" content="">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <meta name="renderer" content="webkit|ie-stand|ie-comp">
-    <meta name="mobile-web-app-capable" content="yes">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Docker入门：（二）Docker介绍 | 晓&amp;静</title>
-    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/favicon.png">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/awesome/css/all.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/materialize/materialize.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/aos/aos.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/animate/animate.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/lightGallery/css/lightgallery.min.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/css/matery.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/css/my.css">
 
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/jquery/jquery.min.js"></script>
-    <script src="https://sdk.jinrishici.com/v2/browser/jinrishici.js" charset="utf-8"></script>
-
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/others/clicklove.js" async="async"></script>
-    <!-- “不蒜子”是提供静态页面计数功能的一个第三方服务 -->
-    <script async src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/others/busuanzi.pure.mini.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/instantpage/instantpage.js" type="module"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/tocbot/tocbot.css">
-
-    <!-- 搜索 -->
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/js/search.js"></script>
-    <script type="text/javascript">
-        $(function () {
-            searchFunc("https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/search.xml", 'searchInput', 'searchResult');
-        });
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/materialize/materialize.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/masonry/masonry.pkgd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/aos/aos.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/scrollprogress/scrollProgress.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/lightGallery/js/lightgallery-all.min.js"></script>
-    <!--
-    <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/js/matery.js"></script>
--->
-    <link rel="stylesheet" th:href="@{/css/bootstrap-treeview.min.css}">
-    <link href="http://www.jq22.com/jquery/bootstrap-3.3.4.css" rel="stylesheet">
-    <style type="text/css">
-        .jq22-header{margin-bottom: 15px;font-family: "Segoe UI", "Lucida Grande", Helvetica, Arial, "Microsoft YaHei", FreeSans, Arimo, "Droid Sans", "wenquanyi micro hei", "Hiragino Sans GB", "Hiragino Sans GB W3", "FontAwesome", sans-serif;}
-        .jq22-icon{color: #fff;}
-    </style>
-    <script>
-        (function () {
-            var bp = document.createElement('script');
-            var curProtocol = window.location.protocol.split(':')[0];
-            if (curProtocol === 'https') {
-                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-            } else {
-                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-            }
-            var s = document.getElementsByTagName("script")[0];
-            s.parentNode.insertBefore(bp, s);
-        })();
-    </script>
-
-
-</head>
-
+<head th:replace="blog/fragment/common::head"></head>
 
 <body>
 
 <header th:replace="blog/fragment/header::header"></header>
-
 <div th:replace="blog/fragment/common::blog_bgcover"></div>
-
 
 <main class="content">
 
@@ -86,538 +17,117 @@
                 <div class="tag-title center-align">
                     <i class="fas fa-bookmark"></i>&nbsp;&nbsp;文章分类
                 </div>
+                <div class="tag-chips">
+
+                    <a href="/categories/Docker/" title="Docker: 9">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          style="background-color: #F9EBEA;">Docker
+                        <span class="tag-length">9</span>
+                    </span>
+                    </a>
+
+                    <a href="/categories/Nginx/" title="Nginx: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          style="background-color: #F5EEF8;">Nginx
+                        <span class="tag-length">1</span>
+                    </span>
+                    </a>
+
+                    <a href="/categories/Spring/" title="Spring: 4">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          style="background-color: #D5F5E3;">Spring
+                        <span class="tag-length">4</span>
+                    </span>
+                    </a>
+
+                    <a href="/categories/Spring/SpringCloud/" title="SpringCloud: 2">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          style="background-color: #E8F8F5;">SpringCloud
+                        <span class="tag-length">2</span>
+                    </span>
+                    </a>
+
+                    <a href="/categories/Spring/SpringBoot/" title="SpringBoot: 2">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                          style="background-color: #FEF9E7;">SpringBoot
+                        <span class="tag-length">2</span>
+                    </span>
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </div>
 
 
+    <style type="text/css">
+        #category-radar {
+            width: 100%;
+            height: 360px;
+        }
+    </style>
 
-                        <div class="row">
-                            <div class="col-sm-4">
-                                <div id="treeview5" class=""></div>
-                            </div>
-                        </div>
-
+    <div class="container" data-aos="fade-up">
+        <div class="card">
+            <div id="category-radar" class="card-content">
 
             </div>
         </div>
     </div>
 
-    <article id="articles" class="container articles">
-        <div class="row tags-posts">
-
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2020/06/21/spring/springcloud/springcloud-xue-xi-bi-ji-liu-config-fen-bu-shi-pei-zhi-zhong-xin/">
-                        <div class="card-image tag-image">
-
-                            <img src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/featureimages/2.jpg" class="responsive-img" alt="SpringCloud笔记 | 第一篇：服务注册与发现（Eureka）">
-
-                            <span class="card-title">SpringCloud笔记 | 第一篇：服务注册与发现（Eureka）</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-
-                            服务注册与发现1.服务治理  SpringCloud封装了Netflix公司开发的Eureka模块来实现服务治理  在传统的rpc远程调用框架中，管理每个服务与服务之间依赖关系比较复杂，管理比较复杂，所以需要使用服务治理，管理服务于服务之间
-
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-21
-                            </span>
-                            <span class="publish-author">
-
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-
-                                <a href="/categories/Spring/categorieswww.html" class="post-category">
-                                    Spring
-                                </a>
-
-                                <a href="/categories/Spring/SpringCloud/categorieswww.html" class="post-category">
-                                    SpringCloud
-                                </a>
-
-
-                            </span>
-                        </div>
-                    </div>
-
-
-                    <div class="card-action article-tags">
-
-                        <a href="/tags/SpringCloud/">
-                            <span class="chip bg-color">SpringCloud</span>
-                        </a>
-
-                        <a href="/tags/Config/">
-                            <span class="chip bg-color">Config</span>
-                        </a>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2020/06/20/spring/springcloud/springcloud-yi-fu-wu-zhu-ce-yu-fa-xian/">
-                        <div class="card-image tag-image">
-
-
-                            <img src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/featureimages/22.jpg" class="responsive-img" alt="SpringCloud：(一)服务注册与发现">
-
-                            <span class="card-title">SpringCloud：(一)服务注册与发现</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-
-                            创建一个maven主工程1.引入pom文件在pom文件中引入如下依赖,spring Boot版本为2.2.2.RELEASE，Spring Cloud版本为Hoxton.SR1（该版本要求jdk必须为1.8以上）。这个pom文件作为父pom
-
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-20
-                            </span>
-                            <span class="publish-author">
-
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-
-                                <a href="/categories/Spring/categorieswww.html" class="post-category">
-                                    Spring
-                                </a>
-
-                                <a href="/categories/Spring/SpringCloud/categorieswww.html" class="post-category">
-                                    SpringCloud
-                                </a>
-
-
-                            </span>
-                        </div>
-                    </div>
-
-
-                    <div class="card-action article-tags">
-
-                        <a href="/tags/SpringCloud/">
-                            <span class="chip bg-color">SpringCloud</span>
-                        </a>
-
-                        <a href="/tags/Config/">
-                            <span class="chip bg-color">Config</span>
-                        </a>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2020/06/14/spring/springboot/springboot-ru-men-dao-jing-tong-er-qi-dong-yuan-li-jie-xi/">
-                        <div class="card-image tag-image">
-
-
-                            <img src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/featureimages/14.jpg" class="responsive-img" alt="SpringBoot入门到精通：（二）启动原理解析">
-
-                            <span class="card-title">SpringBoot入门到精通：（二）启动原理解析</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-
-
-                            前言前面见识了SpringBoot为我们做的自动配置，非常方便快捷，相比于之前繁琐的配置文件，简直不要太优秀，让我们不禁好奇，到底是怎么做到的呢，让我们一起来探究一下
-
-                            正文我们开发任何一个Spring Boot项目，都会用到如下的启动类
-
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-14
-                            </span>
-                            <span class="publish-author">
-
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-
-                                <a href="/categories/Spring/categorieswww.html" class="post-category">
-                                    Spring
-                                </a>
-
-                                <a href="/categories/Spring/SpringBoot/categorieswww.html" class="post-category">
-                                    SpringBoot
-                                </a>
-
-
-                            </span>
-                        </div>
-                    </div>
-
-
-                    <div class="card-action article-tags">
-
-                        <a href="/tags/SpringBoot/">
-                            <span class="chip bg-color">SpringBoot</span>
-                        </a>
-
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="article tag-post col s12 m6 l4" data-aos="zoom-in">
-                <div class="card">
-                    <a href="/2020/06/14/spring/springboot/springboot-ru-men-dao-jing-tong-yi-hello-world/">
-                        <div class="card-image tag-image">
-
-
-                            <img src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/featureimages/21.jpg" class="responsive-img" alt="SpringBoot入门到精通：（一）Hello World">
-
-                            <span class="card-title">SpringBoot入门到精通：（一）Hello World</span>
-                        </div>
-                    </a>
-                    <div class="card-content article-content">
-                        <div class="summary block-with-text">
-
-
-                            Spring Boot 概述
-                            Build Anything with Spring Boot：Spring Boot is the starting point for building all Spring-based applicat
-
-                        </div>
-                        <div class="publish-info">
-                            <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-14
-                            </span>
-                            <span class="publish-author">
-
-                                <i class="fas fa-bookmark fa-fw icon-category"></i>
-
-                                <a href="/categories/Spring/categorieswww.html" class="post-category">
-                                    Spring
-                                </a>
-
-                                <a href="/categories/Spring/SpringBoot/categorieswww.html" class="post-category">
-                                    SpringBoot
-                                </a>
-
-
-                            </span>
-                        </div>
-                    </div>
-
-
-                    <div class="card-action article-tags">
-                        <a href="/tags/SpringBoot/">
-                            <span class="chip bg-color">SpringBoot</span>
-                        </a>
-                    </div>
-
-                </div>
-            </div>
-
-        </div>
-    </article>
-
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/echarts/echarts.min.js"></script>
+    <script type="text/javascript">
+        let radarChart = echarts.init(document.getElementById('category-radar'));
+
+        let option = {
+            title: {
+                left: 'center',
+                text: '文章分类雷达图',
+                textStyle: {
+                    fontWeight: 500,
+                    fontSize: 22
+                }
+            },
+            tooltip: {},
+            radar: {
+                name: {
+                    textStyle: {
+                        color: '#3C4858'
+                    }
+                },
+                indicator: [{"name":"Docker","max":10},{"name":"Nginx","max":10},{"name":"Spring","max":10},{"name":"SpringCloud","max":10},{"name":"SpringBoot","max":10}],
+                nameGap: 5,
+                center: ['50%','55%'],
+                radius: '66%'
+            },
+            series: [{
+                type: 'radar',
+                color: ['#3ecf8e'],
+                itemStyle: {normal: {areaStyle: {type: 'default'}}},
+                data : [
+                    {
+                        value : [9,1,4,2,2],
+                        name : '文章分类数量'
+                    }
+                ]
+            }]
+        };
+
+        radarChart.setOption(option);
+    </script>
 
 </main>
 
-    <footer th:replace="blog/fragment/footer::footer"></footer>
-    <div th:replace="blog/fragment/common::blog_tools"></div>
+<footer th:replace="blog/fragment/footer::footer"></footer>
+
+<div th:replace="blog/fragment/common::blog_tools"></div>
 
 
 </body>
 
-<script th:src="@{/js/bootstrap-treeview.js}"></script>
-<script type="text/javascript">
-
-    $(function() {
-
-        var defaultData = [
-            {
-                text: 'Parent 1',
-                href: '#parent1',
-                tags: ['4'],
-                nodes: [
-                    {
-                        text: 'Child 1',
-                        href: '#child1',
-                        tags: ['2'],
-                        nodes: [
-                            {
-                                text: 'Grandchild 1',
-                                href: '#grandchild1',
-                                tags: ['0']
-                            },
-                            {
-                                text: 'Grandchild 2',
-                                href: '#grandchild2',
-                                tags: ['0']
-                            }
-                        ]
-                    },
-                    {
-                        text: 'Child 2',
-                        href: '#child2',
-                        tags: ['0']
-                    }
-                ]
-            },
-            {
-                text: 'Parent 2',
-                href: '#parent2',
-                tags: ['0']
-            },
-            {
-                text: 'Parent 3',
-                href: '#parent3',
-                tags: ['0']
-            },
-            {
-                text: 'Parent 4',
-                href: '#parent4',
-                tags: ['0']
-            },
-            {
-                text: 'Parent 5',
-                href: '#parent5'  ,
-                tags: ['0']
-            }
-        ];
-
-
-
-
-        $('#treeview5').treeview({
-            color: "#428bca",
-            expandIcon: 'glyphicon glyphicon-chevron-right',
-            collapseIcon: 'glyphicon glyphicon-chevron-down',
-            nodeIcon: 'glyphicon glyphicon-bookmark',
-            data: defaultData
-        });
-
-
-
-
-
-        var $searchableTree = $('#treeview-searchable').treeview({
-            data: defaultData,
-        });
-
-        var search = function(e) {
-            var pattern = $('#input-search').val();
-            var options = {
-                ignoreCase: $('#chk-ignore-case').is(':checked'),
-                exactMatch: $('#chk-exact-match').is(':checked'),
-                revealResults: $('#chk-reveal-results').is(':checked')
-            };
-            var results = $searchableTree.treeview('search', [ pattern, options ]);
-
-            var output = '<p>' + results.length + ' matches found</p>';
-            $.each(results, function (index, result) {
-                output += '<p>- ' + result.text + '</p>';
-            });
-            $('#search-output').html(output);
-        }
-
-
-        $('#input-search').on('keyup', search);
-
-        $('#btn-clear-search').on('click', function (e) {
-            $searchableTree.treeview('clearSearch');
-            $('#input-search').val('');
-            $('#search-output').html('');
-        });
-
-
-        var initSelectableTree = function() {
-            return $('#treeview-selectable').treeview({
-                data: defaultData,
-                multiSelect: $('#chk-select-multi').is(':checked'),
-                onNodeSelected: function(event, node) {
-                    $('#selectable-output').prepend('<p>' + node.text + ' was selected</p>');
-                },
-                onNodeUnselected: function (event, node) {
-                    $('#selectable-output').prepend('<p>' + node.text + ' was unselected</p>');
-                }
-            });
-        };
-        var $selectableTree = initSelectableTree();
-
-        var findSelectableNodes = function() {
-            return $selectableTree.treeview('search', [ $('#input-select-node').val(), { ignoreCase: false, exactMatch: false } ]);
-        };
-        var selectableNodes = findSelectableNodes();
-
-        $('#chk-select-multi:checkbox').on('change', function () {
-            console.log('multi-select change');
-            $selectableTree = initSelectableTree();
-            selectableNodes = findSelectableNodes();
-        });
-
-        // Select/unselect/toggle nodes
-        $('#input-select-node').on('keyup', function (e) {
-            selectableNodes = findSelectableNodes();
-            $('.select-node').prop('disabled', !(selectableNodes.length >= 1));
-        });
-
-        $('#btn-select-node.select-node').on('click', function (e) {
-            $selectableTree.treeview('selectNode', [ selectableNodes, { silent: $('#chk-select-silent').is(':checked') }]);
-        });
-
-        $('#btn-unselect-node.select-node').on('click', function (e) {
-            $selectableTree.treeview('unselectNode', [ selectableNodes, { silent: $('#chk-select-silent').is(':checked') }]);
-        });
-
-        $('#btn-toggle-selected.select-node').on('click', function (e) {
-            $selectableTree.treeview('toggleNodeSelected', [ selectableNodes, { silent: $('#chk-select-silent').is(':checked') }]);
-        });
-
-
-
-        var $expandibleTree = $('#treeview-expandible').treeview({
-            data: defaultData,
-            onNodeCollapsed: function(event, node) {
-                $('#expandible-output').prepend('<p>' + node.text + ' was collapsed</p>');
-            },
-            onNodeExpanded: function (event, node) {
-                $('#expandible-output').prepend('<p>' + node.text + ' was expanded</p>');
-            }
-        });
-
-        var findExpandibleNodess = function() {
-            return $expandibleTree.treeview('search', [ $('#input-expand-node').val(), { ignoreCase: false, exactMatch: false } ]);
-        };
-        var expandibleNodes = findExpandibleNodess();
-
-        // Expand/collapse/toggle nodes
-        $('#input-expand-node').on('keyup', function (e) {
-            expandibleNodes = findExpandibleNodess();
-            $('.expand-node').prop('disabled', !(expandibleNodes.length >= 1));
-        });
-
-        $('#btn-expand-node.expand-node').on('click', function (e) {
-            var levels = $('#select-expand-node-levels').val();
-            $expandibleTree.treeview('expandNode', [ expandibleNodes, { levels: levels, silent: $('#chk-expand-silent').is(':checked') }]);
-        });
-
-        $('#btn-collapse-node.expand-node').on('click', function (e) {
-            $expandibleTree.treeview('collapseNode', [ expandibleNodes, { silent: $('#chk-expand-silent').is(':checked') }]);
-        });
-
-        $('#btn-toggle-expanded.expand-node').on('click', function (e) {
-            $expandibleTree.treeview('toggleNodeExpanded', [ expandibleNodes, { silent: $('#chk-expand-silent').is(':checked') }]);
-        });
-
-        // Expand/collapse all
-        $('#btn-expand-all').on('click', function (e) {
-            var levels = $('#select-expand-all-levels').val();
-            $expandibleTree.treeview('expandAll', { levels: levels, silent: $('#chk-expand-silent').is(':checked') });
-        });
-
-        $('#btn-collapse-all').on('click', function (e) {
-            $expandibleTree.treeview('collapseAll', { silent: $('#chk-expand-silent').is(':checked') });
-        });
-
-
-
-        var $checkableTree = $('#treeview-checkable').treeview({
-            data: defaultData,
-            showIcon: false,
-            showCheckbox: true,
-            onNodeChecked: function(event, node) {
-                $('#checkable-output').prepend('<p>' + node.text + ' was checked</p>');
-            },
-            onNodeUnchecked: function (event, node) {
-                $('#checkable-output').prepend('<p>' + node.text + ' was unchecked</p>');
-            }
-        });
-
-        var findCheckableNodess = function() {
-            return $checkableTree.treeview('search', [ $('#input-check-node').val(), { ignoreCase: false, exactMatch: false } ]);
-        };
-        var checkableNodes = findCheckableNodess();
-
-        // Check/uncheck/toggle nodes
-        $('#input-check-node').on('keyup', function (e) {
-            checkableNodes = findCheckableNodess();
-            $('.check-node').prop('disabled', !(checkableNodes.length >= 1));
-        });
-
-        $('#btn-check-node.check-node').on('click', function (e) {
-            $checkableTree.treeview('checkNode', [ checkableNodes, { silent: $('#chk-check-silent').is(':checked') }]);
-        });
-
-        $('#btn-uncheck-node.check-node').on('click', function (e) {
-            $checkableTree.treeview('uncheckNode', [ checkableNodes, { silent: $('#chk-check-silent').is(':checked') }]);
-        });
-
-        $('#btn-toggle-checked.check-node').on('click', function (e) {
-            $checkableTree.treeview('toggleNodeChecked', [ checkableNodes, { silent: $('#chk-check-silent').is(':checked') }]);
-        });
-
-        // Check/uncheck all
-        $('#btn-check-all').on('click', function (e) {
-            $checkableTree.treeview('checkAll', { silent: $('#chk-check-silent').is(':checked') });
-        });
-
-        $('#btn-uncheck-all').on('click', function (e) {
-            $checkableTree.treeview('uncheckAll', { silent: $('#chk-check-silent').is(':checked') });
-        });
-
-
-
-        var $disabledTree = $('#treeview-disabled').treeview({
-            data: defaultData,
-            onNodeDisabled: function(event, node) {
-                $('#disabled-output').prepend('<p>' + node.text + ' was disabled</p>');
-            },
-            onNodeEnabled: function (event, node) {
-                $('#disabled-output').prepend('<p>' + node.text + ' was enabled</p>');
-            },
-            onNodeCollapsed: function(event, node) {
-                $('#disabled-output').prepend('<p>' + node.text + ' was collapsed</p>');
-            },
-            onNodeUnchecked: function (event, node) {
-                $('#disabled-output').prepend('<p>' + node.text + ' was unchecked</p>');
-            },
-            onNodeUnselected: function (event, node) {
-                $('#disabled-output').prepend('<p>' + node.text + ' was unselected</p>');
-            }
-        });
-
-        var findDisabledNodes = function() {
-            return $disabledTree.treeview('search', [ $('#input-disable-node').val(), { ignoreCase: false, exactMatch: false } ]);
-        };
-        var disabledNodes = findDisabledNodes();
-
-        // Expand/collapse/toggle nodes
-        $('#input-disable-node').on('keyup', function (e) {
-            disabledNodes = findDisabledNodes();
-            $('.disable-node').prop('disabled', !(disabledNodes.length >= 1));
-        });
-
-        $('#btn-disable-node.disable-node').on('click', function (e) {
-            $disabledTree.treeview('disableNode', [ disabledNodes, { silent: $('#chk-disable-silent').is(':checked') }]);
-        });
-
-        $('#btn-enable-node.disable-node').on('click', function (e) {
-            $disabledTree.treeview('enableNode', [ disabledNodes, { silent: $('#chk-disable-silent').is(':checked') }]);
-        });
-
-        $('#btn-toggle-disabled.disable-node').on('click', function (e) {
-            $disabledTree.treeview('toggleNodeDisabled', [ disabledNodes, { silent: $('#chk-disable-silent').is(':checked') }]);
-        });
-
-        // Expand/collapse all
-        $('#btn-disable-all').on('click', function (e) {
-            $disabledTree.treeview('disableAll', { silent: $('#chk-disable-silent').is(':checked') });
-        });
-
-        $('#btn-enable-all').on('click', function (e) {
-            $disabledTree.treeview('enableAll', { silent: $('#chk-disable-silent').is(':checked') });
-        });
-
-
-
-
-    });
-</script>
 </html>

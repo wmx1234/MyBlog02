@@ -37,6 +37,10 @@ public class ArticleVO extends Article {
 
     public ArticleVO(){}
 
+    public ArticleVO(Integer id){
+        super.setId(id);
+    }
+
     public ArticleVO(Article article){
         super.setId(article.getId());
         super.setArticleTitle(article.getArticleTitle());

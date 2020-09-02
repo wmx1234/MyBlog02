@@ -3,6 +3,11 @@ package com.xiao.blog.util;
 import com.xiao.blog.vo.ArchiveVO;
 import com.xiao.blog.vo.ArticleVO;
 
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Arrays;
 import java.util.Random;
 
 /**
@@ -32,5 +37,6 @@ public class CommonUtils {
             return "#00CCCC";
         }
     }
+
 
 }

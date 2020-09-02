@@ -141,7 +141,7 @@ public class AdminController {
     @RequestMapping("/editor")
     public String write(Model model){
 
-        //model.addAttribute("articleVO", new ArticleVO(DataBaseUtil.nextValue()));
+        model.addAttribute("articleVO", new ArticleVO(DataBaseUtil.nextValue()));
         //获取分类列表
         model.addAttribute("categoriesList",categoriesService.getCategoriesByField(new Categories(ShiroKit.getUser().getId())));
         //获取标签列表
@@ -149,14 +149,10 @@ public class AdminController {
 
         return "/admin/md_editor";
     }
+
     @RequestMapping("/editor/{id}")
     public String edit(@PathVariable("id") Integer id,Model model){
-
-
         //model.addAttribute("articleVO", articleService.getArticleById(id));
-
-
-
         return "/admin/md_editor";
     }
 }

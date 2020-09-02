@@ -72,8 +72,7 @@
 
                         <label class="layui-form-label"></label>
                         <div class="layui-input-block" >
-                            <input type="checkbox" th:each="tags,index:${tagsList}" th:title="${tags.name}" name="tags "  lay-skin="primary">
-
+                            <input type="checkbox" th:each="tags,index:${tagsList}" th:title="${tags.name}" name="tags" th:value="${tags.id}" lay-skin="primary">
                         </div>
                     </div>
 
@@ -112,7 +111,7 @@
 
     //获取博客
     let articleVO = [[${articleVO}]];
-    console.log(articleVO);
+
     $(function() {
         //定义markdown编辑器
         let md_edit = editormd("editor-md",
@@ -135,9 +134,11 @@
             }
         });
 
-        $("#id").val(articleVO.id);
-        $("#articleContent").html(articleVO.articleContent);
-        $(".editormd-html-textarea").html(articleVO.articleHtmlContent);
+        if(articleVO == null){
+            $("#id").val(articleVO.id);
+            $("#articleContent").html(articleVO.articleContent);
+            $(".editormd-html-textarea").html(articleVO.articleHtmlContent);
+        }
 
         layui.use(['form'], function(){
 
@@ -151,11 +152,13 @@
                 field['isDraft'] = 0;
                 field['articleHtmlContent'] = field['editor-md-html-code'];
                 params['article'] = field;
-                let tags = [];
-                $("input:checkbox[name='tags']:checked").each(function () {
-                    tags.push({'aId':$("input[name='id']").val(),'bId':$(this).val()});
+                let tagsList = [];
+                $("input:checkbox[name='tags']:checked").each(function (e) {
+                    let tags = {'id':$(this).val(),'name':$(this).attr("title")};
+                    tagsList.push(tags);
                 });
-                params['tags'] = tags;
+                params['tagsList'] = tagsList;
+
                 save(params);
                 return false;
             });

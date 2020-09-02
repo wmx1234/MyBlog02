@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.xiao.blog.mapper.ArticleMapper" >
+
     <resultMap id="BaseResultMap" type="com.xiao.blog.model.Article" >
 
         <id column="id" property="id" jdbcType="INTEGER" />
@@ -62,17 +63,17 @@
 
 
   <!--新增博客-->
-  <insert id="save" parameterType="com.xiao.blog.model.Article" >
+  <insert id="insert" parameterType="com.xiao.blog.model.Article" >
 
     insert into blog_article (
         id,
         article_digest,
         article_title,
+        article_url,
+        article_image,
         create_date,
         last_article_id,
-        next_article_id,
         top,
-
         draft,
         privacy,
         article_content,
@@ -84,18 +85,17 @@
         #{id,jdbcType=INTEGER},
         #{articleDigest,jdbcType=VARCHAR},
         #{articleTitle,jdbcType=VARCHAR},
+        #{articleUrl,jdbcType=VARCHAR},
+        #{articleImage,jdbcType=VARCHAR},
         #{createDate,jdbcType=VARCHAR},
         #{lastArticleId,jdbcType=INTEGER},
-        #{nextArticleId,jdbcType=INTEGER},
         #{top,jdbcType=INTEGER},
-
         #{draft,jdbcType=INTEGER},
         #{privacy,jdbcType=INTEGER},
         #{articleContent,jdbcType=LONGVARCHAR},
         #{articleHtmlContent,jdbcType=LONGVARCHAR},
         #{userId,jdbcType=INTEGER},
         #{categoriesId,jdbcType=INTEGER}
-
       )
   </insert>
 

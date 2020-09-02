@@ -10,10 +10,13 @@ import com.github.pagehelper.PageHelper;
 import com.xiao.blog.mapper.ArticleMapper;
 import com.xiao.blog.mapper.RelationMapper;
 import com.xiao.blog.model.Article;
+import com.xiao.blog.model.Tags;
 import com.xiao.blog.pojo.param.Params;
 import com.xiao.blog.service.ArticleService;
 import com.xiao.blog.shiro.ShiroKit;
 import com.xiao.blog.util.ArticleUtil;
+import com.xiao.blog.util.CommonUtils;
+import com.xiao.blog.util.DataBaseUtil;
 import com.xiao.blog.vo.ArchiveVO;
 import com.xiao.blog.vo.ArticleVO;
 import com.xiao.blog.vo.ClassifyVO;
@@ -41,8 +44,15 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
 
     public void save(Params params) {
-        //保存博客
-        articleMapper.save(params.getObject("article",Article.class));
+
+        int id = params.getInt("id");
+
+        if(id == 0){
+            //保存博客
+            this.insert(params);
+        }else{
+            update(params.getObject("article",Article.class));
+        }
 
     }
 
@@ -152,27 +162,56 @@ public class ArticleServiceImpl implements ArticleService {
 
         return calendarInfo;
     }
-//    private void insert(Params params){
-//
-//        Article article = params.getObject("article",Article.class);
+
+    /**
+     * 插入博客
+     * @param params
+     */
+    private void insert(Params params){
+
+        ArticleVO articleVO = params.toObject(ArticleVO.class);
+        System.out.println(articleVO);
+        Article article = params.toObject(Article.class);
+        System.out.println(article);
+
+//        article.setId(DataBaseUtil.nextValue());
 //
 //        article.setArticleDigest(ArticleUtil.buildArticleTabloid(article.getArticleHtmlContent()));
 //
 //        article.setCreateDate(DateUtil.today());
 //
-//        article.setUserId(ShiroKit.getUser().getId());
+//        //article.setUserId(ShiroKit.getUser().getId());
 //
 //        article.setLastArticleId(articleMapper.getLastArticleId());
 //
+//        article.setArticleUrl("/article/"+article.getId());
+//
+//        article.setArticleImage("https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/featureimages/"+new Random().nextInt(18)+".jpg");
+//
 //        articleMapper.insert(article);
-//
-//        relationMapper.batchInsertArticleLabelRelation(params.getList("tags"));
-//
-//        //relationMapper.insertArticleCategoriesRelation(params.getObject("categories", Relation.class));
-//    }
-//
-//    private void update(Params params){
-//
+
+        List<Map> tagsList = params.getListMap("tagsList");
+        tagsList.forEach(tags->{
+            Set set = tags.keySet();
+            set.forEach(e->{
+                System.out.println("==============================================");
+                System.out.println(e);
+                System.out.println("==============================================");
+            });
+
+        });
+
+        relationMapper.batchInsertArticleLabelRelation(params.getList("tags"));
+
+        //relationMapper.insertArticleCategoriesRelation(params.getObject("categories", Relation.class));
+    }
+
+    /**
+     * 修改博客
+     * @param params
+     */
+    private void update(Params params){
+
 //        Article article = params.getObject("article",Article.class);
 //
 //        article.setArticleDigest(ArticleUtil.buildArticleTabloid(article.getArticleHtmlContent()));
@@ -184,9 +223,9 @@ public class ArticleServiceImpl implements ArticleService {
 //        relationMapper.deleteLabelsByArticleId(article.getId());
 //
 //        relationMapper.batchInsertArticleLabelRelation(params.getList("labels"));
-//
-//        //relationMapper.deleteCategoriesByArticleId(article.getId());
-//
-//        //relationMapper.insertArticleCategoriesRelation(params.getObject("categories", Relation.class));
-//    }
+
+        //relationMapper.deleteCategoriesByArticleId(article.getId());
+
+        //relationMapper.insertArticleCategoriesRelation(params.getObject("categories", Relation.class));
+    }
 }

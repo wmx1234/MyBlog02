@@ -5,15 +5,11 @@
   <resultMap id="BaseResultMap" type="com.xiao.blog.model.Tags" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="create_date" property="createDate" jdbcType="VARCHAR" />
-    <result column="update_data" property="updateData" jdbcType="VARCHAR" />
+
   </resultMap>
 
   <insert id="insert" parameterType="com.xiao.blog.model.Tags" >
-    insert into blog_tags (id, `name`, create_date,
-      update_data, user_id)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{createDate,jdbcType=VARCHAR},
-      #{updateData,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER})
+    insert into blog_tags (id, `name`) values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
   </insert>
 
 
@@ -22,11 +18,7 @@
   </delete>
 
   <update id="updateByPrimaryKey" parameterType="com.xiao.blog.model.Tags" >
-    update blog_tags
-    set
-    `name` = #{name,jdbcType=VARCHAR},
-    update_data = #{updateData,jdbcType=VARCHAR}
-        where id = #{id,jdbcType=INTEGER}
+    update blog_tags set `name` = #{name,jdbcType=VARCHAR} where id = #{id,jdbcType=INTEGER}
   </update>
 
 

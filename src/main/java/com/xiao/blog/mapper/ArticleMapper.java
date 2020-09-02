@@ -17,14 +17,7 @@ import java.util.Map;
  * @author wangmx
  */
 @Mapper
-public interface ArticleMapper extends BaseMapper<ArticleVO>{
-
-    /**
-     * 新增博客
-     * @param article
-     * @return
-     */
-    int save(Article article);
+public interface ArticleMapper extends BaseMapper<Article>{
 
     /**
      * 删除博客
@@ -74,4 +67,12 @@ public interface ArticleMapper extends BaseMapper<ArticleVO>{
      */
     @Select("select create_date,count(id) count from blog_article where draft = 0 and privacy = 0 group by create_date")
     List<Map> getBlogCountByCreateDate();
+
+
+    /**
+     * 获取最近的博客id
+     * @return
+     */
+    @Select("select id from blog_article order by id desc limit 1")
+    int getLastArticleId();
 }

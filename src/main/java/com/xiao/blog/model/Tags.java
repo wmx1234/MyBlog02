@@ -16,8 +16,4 @@ public class Tags implements Serializable {
 
     private String name;
 
-    private String createDate;
-
-    private String updateData;
-
 }

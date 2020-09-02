@@ -71,13 +71,13 @@ public class TagsServiceImpl implements TagsService {
 
     private int insert(Tags tags){
 
-        tags.setCreateDate(DateUtil.today());
+
         tags.setId(DataBaseUtil.nextValue());
         return tagsMapper.insert(tags);
     }
 
     private int update(Tags tags){
-        tags.setUpdateData(DateUtil.today());
+
         return tagsMapper.updateByPrimaryKey(tags);
     }
 }

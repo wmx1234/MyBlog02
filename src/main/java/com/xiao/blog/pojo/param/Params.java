@@ -108,6 +108,7 @@ public class Params {
             return (List) obj;
         }
         List list = (List) JSONUtil.toBean(getString(name), List.class);
+
         return list;
     }
 

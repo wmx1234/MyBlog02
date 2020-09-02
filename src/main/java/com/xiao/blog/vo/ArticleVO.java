@@ -35,7 +35,9 @@ public class ArticleVO extends Article {
 
     private String day;
 
-    public ArticleVO(){}
+    public ArticleVO(){
+        super();
+    }
 
     public ArticleVO(Integer id){
         super.setId(id);
@@ -73,4 +75,8 @@ public class ArticleVO extends Article {
 //        private Integer categoriesId;
     }
 
+
+    public Article getArticle(){
+        return new Article();
+    }
 }

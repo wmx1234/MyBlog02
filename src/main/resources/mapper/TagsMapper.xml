@@ -12,6 +12,14 @@
     insert into blog_tags (id, `name`) values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR})
   </insert>
 
+  <insert id="batchInsertTags" parameterType="com.xiao.blog.model.Tags" >
+    insert into blog_tags (id, `name`)
+        values
+        <foreach collection ="tagsList" item="tags" index= "index" separator =",">
+            (#{tags.id}, #{tags.name)
+        </foreach >
+  </insert>
+
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from blog_tags where id = #{id,jdbcType=INTEGER}

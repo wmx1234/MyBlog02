@@ -19,9 +19,9 @@ public interface ArticleService {
 
     /**
      * 保存博客
-     * @param params
+     * @param articleVO
      */
-    public void save(Params params);
+    public void save(ArticleVO articleVO);
 
     /**
      * 删除博客
@@ -30,7 +30,7 @@ public interface ArticleService {
     public void delete(Integer id);
 
     /**
-     * 删除博客
+     * 修改博客
      * @param article
      */
     public void update(Article article);
@@ -40,6 +40,13 @@ public interface ArticleService {
      * @return
      */
     public List<ArticleVO> getAllArticles();
+
+    /**
+     * 获取博客列表
+     * @param article
+     * @return
+     */
+    public List<ArticleVO> getArticleListByField(ArticleVO article);
 
     /**
      * 获取博客列表
@@ -56,10 +63,20 @@ public interface ArticleService {
     public ArticleVO getArticleById(int id);
 
     /**
+     * 获取置顶博客
+     * @return
+     */
+    public ArticleVO getTopArticle();
+
+    /**
      * 获取归档数据
      * @return
      */
     public List<ArticleVO> archive();
 
+    /**
+     * 获取归档页面日历信息
+     * @return
+     */
     public Map<String,Object> getCalendar();
 }

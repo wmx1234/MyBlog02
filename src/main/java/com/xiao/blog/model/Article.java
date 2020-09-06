@@ -1,21 +1,14 @@
 package com.xiao.blog.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-
 import java.io.Serializable;
-import java.util.Date;
+
 
 /**
  * 博客实体类
  * @author 王明晓
  */
 @Data
-@ToString
-@NoArgsConstructor
-@AllArgsConstructor
 public class Article implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -54,23 +54,13 @@
   <resultMap id="CategoriesVO" type="com.xiao.blog.vo.CategoriesVO" extends="BaseResultMap">
     <result column="article_count" jdbcType="INTEGER" property="articleCount" />
   </resultMap>
-  <select id="getCategoriesVOList" resultMap="CategoriesVO" parameterType="java.lang.Integer">
+  <select id="getCategoriesVOList" resultMap="CategoriesVO" >
     select
     categories.id,
     categories.name,
-    categories.icon,
-    categories.create_date,
-    (CASE WHEN
-            center_table.article_count is null THEN 0
-          ELSE center_table.article_count END ) article_count
+    (select count(article.id) from blog_article article where article.categories_id = categories.id) article_count
     from blog_categories categories
-    left join
-      (select count(article.id) article_count, article.categories_id
-        from blog_article article
-        group by article.categories_id) center_table on center_table.categories_id = categories.id
-    where
-    user_id = #{userId,jdbcType=INTEGER}
-    order by id
+    order by article_count desc
   </select>
 
 </mapper>

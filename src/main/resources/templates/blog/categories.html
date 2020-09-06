@@ -1,7 +1,6 @@
 <!DOCTYPE HTML>
 <html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
 
-
 <head th:replace="blog/fragment/common::head"></head>
 
 <body>
@@ -19,44 +18,11 @@
                 </div>
                 <div class="tag-chips">
 
-                    <a href="/categories/Docker/" title="Docker: 9">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                          style="background-color: #F9EBEA;">Docker
-                        <span class="tag-length">9</span>
-                    </span>
-                    </a>
-
-                    <a href="/categories/Nginx/" title="Nginx: 1">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                          style="background-color: #F5EEF8;">Nginx
-                        <span class="tag-length">1</span>
-                    </span>
-                    </a>
-
-                    <a href="/categories/Spring/" title="Spring: 4">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                          style="background-color: #D5F5E3;">Spring
-                        <span class="tag-length">4</span>
-                    </span>
-                    </a>
-
-                    <a href="/categories/Spring/SpringCloud/" title="SpringCloud: 2">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                          style="background-color: #E8F8F5;">SpringCloud
-                        <span class="tag-length">2</span>
-                    </span>
-                    </a>
-
-                    <a href="/categories/Spring/SpringBoot/" title="SpringBoot: 2">
-                    <span class="chip center-align waves-effect waves-light
-                             chip-default "
-                          style="background-color: #FEF9E7;">SpringBoot
-                        <span class="tag-length">2</span>
-                    </span>
+                    <a th:href="'/categories/'+${categories.id}" th:title="${categories.name}+':'+${categories.articleCount}" th:each="categories,index:${categoriesList}">
+                        <span class="chip center-align waves-effect waves-light chip-default "
+                              th:style="'background-color:' +${categories.color}">[[${categories.name}]]
+                            <span class="tag-length">[[${categories.articleCount}]]</span>
+                        </span>
                     </a>
 
                 </div>
@@ -72,7 +38,7 @@
         }
     </style>
 
-    <div class="container" data-aos="fade-up">
+    <div class="container" data-aos="fade-up" th:style="'display:'+${articleList==null?'':'none'}">
         <div class="card">
             <div id="category-radar" class="card-content">
 
@@ -81,9 +47,25 @@
     </div>
 
     <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/echarts/echarts.min.js"></script>
-    <script type="text/javascript">
+    <script type="text/javascript" th:inline="javascript">
         let radarChart = echarts.init(document.getElementById('category-radar'));
 
+        let categoriesList = [[${categoriesList}]]
+
+        let indicator = [];
+
+        let count = [];
+
+        for(let i=0;i<categoriesList.length;i++){
+            if(categoriesList[i]['articleCount'] > 0){
+                let item = {'max':categoriesList[0]['articleCount']};
+                item['name'] = categoriesList[i]['name'];
+                indicator.push(item);
+                count.push(categoriesList[i]['articleCount']);
+            }
+        }
+
+        let data = [{'value':count,name : '文章分类数量'}];
         let option = {
             title: {
                 left: 'center',
@@ -100,7 +82,7 @@
                         color: '#3C4858'
                     }
                 },
-                indicator: [{"name":"Docker","max":10},{"name":"Nginx","max":10},{"name":"Spring","max":10},{"name":"SpringCloud","max":10},{"name":"SpringBoot","max":10}],
+                indicator: indicator,
                 nameGap: 5,
                 center: ['50%','55%'],
                 radius: '66%'
@@ -109,18 +91,15 @@
                 type: 'radar',
                 color: ['#3ecf8e'],
                 itemStyle: {normal: {areaStyle: {type: 'default'}}},
-                data : [
-                    {
-                        value : [9,1,4,2,2],
-                        name : '文章分类数量'
-                    }
-                ]
+                data : data
             }]
         };
 
         radarChart.setOption(option);
     </script>
 
+    <!-- 文章列表 -->
+    <article th:replace="blog/fragment/article::blog_articles"></article>
 </main>
 
 <footer th:replace="blog/fragment/footer::footer"></footer>

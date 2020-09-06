@@ -28,8 +28,8 @@
 
                     <div class="layui-form-item">
                         <div id="">
-                            <input id="id" name="id" type="hidden" placeholder="博客id">
-                            <input id="articleTitle" name="articleTitle" type="text" class="layui-input"
+                            <input name="id" type="hidden" placeholder="博客id">
+                            <input name="articleTitle" type="text" class="layui-input"
                                    lay-verify="required" lay-reqtext="文章内容是必填项，岂能为空？" placeholder="请输入标题"></input>
                         </div>
                     </div>
@@ -44,7 +44,7 @@
 
                         <label class="layui-form-label">文章分类</label>
                         <div class="layui-input-inline">
-                            <select name="categoriesId" lay-verify="required" lay-reqtext="分类必填项，岂能为空？">
+                            <select name="categoriesId" lay-reqtext="分类必填项，岂能为空？">
                                 <option value=""></option>
                                 <option th:each="categories,index:${categoriesList}" th:value="${categories.id}" >[[${categories.name}]]</option>
                             </select>
@@ -134,10 +134,10 @@
             }
         });
 
-        if(articleVO == null){
-            $("#id").val(articleVO.id);
-            $("#articleContent").html(articleVO.articleContent);
-            $(".editormd-html-textarea").html(articleVO.articleHtmlContent);
+        if(articleVO != null){
+            $("input[name='id']").val(articleVO['id']);
+            $("#articleContent").html(articleVO['articleContent']);
+            $(".editormd-html-textarea").html(articleVO['articleHtmlContent']);
         }
 
         layui.use(['form'], function(){
@@ -151,15 +151,15 @@
                 let field = data.field;
                 field['isDraft'] = 0;
                 field['articleHtmlContent'] = field['editor-md-html-code'];
-                params['article'] = field;
+                //params['article'] = field;
                 let tagsList = [];
                 $("input:checkbox[name='tags']:checked").each(function (e) {
                     let tags = {'id':$(this).val(),'name':$(this).attr("title")};
                     tagsList.push(tags);
                 });
-                params['tagsList'] = tagsList;
+                field['tagsList'] = tagsList;
 
-                save(params);
+                save(field);
                 return false;
             });
 
@@ -196,7 +196,7 @@
 
 
         function save(e){
-            let data = JSON.stringify({'fieldMap':e})
+            let data = JSON.stringify(e)
             //$.post('/admin/article/save',data).done(alert(1));
 
             ajax_post('/admin/article/save',data,function(e){

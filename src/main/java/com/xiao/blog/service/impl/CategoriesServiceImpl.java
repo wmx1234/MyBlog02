@@ -1,6 +1,7 @@
 package com.xiao.blog.service.impl;
 
 import cn.hutool.core.date.DateUtil;
+import com.xiao.blog.common.Constant;
 import com.xiao.blog.exception.BusinessException;
 import com.xiao.blog.exception.assertion.BusinessExceptionAssert;
 import com.xiao.blog.mapper.ArticleMapper;
@@ -12,7 +13,9 @@ import com.xiao.blog.vo.CategoriesVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.Random;
 
 /**
  * @author wangmx
@@ -22,10 +25,10 @@ import java.util.List;
 @Service
 public class CategoriesServiceImpl implements CategoriesService {
 
-    @Autowired
+    @Resource
     CategoriesMapper categoriesMapper;
 
-    @Autowired
+    @Resource
     ArticleMapper articleMapper;
 
     @Override
@@ -39,7 +42,10 @@ public class CategoriesServiceImpl implements CategoriesService {
             return insert(categories);
     }
 
-
+    @Override
+    public List<Categories> getAllCategories(){
+        return categoriesMapper.getAllCategories();
+    }
     /**
      * 根据条件查询分类
      * @param categories
@@ -52,8 +58,16 @@ public class CategoriesServiceImpl implements CategoriesService {
     }
 
     @Override
-    public List<CategoriesVO> getCategoriesVOList(Integer userId) {
-        return categoriesMapper.getCategoriesVOList(userId);
+    public List<CategoriesVO> getCategoriesVOList() {
+
+        List<CategoriesVO> categoriesVOList = categoriesMapper.getCategoriesVOList();
+
+        categoriesVOList.forEach(categories->{
+            categories.setLink("/categories/"+categories.getId());
+            categories.setColor(Constant.COLORS[new Random().nextInt(9)]);
+        });
+
+        return categoriesVOList;
     }
 
     @Override

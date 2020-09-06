@@ -133,7 +133,7 @@
                                     </span>
                                     <span class="publish-author">
                                         <i class="fas fa-bookmark fa-fw icon-category"></i>
-                                        <a href="/categories/Nginx/" class="post-category">[[${articleVO.categories.name}]]</a>
+                                        <a th:href="'/categories/'+${articleVO.categories.id}" class="post-category">[[${articleVO.categories.name}]]</a>
                                     </span>
                                 </div>
                             </div>
@@ -154,7 +154,7 @@
     </main>
 
     <!-- 分页 -->
-    <div th:replace="blog/fragment/common::blog_paging"></div>
+    <div th:replace="blog/fragment/article-page::blog_paging"></div>
 
     <footer th:replace="blog/fragment/footer::footer"></footer>
 

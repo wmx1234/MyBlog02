@@ -10,6 +10,9 @@ import java.util.List;
 @Mapper
 public interface CategoriesMapper {
 
+    @Select("select * from blog_article")
+    List<Categories> getAllCategories();
+
     int deleteByPrimaryKey(Integer id);
 
     int insert(Categories record);
@@ -20,7 +23,7 @@ public interface CategoriesMapper {
 
     int updateByPrimaryKey(Categories record);
 
-    List<CategoriesVO> getCategoriesVOList(Integer userId);
+    List<CategoriesVO> getCategoriesVOList();
 
     @Select("select count(id) from blog_categories where name = #{name}")
     Integer exist(Categories categories);

@@ -14,4 +14,8 @@ public class CategoriesVO extends Categories {
 
     private Integer articleCount;
 
+    private String color;
+
+    private String link;
+
 }

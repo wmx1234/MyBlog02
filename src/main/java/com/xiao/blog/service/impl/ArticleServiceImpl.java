@@ -2,27 +2,19 @@ package com.xiao.blog.service.impl;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.json.JSON;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
-import com.alibaba.druid.support.json.JSONUtils;
-import com.github.pagehelper.PageHelper;
 import com.xiao.blog.mapper.ArticleMapper;
 import com.xiao.blog.mapper.RelationMapper;
+import com.xiao.blog.mapper.TagsMapper;
 import com.xiao.blog.model.Article;
 import com.xiao.blog.model.Tags;
+import com.xiao.blog.pojo.Relation;
 import com.xiao.blog.pojo.param.Params;
 import com.xiao.blog.service.ArticleService;
 import com.xiao.blog.shiro.ShiroKit;
 import com.xiao.blog.util.ArticleUtil;
-import com.xiao.blog.util.CommonUtils;
 import com.xiao.blog.util.DataBaseUtil;
-import com.xiao.blog.vo.ArchiveVO;
 import com.xiao.blog.vo.ArticleVO;
-import com.xiao.blog.vo.ClassifyVO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -41,17 +33,17 @@ public class ArticleServiceImpl implements ArticleService {
     @Resource
     RelationMapper relationMapper;
 
+    @Resource
+    TagsMapper tagsMapper;
+
     @Override
+    public void save(ArticleVO articleVO) {
 
-    public void save(Params params) {
-
-        int id = params.getInt("id");
-
-        if(id == 0){
+        if(articleVO.getId() == null){
             //保存博客
-            this.insert(params);
+            this.insert(articleVO);
         }else{
-            update(params.getObject("article",Article.class));
+            //update(params.getObject("article",Article.class));
         }
 
     }
@@ -68,7 +60,15 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public List<ArticleVO> getArticleListByTagsId(Integer id) {
-        return articleMapper.getArticleListByTagsId(id);
+
+        ArticleVO article = new ArticleVO();
+
+        article.setTagsId(id);
+
+        List<ArticleVO> articleListByField = articleMapper.getArticleListByField(article);
+
+        return articleListByField;
+
     }
 
     @Override
@@ -77,8 +77,25 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
+    public List<ArticleVO> getArticleListByField(ArticleVO article) {
+        return articleMapper.getArticleListByField(article);
+    }
+
+    @Override
     public ArticleVO getArticleById(int id) {
         return articleMapper.getArticleById(id);
+    }
+
+    @Override
+    public ArticleVO getTopArticle() {
+        ArticleVO article = new ArticleVO();
+        article.setTop(1);
+        List<ArticleVO> articleListByField = articleMapper.getArticleListByField(article);
+        if(articleListByField != null && articleListByField.size() > 0){
+            return articleListByField.get(0);
+        }
+
+        return article;
     }
 
     @Override
@@ -108,7 +125,8 @@ public class ArticleServiceImpl implements ArticleService {
 
             article.setDay(DateUtil.format(createDate, "dd"));
         });
-        getCalendar();
+
+
         return allArticles;
     }
 
@@ -165,45 +183,49 @@ public class ArticleServiceImpl implements ArticleService {
 
     /**
      * 插入博客
-     * @param params
+     * @param articleVO
      */
-    private void insert(Params params){
+    private void insert(ArticleVO articleVO){
 
-        ArticleVO articleVO = params.toObject(ArticleVO.class);
-        System.out.println(articleVO);
-        Article article = params.toObject(Article.class);
-        System.out.println(article);
+        Article article = (Article)articleVO;
 
-//        article.setId(DataBaseUtil.nextValue());
-//
-//        article.setArticleDigest(ArticleUtil.buildArticleTabloid(article.getArticleHtmlContent()));
-//
-//        article.setCreateDate(DateUtil.today());
-//
-//        //article.setUserId(ShiroKit.getUser().getId());
-//
-//        article.setLastArticleId(articleMapper.getLastArticleId());
-//
-//        article.setArticleUrl("/article/"+article.getId());
-//
-//        article.setArticleImage("https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/featureimages/"+new Random().nextInt(18)+".jpg");
-//
-//        articleMapper.insert(article);
+        article.setId(DataBaseUtil.nextValue());
 
-        List<Map> tagsList = params.getListMap("tagsList");
+        article.setArticleDigest(ArticleUtil.buildArticleTabloid(article.getArticleHtmlContent()));
+
+        article.setCreateDate(DateUtil.today());
+
+        article.setUserId(ShiroKit.getUser().getId());
+
+        article.setLastArticleId(articleMapper.getLastArticleId());
+
+        article.setArticleUrl("/article/"+article.getId());
+
+        article.setArticleImage(ArticleUtil.randomImage());
+
+        articleMapper.insert(article);
+
+        List<Tags> tagsList = articleVO.getTagsList();
+
+        List<Relation> relationList = new ArrayList<Relation>();
+
+        List<Tags> newTagsList = new ArrayList<Tags>();
+
         tagsList.forEach(tags->{
-            Set set = tags.keySet();
-            set.forEach(e->{
-                System.out.println("==============================================");
-                System.out.println(e);
-                System.out.println("==============================================");
-            });
-
+            if(tags.getId() == 0){
+                tags.setId(DataBaseUtil.nextValue());
+                newTagsList.add(tags);
+            }
+            Relation relation = new Relation(article.getId(),tags.getId());
+            relationList.add(relation);
         });
 
-        relationMapper.batchInsertArticleLabelRelation(params.getList("tags"));
+        if(newTagsList.size() != 0){
+            tagsMapper.batchInsertTags(newTagsList);
+        }
 
-        //relationMapper.insertArticleCategoriesRelation(params.getObject("categories", Relation.class));
+        relationMapper.batchInsertArticleTagsRelation(relationList);
+
     }
 
     /**

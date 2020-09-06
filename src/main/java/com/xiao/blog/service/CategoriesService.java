@@ -4,6 +4,7 @@ import com.xiao.blog.model.Categories;
 import com.xiao.blog.vo.CategoriesVO;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author wangmx
@@ -14,9 +15,16 @@ public interface CategoriesService {
 
     public int save(Categories categories);
 
+    List<Categories> getAllCategories();
+
     List<Categories> getCategoriesByField(Categories categories);
 
-    List<CategoriesVO> getCategoriesVOList(Integer userId);
+    /**
+     * 获取分类列表
+     * @return
+     */
+    List<CategoriesVO> getCategoriesVOList();
 
     int delete(Integer id);
+
 }

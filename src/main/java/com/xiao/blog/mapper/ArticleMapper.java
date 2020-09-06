@@ -35,24 +35,10 @@ public interface ArticleMapper extends BaseMapper<Article>{
     int update(Article article);
 
     /**
-     * 获取博客列表
-     * @param article
-     * @return
-     */
-    List<ArticleVO> getArticleList(ArticleVO article);
-
-    /**
      * 获取所有博客列表
      * @return
      */
     List<ArticleVO> getAllArticles();
-
-    /**
-     * 根据标签博客列表
-     * @param id
-     * @return
-     */
-    List<ArticleVO> getArticleListByTagsId(Integer id);
 
     /**
      * 根据id获取博客
@@ -75,4 +61,11 @@ public interface ArticleMapper extends BaseMapper<Article>{
      */
     @Select("select id from blog_article order by id desc limit 1")
     int getLastArticleId();
+
+    /**
+     * 获取博客列表
+     * @param article
+     * @return
+     */
+    List<ArticleVO> getArticleListByField(ArticleVO article);
 }

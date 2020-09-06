@@ -16,6 +16,13 @@ import java.util.List;
 @Mapper
 public interface TagsMapper extends BaseMapper<Tags> {
 
+    /**
+     * 批量插入标签
+     * @param tagsList
+     * @return
+     */
+    int batchInsertTags(List<Tags> tagsList);
+
     int deleteByPrimaryKey(Integer id);
 
 

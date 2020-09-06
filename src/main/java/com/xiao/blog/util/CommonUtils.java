@@ -1,10 +1,19 @@
 package com.xiao.blog.util;
 
+import cn.hutool.core.util.XmlUtil;
+import com.xiao.blog.model.Article;
 import com.xiao.blog.vo.ArchiveVO;
 import com.xiao.blog.vo.ArticleVO;
+import org.dom4j.Attribute;
+import org.dom4j.Document;
+import org.dom4j.Element;
+import org.dom4j.io.SAXReader;
+import org.dom4j.io.XMLWriter;
 
 import java.beans.BeanInfo;
 import java.beans.Introspector;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
@@ -37,6 +46,11 @@ public class CommonUtils {
             return "#00CCCC";
         }
     }
+
+    public static String randomImage() {
+        return "https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/featureimages/"+new Random().nextInt(18)+".jpg";
+    }
+
 
 
 }

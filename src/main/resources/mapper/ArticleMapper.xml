@@ -126,60 +126,6 @@
   </update>
 
     <!--根据条件查询博客 -->
-    <select id="getArticleList" resultMap="ArticleVO" parameterType="com.xiao.blog.vo.ArticleVO">
-
-        select
-        article.id,
-        article.article_image,
-        article.article_url,
-        article.article_digest,
-        article.article_title,
-        article.create_date,
-        article.user_id,
-        u.name user_name,
-        article.categories_id,
-        categories.name categories_name
-
-        from blog_article article
-        left join sys_user u on article.user_id = u.id
-        left join blog_categories categories on article.categories_id = categories.id
-        where 1=1
-        and article.draft = 0
-        and article.privacy = 0
-        <if test="categoriesId != null">
-            and article.categories_id = #{categoriesId,jdbcType=INTEGER}
-        </if>
-
-    </select>
-
-
-    <!--根据条件查询博客 -->
-    <select id="getArticleListByTagsId" resultMap="ArticleVO" parameterType="java.lang.Integer">
-
-        select
-            article.id,
-            article.article_image,
-            article.article_url,
-            article.article_digest,
-            article.article_title,
-            article.create_date,
-            article.user_id,
-            u.name user_name,
-            article.categories_id,
-            categories.name categories_name
-
-        from blog_article article
-        left join sys_user u on article.user_id = u.id
-        left join blog_categories categories on article.categories_id = categories.id
-        left join blog_article_tags bat on bat.article_id = article.id
-        left join blog_tags tags on tags.id = bat.tags_id
-        where article.draft = 0
-        and article.privacy = 0
-        and tags.id = #{id}
-
-
-    </select>
-    <!--根据条件查询博客 -->
     <select id="getAllArticles" resultMap="ArticleVO">
 
         select
@@ -202,6 +148,42 @@
         order by create_date desc
 
     </select>
+
+    <select id="getArticleListByField" resultMap="ArticleVO" parameterType="com.xiao.blog.vo.ArticleVO">
+        select
+            article.id,
+            article.article_image,
+            article.article_url,
+            article.article_digest,
+            article.article_title,
+            article.create_date,
+            article.user_id,
+            u.name user_name,
+            article.categories_id,
+            categories.name categories_name
+
+        from blog_article article
+        left join sys_user u on article.user_id = u.id
+        left join blog_categories categories on article.categories_id = categories.id
+        left join blog_article_tags bat on bat.article_id = article.id
+        left join blog_tags tags on tags.id = bat.tags_id
+        where 1 = 1
+        and article.draft = 0
+        and article.privacy = 0
+        <if test="categoriesId != null">
+            and article.categories_id = #{categoriesId,jdbcType=INTEGER}
+        </if>
+        <if test="top != null">
+            and article.top = #{top,jdbcType=INTEGER}
+        </if>
+        <if test="tagsId != null">
+            and tags.id = #{tagsId,jdbcType=INTEGER}
+        </if>
+
+        order by create_date desc
+
+    </select>
+
     <!--根据条件查询博客 -->
     <select id="getArticleById" resultMap="ArticleVO" parameterType="com.xiao.blog.vo.ArticleVO">
 
@@ -225,6 +207,7 @@
 
     </select>
 
+
     <resultMap id="Classify" type="com.xiao.blog.vo.ClassifyVO" >
 
         <result column="name" property="categoriesName" jdbcType="VARCHAR" />
@@ -238,17 +221,5 @@
 
 
     </resultMap>
-    <select id="classify" resultMap="Classify">
-      select
-      a.id,
-      a.article_title,
-      c.name
-
-      from blog_article a
-      left join  blog_categories c on a.categories_id = c.id
-      where a.user_id = #{userId,jdbcType=INTEGER}
-
-
-  </select>
 
 </mapper>

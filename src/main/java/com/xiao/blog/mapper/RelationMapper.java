@@ -32,10 +32,22 @@ public interface RelationMapper {
     @Delete("delete from sys_role_permission where role_id = #{id}")
     void deleteRelationByRoleId(Integer id);
 
-    @Insert("insert into  article_id,tags_id values ( #{aid,jdbcType=INTEGER},#{bId,jdbcType=INTEGER})")
-    int batchInsertArticleLabelRelation(List<Relation> list);
+    /**
+     * 批量插入博客和标签对照表
+     * @param list
+     * @return
+     */
+    @Insert("<script> " +
+            "insert into blog_article_tags (article_id,tags_id) " +
+            "values <foreach collection =\"list\" item=\"relation\" index= \"index\" separator =\",\"> " +
+            "(#{relation.aId,jdbcType=INTEGER},#{relation.bId,jdbcType=INTEGER})" +
+            "</foreach></script>")
+    int batchInsertArticleTagsRelation(List<Relation> list);
 
-
+    /**
+     * 删除博客和标签对照表
+     * @param id
+     */
     @Delete("delete from blog_article_tags where article_id = #{id}")
     void deleteLabelsByArticleId(Integer id);
 

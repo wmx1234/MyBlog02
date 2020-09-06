@@ -1,5 +1,7 @@
 package com.xiao.blog.pojo;
 
+import jdk.nashorn.internal.objects.annotations.Constructor;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
@@ -9,6 +11,7 @@ import lombok.Data;
  */
 
 @Data
+@AllArgsConstructor
 public class Relation {
 
     private int aId;

@@ -1,5 +1,7 @@
 package com.xiao.blog.util;
 
+import java.util.Random;
+
 /**
  * @author wangmx
  * @create 2019-12-08 20:39
@@ -7,6 +9,11 @@ package com.xiao.blog.util;
  */
 public class ArticleUtil {
 
+    /**
+     * 获取文章简介
+     * @param htmlArticleComment
+     * @return
+     */
     public static String buildArticleTabloid(String htmlArticleComment){
 
         String regex = "\\s+";
@@ -43,6 +50,14 @@ public class ArticleUtil {
         }
 
         return myArticleTabloid;
+    }
+
+    /**
+     * 获取文章随机图片
+     * @return
+     */
+    public static String randomImage() {
+        return "https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/featureimages/"+new Random().nextInt(18)+".jpg";
     }
 }
 

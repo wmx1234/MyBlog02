@@ -1,5 +1,8 @@
 package com.xiao.blog.util;
 
+import com.hankcs.hanlp.HanLP;
+
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -8,6 +11,15 @@ import java.util.Random;
  * @Desc
  */
 public class ArticleUtil {
+
+    public static String  extractSummary(String htmlArticleComment){
+
+        List<String> summaryList= HanLP.extractSummary(htmlArticleComment,5);
+
+        String summary = String.join(",", summaryList);
+
+        return summary;
+    }
 
     /**
      * 获取文章简介

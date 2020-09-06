@@ -191,7 +191,7 @@ public class ArticleServiceImpl implements ArticleService {
 
         article.setId(DataBaseUtil.nextValue());
 
-        article.setArticleDigest(ArticleUtil.buildArticleTabloid(article.getArticleHtmlContent()));
+        article.setArticleDigest(ArticleUtil.extractSummary(article.getArticleHtmlContent()));
 
         article.setCreateDate(DateUtil.today());
 

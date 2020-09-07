@@ -125,10 +125,10 @@
                 <div class="row tag-cate">
                     <div class="col s7">
 
-                        <div class="article-tag">
+                        <div class="article-tag" >
 
-                                <a href="/tags/Docker/">
-                                    <span class="chip bg-color">Docker</span>
+                                <a th:href="'/tags/'+${tags.id}" th:each="tags,index:${article.tagsList}">
+                                    <span class="chip bg-color" th:text="${tags.name}">Docker</span>
                                 </a>
 
                         </div>
@@ -139,8 +139,8 @@
                         <div class="post-cate">
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
 
-                                <a href="/categories/Docker/" class="post-category">
-                                    Docker
+                                <a th:href="'/categories/'+${article.categories.id}" class="post-category" >
+                                    [[${article.categories.name}]]
                                 </a>
 
                         </div>
@@ -227,9 +227,9 @@
                     <div class="post-meta__tag-list" style="display: inline-block;">
 
                             <div class="article-tag">
-                                    <a href="/tags/Docker/">
-                                        <span class="chip bg-color">Docker</span>
-                                    </a>
+                                <a th:href="'/tags/'+${tags.id}" th:each="tags,index:${article.tagsList}">
+                                    <span class="chip bg-color" th:text="${tags.name}">Docker</span>
+                                </a>
                             </div>
 
                     </div>
@@ -239,7 +239,6 @@
                             <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
                             <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/share/js/social-share.min.js"></script>
                         </div>
-
                     </div>
                 </div>
 

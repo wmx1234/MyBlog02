@@ -2,7 +2,7 @@
 
 <head th:fragment="blog_head">
     <meta charset="utf-8">
-    <meta name="keywords" content="Docker入门：（二）Docker介绍, 晓&amp;静">
+    <meta name="keywords" th:content="${content}">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -11,8 +11,11 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Docker入门：（二）Docker介绍 | 晓&amp;静</title>
+    <title th:text="${title}">Docker入门：（二）Docker介绍 | 晓&amp;静</title>
     <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/favicon.png">
+
+
+    <!-- 图标 -->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/awesome/css/all.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/materialize/materialize.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/aos/aos.css">
@@ -30,8 +33,11 @@
     <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/instantpage/instantpage.js" type="module"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/tocbot/tocbot.css">
 
-    <!-- 搜索 -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/font-awesome.min.css}">
+    <!-- 搜索
     <script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/js/search.js"></script>
+    -->
+    <script th:src="@{/js/search.js}"></script>
     <script type="text/javascript">
         $(function () {
             searchFunc("/search.xml", 'searchInput', 'searchResult');
@@ -82,7 +88,7 @@
 
         <script>
             // 每天切换 banner 图.  Switch banner image every day.
-            var bannerUrl = "https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/banner/" + new Date().getDay() + '.jpg';
+            let bannerUrl = "https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/banner/" + new Date().getDay() + '.jpg';
             $('.bg-cover').css('background-image', 'url(' + bannerUrl + ')');
         </script>
 

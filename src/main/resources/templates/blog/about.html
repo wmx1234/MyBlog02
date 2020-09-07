@@ -13,17 +13,17 @@
                     <div class="post-statis col l4 hide-on-med-and-down" data-aos="zoom-in-right">
 
                         <div class="statis">
-                            <span class="count"><a href="/">14</a></span>
+                            <span class="count"><a href="/" th:text="${articleCount}">14</a></span>
                             <span class="name">文章</span>
                         </div>
 
                         <div class="statis">
-                            <span class="count"><a href="/categories">5</a></span>
+                            <span class="count"><a href="/categories" th:text="${categoriesCount}">5</a></span>
                             <span class="name">分类</span>
                         </div>
 
                         <div class="statis">
-                            <span class="count"><a href="/tags">9</a></span>
+                            <span class="count"><a href="/tags" th:text="${tagsCount}">9</a></span>
                             <span class="name">标签</span>
                         </div>
 
@@ -54,7 +54,7 @@
 
                                 </div>
                                 <div class="title">王明晓</div>
-                                <div class="career">Software Engineer</div>
+                                <div class="career">一条有梦想的咸鱼</div>
                                 <div class="social-link hide-on-large-only" data-aos="zoom-in-left">
 
                                 </div>
@@ -63,27 +63,52 @@
                     </div>
                     <div class="col l4 hide-on-med-and-down" data-aos="zoom-in-left">
                         <div class="social-link">
+                            <a href="https://github.com/wangmx996" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+                                <i class="fab fa-github"></i>
+                            </a>
 
+
+                            <a href="mailto:wangmx_he@163.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+                                <i class="fas fa-envelope-open"></i>
+                            </a>
+
+
+                            <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1130467636" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1130467636" data-position="top" data-delay="50">
+                                <i class="fab fa-qq"></i>
+                            </a>
+
+
+                            <a href="https://weibo.com/p/1005057075147314" class="tooltipped" target="_blank" data-tooltip="关注我的微博: https://weibo.com/p/1005057075147314" data-position="top" data-delay="50">
+                                <i class="fab fa-weibo"></i>
+                            </a>
+                            <!--
+                            <a href="https://www.zhihu.com/xxx" class="tooltipped" target="_blank" data-tooltip="关注我的知乎: https://www.zhihu.com/xxx" data-position="top" data-delay="50">
+                                <i class="fab fa-zhihu1">知</i>
+                            </a>
+
+                            <a href="https://www.zhihu.com/xxx" class="tooltipped" target="_blank" data-tooltip="关注我的知乎: https://www.zhihu.com/xxx" data-position="top" data-delay="50">
+                                <i class="fab fa-weixin"></i>
+                            </a>
+                             -->
                         </div>
                     </div>
                 </div>
 
-                <div class="introduction center-align" data-aos="fade-up">If you wish to succeed, you should use persistence as your good friend, experience as your reference, prudence as your brother and hope as your sentry.</div>
-                <div>
+                <div class="introduction center-align" data-aos="fade-up">
+                    梦想还是要有的，万一实现了呢！！！
+                </div>
+
+
+                <div style="margin-left: 100px">
                     <h3>个人信息</h3>
                     <ul>
                         <li>学历：本科</li>
-                        <li>aaa</li>
-                        <li>aaa</li><li>aaa</li>
-
-                        <li>aaa</li>
-                        <li>aaa</li>
-                        <li>aaa</li><li>aaa</li>
-                        <li>aaa</li>
-
-
+                        <li>毕业院校：河北师范大学</li>
+                        <li>所在地：河北石家庄</li>
+                        <li>职位：Java开发工程师</li>
 
                     </ul>
+
                 </div>
             </div>
 

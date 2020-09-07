@@ -1,6 +1,8 @@
 package com.xiao.blog.model;
 
 import lombok.Data;
+import org.springframework.data.elasticsearch.annotations.Document;
+
 import java.io.Serializable;
 
 
@@ -9,6 +11,7 @@ import java.io.Serializable;
  * @author 王明晓
  */
 @Data
+@Document(indexName = "blog",type = "article")
 public class Article implements Serializable {
 
     private static final long serialVersionUID = 1L;

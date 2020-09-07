@@ -27,4 +27,5 @@ public interface CategoriesService {
 
     int delete(Integer id);
 
+    int getArticleCount();
 }

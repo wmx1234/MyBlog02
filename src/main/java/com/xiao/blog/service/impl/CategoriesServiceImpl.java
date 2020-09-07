@@ -75,6 +75,10 @@ public class CategoriesServiceImpl implements CategoriesService {
         return categoriesMapper.deleteByPrimaryKey(id);
     }
 
+    @Override
+    public int getArticleCount(){
+        return categoriesMapper.getCategoriesCount();
+    }
     /**
      * 新增分类
      * @param categories

@@ -79,4 +79,8 @@ public interface ArticleService {
      * @return
      */
     public Map<String,Object> getCalendar();
+
+    public Iterable<Article> searchArticle(String name);
+
+    public int getArticleCount();
 }

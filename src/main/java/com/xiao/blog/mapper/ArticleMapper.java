@@ -68,4 +68,11 @@ public interface ArticleMapper extends BaseMapper<Article>{
      * @return
      */
     List<ArticleVO> getArticleListByField(ArticleVO article);
+
+    /**
+     * 获取公开发布文章数量
+     * @return
+     */
+    @Select("select count(id) from blog_article where draft = 0 and privacy = 0")
+    int getArticleCount();
 }

@@ -49,6 +49,7 @@ public class AdminController {
     public String login(){
         return "admin/login";
     }
+
     @PostMapping("/login")
     public String login(User user){
 
@@ -66,7 +67,7 @@ public class AdminController {
         List<Permission> menu = permissionService.getMenu(currentUser.getRole().getId());
         session.setAttribute("permissions",menu);
 
-        return "redirect:admin/index";
+        return "redirect:index";
     }
 
 

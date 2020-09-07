@@ -24,4 +24,5 @@ public interface TagsService {
 
     List<Tags> getTagsList();
 
+    int getTagsCount();
 }

@@ -9,11 +9,14 @@ import com.xiao.blog.model.Article;
 import com.xiao.blog.model.Tags;
 import com.xiao.blog.pojo.Relation;
 import com.xiao.blog.pojo.param.Params;
+import com.xiao.blog.repository.ArticleRepository;
 import com.xiao.blog.service.ArticleService;
 import com.xiao.blog.shiro.ShiroKit;
 import com.xiao.blog.util.ArticleUtil;
 import com.xiao.blog.util.DataBaseUtil;
 import com.xiao.blog.vo.ArticleVO;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -35,6 +38,9 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Resource
     TagsMapper tagsMapper;
+
+    @Resource
+    ArticleRepository articleRepository;
 
     @Override
     public void save(ArticleVO articleVO) {
@@ -181,6 +187,17 @@ public class ArticleServiceImpl implements ArticleService {
         return calendarInfo;
     }
 
+    @Override
+    public Iterable<Article> searchArticle(String name) {
+
+        Iterable<Article> search = articleRepository.search(QueryBuilders
+                .multiMatchQuery(name,"articleTitle","articleContent"));
+
+
+
+        return search;
+    }
+
     /**
      * 插入博客
      * @param articleVO
@@ -226,6 +243,11 @@ public class ArticleServiceImpl implements ArticleService {
 
         relationMapper.batchInsertArticleTagsRelation(relationList);
 
+        articleRepository.save(article);
+    }
+
+    public int getArticleCount(){
+        return articleMapper.getArticleCount();
     }
 
     /**

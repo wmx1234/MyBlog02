@@ -51,4 +51,10 @@ public interface TagsMapper extends BaseMapper<Tags> {
     @Select("select * from blog_tags tags left join blog_article_tags bat on tags.id = bat.tags_id where bat.article_id = #{id}")
     List<Tags> getTagsListByArticle(Integer id);
 
+    /**
+     * 获取标签数
+     * @return
+     */
+    @Select("select count(id) from blog_tags")
+    int getTagsCount();
 }

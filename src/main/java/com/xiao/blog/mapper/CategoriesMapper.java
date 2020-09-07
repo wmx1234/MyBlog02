@@ -27,4 +27,11 @@ public interface CategoriesMapper {
 
     @Select("select count(id) from blog_categories where name = #{name}")
     Integer exist(Categories categories);
+
+    /**
+     * 获取分类数
+     * @return
+     */
+    @Select("select count(id) from blog_categories")
+    int getCategoriesCount();
 }

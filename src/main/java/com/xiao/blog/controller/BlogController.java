@@ -3,6 +3,7 @@ package com.xiao.blog.controller;
 import cn.hutool.json.JSONUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xiao.blog.model.Article;
 import com.xiao.blog.service.ArticleService;
 import com.xiao.blog.service.CategoriesService;
 import com.xiao.blog.service.TagsService;
@@ -11,9 +12,7 @@ import com.xiao.blog.vo.CategoriesVO;
 import com.xiao.blog.vo.TagsVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -56,6 +55,10 @@ public class BlogController {
 
         model.addAttribute("topArticle",articleService.getTopArticle());
 
+        model.addAttribute("content","晓&amp;静");
+
+        model.addAttribute("title","晓&amp;静");
+
         return "blog/index";
     }
 
@@ -71,7 +74,9 @@ public class BlogController {
 
         model.addAttribute("categoriesList", categoriesVOList);
 
-        model.addAttribute("flag", false);
+        model.addAttribute("content","分类，晓&amp;静");
+
+        model.addAttribute("title","分类 | 晓&amp;静");
 
         return "blog/categories";
     }
@@ -96,6 +101,14 @@ public class BlogController {
 
         model.addAttribute("articleList",articleList);
 
+        categoriesVOList.forEach(categoriesVO->{
+            if(categoriesVO.getId() == id){
+                model.addAttribute("content","分类：" + categoriesVO.getName() + "，晓&amp;静");
+                model.addAttribute("title","分类：" + categoriesVO.getName() + " | 晓&amp;静");
+            }
+        });
+
+
         return "blog/categories";
     }
 
@@ -116,6 +129,11 @@ public class BlogController {
         model.addAttribute("pageInfo",pageInfo);
 
         model.addAttribute("blogCalendar", JSONUtil.parseObj(articleService.getCalendar()));
+
+        model.addAttribute("content","归档 ， 晓&amp;静");
+
+        model.addAttribute("title","归档 | 晓&amp;静");
+
         return "blog/archives";
     }
 
@@ -130,6 +148,10 @@ public class BlogController {
         List<TagsVO> tagsVOList = tagsService.getTagsVOList();
 
         model.addAttribute("tagsList", tagsVOList);
+
+        model.addAttribute("content","标签，晓&amp;静");
+
+        model.addAttribute("title","标签 | 晓&amp;静");
 
         return "blog/tags";
     }
@@ -151,6 +173,13 @@ public class BlogController {
 
         model.addAttribute("articleList",articleList);
 
+        tagsVOList.forEach(tags->{
+            if(tags.getId() == id){
+                model.addAttribute("content","标签：" + tags.getName() + "，晓&amp;静");
+                model.addAttribute("title","标签：" + tags.getName() + " | 晓&amp;静");
+            }
+        });
+
         return "blog/tags";
     }
     /**
@@ -160,6 +189,16 @@ public class BlogController {
      */
     @RequestMapping("/about")
     public String about(Model model){
+
+        model.addAttribute("articleCount",articleService.getArticleCount());
+
+        model.addAttribute("tagsCount",tagsService.getTagsCount());
+
+        model.addAttribute("categoriesCount",categoriesService.getArticleCount());
+
+        model.addAttribute("content","关于我，晓&amp;静");
+
+        model.addAttribute("title","关于我 | 晓&amp;静");
 
         return "blog/about";
     }
@@ -172,6 +211,10 @@ public class BlogController {
     @RequestMapping("/contact")
     public String contact(Model model){
 
+        model.addAttribute("content","留言板，晓&amp;静");
+
+        model.addAttribute("title","留言板 | 晓&amp;静");
+
         return "blog/contact";
     }
 
@@ -183,6 +226,10 @@ public class BlogController {
     @RequestMapping("/friends")
     public String friends(Model model){
 
+        model.addAttribute("content","友情链接，晓&amp;静");
+
+        model.addAttribute("title","友情链接 | 晓&amp;静");
+
         return "blog/friends";
     }
 
@@ -193,8 +240,17 @@ public class BlogController {
 
         model.addAttribute("article",article);
 
+        model.addAttribute("content",article.getArticleTitle()+"，晓&amp;静");
+
+        model.addAttribute("title",article.getArticleTitle()+" | 晓&amp;静");
+
         return "blog/article";
     }
 
+    @ResponseBody
+    @GetMapping("/articles")
+    public Iterable<Article> search(@RequestParam(required = false,defaultValue = "1")String name){
+        return articleService.searchArticle(name);
+    }
 
 }

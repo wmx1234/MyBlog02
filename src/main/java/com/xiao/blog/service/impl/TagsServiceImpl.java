@@ -65,8 +65,10 @@ public class TagsServiceImpl implements TagsService {
         return tagsMapper.getAllTags();
     }
 
-
-
+    @Override
+    public int getTagsCount(){
+        return tagsMapper.getTagsCount();
+    };
 
 
     private int insert(Tags tags){

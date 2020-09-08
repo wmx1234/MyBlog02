@@ -59,7 +59,7 @@ public class TagsController {
     @RequestMapping("/getTagsVOList")
     @ResponseBody
     public CommonResponse<List<TagsVO>> getTagsVOList(){
-        Integer id = ShiroKit.getUser().getId();
+
         List<TagsVO> tagsVOList = tagsService.getTagsVOList();
         return new CommonResponse(tagsVOList);
     }

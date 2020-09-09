@@ -71,18 +71,16 @@
         table.on('tool(admin_tags_filter)', function(obj){
             let data = obj.data;
             if(obj.event === 'del'){
-                if(data.articleCount != 0){
+                if(data.weight != 0){
                     layer.msg("该标签下有博客，不允许删除！！！");
                 }else{
                     layer.confirm('真的删除行么', function(index){
                         $.post("/admin/tags/delete/"+data.id,{},function(e){
                             layer.msg(e.msg);
                             if(e.code == 0){
-
                                 tableIns.reload();
                                 layer.close(index);
                             }
-
                         })
                     });
                 }

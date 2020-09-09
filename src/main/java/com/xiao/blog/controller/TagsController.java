@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -25,7 +26,7 @@ import java.util.List;
 @RequestMapping("/admin/tags")
 public class TagsController {
 
-    @Autowired
+    @Resource
     TagsService tagsService;
 
     @RequestMapping("/save")

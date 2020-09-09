@@ -12,8 +12,14 @@ import java.util.List;
  */
 public interface TagsService {
 
+
     public int save(Tags tags);
 
+    /**
+     * 删除标签
+     * @param id
+     * @return
+     */
     public int delete(Integer id);
 
     /**
@@ -22,7 +28,12 @@ public interface TagsService {
      */
     List<TagsVO> getTagsVOList();
 
+
     List<Tags> getTagsList();
 
+    /**
+     * 获取标签数量
+     * @return
+     */
     int getTagsCount();
 }

@@ -15,7 +15,7 @@ let searchFunc = function (path, search_id, content_id) {
             return;
         }
 
-        $.get("http://localhost:8080/articles", {name: keywords}).done(function(e){
+        $.get("/articles", {name: keywords}).done(function(e){
             let str = '<ul class=\"search-result-list\">';
             let datas = e.content;
 

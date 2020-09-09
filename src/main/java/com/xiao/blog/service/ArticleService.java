@@ -21,13 +21,13 @@ public interface ArticleService {
      * 保存博客
      * @param articleVO
      */
-    public void save(ArticleVO articleVO);
+    public Article save(ArticleVO articleVO);
 
     /**
      * 删除博客
      * @param id
      */
-    public void delete(Integer id);
+    public int delete(Integer id);
 
     /**
      * 修改博客

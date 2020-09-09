@@ -41,14 +41,13 @@
     <result column="weight" property="weight" jdbcType="INTEGER" />
   </resultMap>
   <select id="getTagsVOList" resultMap="TagsVO">
-    select * from (
-        select
-           tags.id,
-           tags.name,
-           tags.name text,
-           (select count(article_id) from blog_article_tags bat where bat.tags_id = tags.id) weight
-        from blog_tags tags
-    ) temp
-    where temp.weight > 0
+
+    select
+       tags.id,
+       tags.name,
+       tags.name text,
+       (select count(article_id) from blog_article_tags bat where bat.tags_id = tags.id) weight
+    from blog_tags tags
+
   </select>
 </mapper>

@@ -65,6 +65,7 @@ public class TagsServiceImpl implements TagsService {
         return tagsMapper.getAllTags();
     }
 
+
     @Override
     public int getTagsCount(){
         return tagsMapper.getTagsCount();
@@ -72,7 +73,6 @@ public class TagsServiceImpl implements TagsService {
 
 
     private int insert(Tags tags){
-
 
         tags.setId(DataBaseUtil.nextValue());
         return tagsMapper.insert(tags);

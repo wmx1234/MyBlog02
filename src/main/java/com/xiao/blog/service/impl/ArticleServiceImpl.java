@@ -43,20 +43,26 @@ public class ArticleServiceImpl implements ArticleService {
     ArticleRepository articleRepository;
 
     @Override
-    public void save(ArticleVO articleVO) {
+    public Article save(ArticleVO articleVO) {
 
         if(articleVO.getId() == null){
-            //保存博客
-            this.insert(articleVO);
+
+            return insert(articleVO);
         }else{
             //update(params.getObject("article",Article.class));
         }
+        return null;
 
     }
 
     @Override
-    public void delete(Integer id) {
-        articleMapper.delete(id);
+    public int delete(Integer id) {
+        //删除和标签关联关系
+        relationMapper.deleteLabelsByArticleId(id);
+        //删除es中的博客
+        articleRepository.deleteArticleById(id);
+        //删除博客
+        return articleMapper.delete(id);
     }
 
     @Override
@@ -202,11 +208,11 @@ public class ArticleServiceImpl implements ArticleService {
      * 插入博客
      * @param articleVO
      */
-    private void insert(ArticleVO articleVO){
+    private Article insert(ArticleVO articleVO){
 
         Article article = (Article)articleVO;
 
-        article.setId(DataBaseUtil.nextValue());
+        articleVO.setId(DataBaseUtil.nextValue());
 
         article.setArticleDigest(ArticleUtil.extractSummary(article.getArticleHtmlContent()));
 
@@ -244,6 +250,8 @@ public class ArticleServiceImpl implements ArticleService {
         relationMapper.batchInsertArticleTagsRelation(relationList);
 
         articleRepository.save(article);
+
+        return article;
     }
 
     public int getArticleCount(){

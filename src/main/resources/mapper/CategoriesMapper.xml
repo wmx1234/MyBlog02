@@ -5,9 +5,6 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="name" jdbcType="VARCHAR" property="name" />
     <result column="icon" jdbcType="VARCHAR" property="icon" />
-    <result column="create_date" jdbcType="VARCHAR" property="createDate" />
-    <result column="update_date" jdbcType="VARCHAR" property="updateDate" />
-    <result column="user_id" jdbcType="INTEGER" property="userId" />
   </resultMap>
 
 
@@ -16,37 +13,21 @@
   </delete>
 
   <insert id="insert" parameterType="com.xiao.blog.model.Categories">
-    insert into blog_categories (id, `name`, icon, 
-      create_date, update_date, user_id
-      )
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, 
-      #{createDate,jdbcType=VARCHAR}, #{updateDate,jdbcType=VARCHAR}, #{userId,jdbcType=INTEGER}
-      )
+    insert into blog_categories (id, `name`, icon) values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR})
   </insert>
   <update id="updateByPrimaryKey" parameterType="com.xiao.blog.model.Categories">
-    update blog_categories
-    set `name` = #{name,jdbcType=VARCHAR},
-      icon = #{icon,jdbcType=VARCHAR},
-      update_date = #{updateDate,jdbcType=VARCHAR}
-
-    where id = #{id,jdbcType=INTEGER}
+    update blog_categories set `name` = #{name,jdbcType=VARCHAR}, icon = #{icon,jdbcType=VARCHAR} where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
-    select id, `name`, icon, create_date, update_date, user_id
-    from blog_categories
-    where id = #{id,jdbcType=INTEGER}
+    select id, `name`, icon from blog_categories where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="getCategoriesByField" parameterType="com.xiao.blog.model.Categories" resultMap="BaseResultMap">
     select
     id,
     `name`,
-    icon,
-    create_date,
-    update_date,
-    user_id
+    icon
     from blog_categories
-    where
-    user_id = #{userId,jdbcType=INTEGER}
+
 
   </select>
 

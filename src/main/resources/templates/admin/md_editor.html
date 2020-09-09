@@ -197,13 +197,36 @@
 
         function save(e){
             let data = JSON.stringify(e)
-            //$.post('/admin/article/save',data).done(alert(1));
+
 
             ajax_post('/admin/article/save',data,function(e){
+
                 if(e.code == 0){
-                    layer.msg('大部分参数都是可以公用的<br>合理搭配，展示不一样的风格', {
-                        time: 20000, //20s后自动关闭
-                        btn: ['明白了', '知道了', '哦']
+                    let data = e.data;
+                    //示范一个公告层
+                    layer.open({
+                        type: 1,
+                        title: '发布成功',
+                        closeBtn: false,
+                        area: '500px;',
+                        shade: 0.8,
+                        id: 'article-success', //设定一个id，防止重复弹出
+                        btn: ['查看文章', '再写一篇'],
+                        btnAlign: 'c',
+                        moveType: 1, //拖拽模式，0或者1
+                        content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">'+data.articleDigest+'</div>',
+                        success: function(layero){
+                            let btn = layero.find('.layui-layer-btn');
+                            //查看文章按钮
+                            btn.find('.layui-layer-btn0').attr({
+                                href: '/article/' + data.id
+                                ,target: '_blank'
+                            });
+                            //再写一篇按钮
+                            btn.find('.layui-layer-btn1').attr({
+                                href: '/admin/editor'
+                            });
+                        }
                     });
                 }
             })

@@ -23,6 +23,11 @@ public interface TagsMapper extends BaseMapper<Tags> {
      */
     int batchInsertTags(List<Tags> tagsList);
 
+    /**
+     * 根据主键删除标签
+     * @param id
+     * @return
+     */
     int deleteByPrimaryKey(Integer id);
 
 

@@ -4,11 +4,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xiao.blog.pojo.request.PageRequest;
 import com.xiao.blog.pojo.response.BaseResponse;
+import com.xiao.blog.pojo.response.CommonResponse;
 import com.xiao.blog.pojo.response.PageResponse;
 import com.xiao.blog.service.ArticleService;
 import com.xiao.blog.service.CategoriesService;
 import com.xiao.blog.vo.ArticleVO;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -38,10 +40,7 @@ public class ArticleController {
     @RequestMapping("/save")
     @ResponseBody
     public BaseResponse save(@RequestBody ArticleVO articleVO){
-
-        articleService.save(articleVO);
-
-        return new BaseResponse();
+        return new CommonResponse(articleService.save(articleVO));
     }
 
     @RequestMapping("/getArticleVOList")
@@ -54,4 +53,15 @@ public class ArticleController {
         return new PageResponse<ArticleVO>(info);
     }
 
+
+    /**
+     * 保存博客
+     * @param id
+     * @return
+     */
+    @RequestMapping("/delete/{id}")
+    @ResponseBody
+    public BaseResponse delete(@PathVariable Integer id){
+        return new CommonResponse(articleService.delete(id));
+    }
 }

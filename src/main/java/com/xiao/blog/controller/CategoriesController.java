@@ -48,7 +48,7 @@ public class CategoriesController {
     public String add(Categories categories, Model model){
         categoriesService.save(categories);
         model.addAttribute("categoriesList",categoriesService.getCategoriesVOList());
-        return "/admin/md_editor::md_editor_categories";
+        return "admin/md_editor::md_editor_categories";
     }
 
     @RequestMapping("/delete/{id}")

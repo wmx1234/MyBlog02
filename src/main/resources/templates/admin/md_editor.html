@@ -44,15 +44,25 @@
 
                         <label class="layui-form-label">文章分类</label>
                         <div class="layui-input-inline">
-                            <select name="categoriesId" lay-reqtext="分类必填项，岂能为空？">
+                            <select name="categoriesId" lay-reqtext="分类必填项，岂能为空？" id="md_editor_categories" th:fragment="md_editor_categories">
                                 <option value=""></option>
                                 <option th:each="categories,index:${categoriesList}" th:value="${categories.id}" >[[${categories.name}]]</option>
                             </select>
                         </div>
                         <div class="layui-input-inline">
-
-                            <button type="button" class="layui-btn layui-btn-radius layui-btn-primary"><i class="layui-icon">&#xe654;</i>流体按钮（最大化适应）</button>
+                            <input type="hidden" name="categoriesName" lay-verify="required|categoriesName" autocomplete="off" class="layui-input">
                         </div>
+                        <div class="layui-input-inline" id="categories-add-btn">
+                            <button type="button" class="layui-btn layui-btn-radius layui-btn-primary"  onclick="addCategories()">
+                                <i class="layui-icon">&#xe654;</i>新增分类
+                            </button>
+                        </div>
+                        <div class="layui-input-inline" id="categories-save-btn" style="display: none">
+                            <button type="button" class="layui-btn layui-btn-radius layui-btn-primary"  onclick="saveCategories()">
+                                <i class="layui-icon">&#xe605;</i>保存
+                            </button>
+                        </div>
+
                     </div>
 
                     <!-- 发布形式 -->
@@ -60,11 +70,8 @@
 
                         <label class="layui-form-label">文章标签</label>
                         <div class="layui-input-block">
-                            <span contenteditable="false" class="tag__name">
-                                设计模式
-                                <i class="layui-icon ">&#x1006;</i>
-                            </span>
-                            <button type="button" class="layui-btn layui-btn-radius layui-btn-primary"><i class="layui-icon">&#xe654;</i>流体按钮（最大化适应）</button>
+                            <span class="layui-btn">查看消息<span class="layui-badge layui-bg-gray">1</span></span>
+                            <button type="button" class="layui-btn layui-btn-radius layui-btn-primary"><i class="layui-icon">&#xe654;</i>新增标签</button>
                         </div>
                     </div>
                     <!-- 发布形式 -->
@@ -144,6 +151,8 @@
 
             let form = layui.form;
 
+
+
             //监听提交
             form.on('submit(save)', function(data){
                 let params = {};
@@ -172,6 +181,7 @@
                 save(field);
                 return false;
             });
+
             form.on('checkbox(tagsList)', function(data){
 
                 let othis = (data.othis)[0];
@@ -196,8 +206,8 @@
 
 
         function save(e){
-            let data = JSON.stringify(e)
 
+            let data = JSON.stringify(e)
 
             ajax_post('/admin/article/save',data,function(e){
 
@@ -313,6 +323,24 @@
 
     });
 
+    function addCategories(){
+        $("input[name='categoriesName']").attr("type","text");
+        $("#categories-add-btn").css("display","none")
+        $("#categories-save-btn").css("display","block")
+
+
+    }
+    function saveCategories(){
+        $("input[name='categoriesName']").attr("type","hidden");
+        $("#categories-add-btn").css("display","block")
+        $("#categories-save-btn").css("display","none")
+        let categoriesName = $("input[name='categoriesName']").val();
+        $.post("/admin/categories/add", {'name':categoriesName},function(e){
+            console.log(e);
+            $("#md_editor_categories").html(e);
+        })
+
+    }
 
     function ajax_post(url,data,success){
         $.ajax({

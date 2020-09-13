@@ -47,7 +47,7 @@ public class BlogController {
 
         PageHelper.startPage(pageNum, 9);
 
-        List<ArticleVO> articles = articleService.getAllArticles();
+        List<ArticleVO> articles = articleService.getPageArticleList(new Article(1,1));
 
         PageInfo pageInfo = new PageInfo(articles);
 

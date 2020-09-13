@@ -18,6 +18,7 @@ import com.xiao.blog.vo.ArticleVO;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.*;
@@ -46,29 +47,23 @@ public class ArticleServiceImpl implements ArticleService {
     public Article save(ArticleVO articleVO) {
 
         if(articleVO.getId() == null){
-
             return insert(articleVO);
         }else{
-            //update(params.getObject("article",Article.class));
+            return update(articleVO);
         }
-        return null;
-
     }
 
     @Override
     public int delete(Integer id) {
         //删除和标签关联关系
-        relationMapper.deleteLabelsByArticleId(id);
+        relationMapper.deleteRelationByArticleId(id);
         //删除es中的博客
         articleRepository.deleteArticleById(id);
         //删除博客
         return articleMapper.delete(id);
     }
 
-    @Override
-    public void update(Article article) {
 
-    }
 
     @Override
     public List<ArticleVO> getArticleListByTagsId(Integer id) {
@@ -84,8 +79,8 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public List<ArticleVO> getAllArticles() {
-        return articleMapper.getAllArticles();
+    public List<ArticleVO> getPageArticleList(Article article) {
+        return articleMapper.getPageArticleList(article);
     }
 
     @Override
@@ -95,7 +90,21 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleVO getArticleById(int id) {
-        return articleMapper.getArticleById(id);
+
+        ArticleVO article = articleMapper.getArticleById(id);
+
+        ArticleVO articleVO = new ArticleVO();
+
+        if(article.getLastArticleId() != null){
+            articleVO.setId(article.getLastArticleId());
+            article.setLastArticle(articleMapper.getArticleListByField(articleVO).get(0));
+        }
+
+        if(article.getNextArticleId() != null){
+            articleVO.setId(article.getNextArticleId());
+            article.setNextArticle(articleMapper.getArticleListByField(articleVO).get(0));
+        }
+        return article;
     }
 
     @Override
@@ -113,7 +122,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public List<ArticleVO> archive(){
 
-        List<ArticleVO> allArticles = articleMapper.getAllArticles();
+        List<ArticleVO> allArticles = articleMapper.getPageArticleList(new Article());
 
         Set<String> yearSet = new HashSet<String>();
 
@@ -198,17 +207,21 @@ public class ArticleServiceImpl implements ArticleService {
 
         Iterable<Article> search = articleRepository.search(QueryBuilders
                 .multiMatchQuery(name,"articleTitle","articleContent"));
-
-
-
         return search;
     }
+
+    @Override
+    public void clearEsArticle() {
+        articleRepository.deleteAll();
+    }
+
 
     /**
      * 插入博客
      * @param articleVO
      */
-    private Article insert(ArticleVO articleVO){
+    @Transactional
+    public Article insert(ArticleVO articleVO){
 
         Article article = (Article)articleVO;
 
@@ -220,16 +233,72 @@ public class ArticleServiceImpl implements ArticleService {
 
         article.setUserId(ShiroKit.getUser().getId());
 
-        article.setLastArticleId(articleMapper.getLastArticleId());
+        Integer lastArticleId = articleMapper.getLastArticleId();
+
+        if(lastArticleId != null){
+
+            article.setLastArticleId(lastArticleId);
+
+            updateLastArticle(lastArticleId,article.getId());
+        }
 
         article.setArticleUrl("/article/"+article.getId());
 
         article.setArticleImage(ArticleUtil.randomImage());
 
+        if(article.getTop() == 1){
+            articleMapper.quitTop();
+        }
+
         articleMapper.insert(article);
 
-        List<Tags> tagsList = articleVO.getTagsList();
+        insertTagsAndUpdateRelation(articleVO.getTagsList(),article);
 
+        articleRepository.save(article);
+
+
+
+        return article;
+    }
+
+    public int getArticleCount(){
+        return articleMapper.getArticleCount();
+    }
+
+    /**
+     * 修改博客
+     * @param articleVO
+     */
+    private Article update(ArticleVO articleVO){
+
+        Article article = (Article)articleVO;
+
+        if(article.getArticleHtmlContent() != null){
+            article.setArticleDigest(ArticleUtil.extractSummary(article.getArticleHtmlContent()));
+        }
+
+        article.setUpdateDate(DateUtil.today());
+
+        articleMapper.update(article);
+
+        relationMapper.deleteRelationByArticleId(article.getId());
+
+        insertTagsAndUpdateRelation(articleVO.getTagsList(),article);
+
+        //删除es中的博客
+        articleRepository.deleteArticleById(articleVO.getId());
+
+        articleRepository.save(article);
+
+        return article;
+    }
+
+    /**
+     * 根据tagsList插入博客和标签的对照关系，并新增数据库中不存在的标签
+     * @param tagsList
+     * @param article
+     */
+    private void insertTagsAndUpdateRelation(List<Tags> tagsList,Article article){
         List<Relation> relationList = new ArrayList<Relation>();
 
         List<Tags> newTagsList = new ArrayList<Tags>();
@@ -248,36 +317,18 @@ public class ArticleServiceImpl implements ArticleService {
         }
 
         relationMapper.batchInsertArticleTagsRelation(relationList);
-
-        articleRepository.save(article);
-
-        return article;
     }
 
-    public int getArticleCount(){
-        return articleMapper.getArticleCount();
+    private void updateLastArticle(Integer lastArticleId,Integer currentArticleId){
+
+        ArticleVO lastArticle = new ArticleVO();
+
+        lastArticle.setId(lastArticleId);
+
+        lastArticle.setNextArticleId(currentArticleId);
+
+        update(lastArticle);
     }
 
-    /**
-     * 修改博客
-     * @param params
-     */
-    private void update(Params params){
 
-//        Article article = params.getObject("article",Article.class);
-//
-//        article.setArticleDigest(ArticleUtil.buildArticleTabloid(article.getArticleHtmlContent()));
-//
-//        article.setUpdateDate(DateUtil.today());
-//
-//        articleMapper.updateArticleById(article);
-//
-//        relationMapper.deleteLabelsByArticleId(article.getId());
-//
-//        relationMapper.batchInsertArticleLabelRelation(params.getList("labels"));
-
-        //relationMapper.deleteCategoriesByArticleId(article.getId());
-
-        //relationMapper.insertArticleCategoriesRelation(params.getObject("categories", Relation.class));
-    }
 }

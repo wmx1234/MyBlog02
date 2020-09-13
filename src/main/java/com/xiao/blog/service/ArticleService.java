@@ -29,17 +29,12 @@ public interface ArticleService {
      */
     public int delete(Integer id);
 
-    /**
-     * 修改博客
-     * @param article
-     */
-    public void update(Article article);
 
     /**
      * 获取所有博客列表
      * @return
      */
-    public List<ArticleVO> getAllArticles();
+    public List<ArticleVO> getPageArticleList(Article article);
 
     /**
      * 获取博客列表
@@ -81,6 +76,8 @@ public interface ArticleService {
     public Map<String,Object> getCalendar();
 
     public Iterable<Article> searchArticle(String name);
+
+    public void clearEsArticle();
 
     public int getArticleCount();
 }

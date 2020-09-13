@@ -1,19 +1,16 @@
 <!DOCTYPE html>
 <html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="admin/fragment/common::header"></head>
-<link th:href="@{/admin/mdeditor/css/editormd.css}" rel="stylesheet">
-<script th:src="@{/admin/mdeditor/js/editormd.min.js}"></script>
+<link th:href="@{/mdeditor/css/editormd.css}" rel="stylesheet">
+<script th:src="@{/mdeditor/js/editormd.min.js}"></script>
 <style>
 
-    .tag__name {
-        margin-right: 8px;
-        padding: 5px;
-        font-size: 14px;
-        height: 28px;
-        background: rgba(38,125,204,.05);
-        border-radius: 4px;
-        border: 1px solid rgba(38,125,204,.2);
-    }
+     .tags-info{
+         margin-top: 8px;
+         padding-left: 10px;
+         border-radius: 4px
+     }
+
 </style>
 <body class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">
@@ -28,8 +25,8 @@
 
                     <div class="layui-form-item">
                         <div id="">
-                            <input name="id" type="hidden" placeholder="博客id">
-                            <input name="articleTitle" type="text" class="layui-input"
+                            <input name="id" type="hidden" placeholder="博客id" th:value="${article.id}">
+                            <input name="articleTitle" type="text" class="layui-input" th:value="${article.articleTitle}"
                                    lay-verify="required" lay-reqtext="文章内容是必填项，岂能为空？" placeholder="请输入标题"></input>
                         </div>
                     </div>
@@ -49,49 +46,67 @@
                                 <option th:each="categories,index:${categoriesList}" th:value="${categories.id}" >[[${categories.name}]]</option>
                             </select>
                         </div>
-                        <div class="layui-input-inline">
-                            <input type="hidden" name="categoriesName" lay-verify="required|categoriesName" autocomplete="off" class="layui-input">
+
+                        <div class="layui-input-inline" style="width:120px">
+                            <input type="hidden" name="categoriesName" placeholder="请输入分类名称"  class="layui-input">
                         </div>
-                        <div class="layui-input-inline" id="categories-add-btn">
-                            <button type="button" class="layui-btn layui-btn-radius layui-btn-primary"  onclick="addCategories()">
+                        <div class="layui-input-inline">
+                            <button type="button" class="layui-btn layui-btn-radius layui-btn-primary add_categories_btn">
                                 <i class="layui-icon">&#xe654;</i>新增分类
                             </button>
                         </div>
-                        <div class="layui-input-inline" id="categories-save-btn" style="display: none">
-                            <button type="button" class="layui-btn layui-btn-radius layui-btn-primary"  onclick="saveCategories()">
+                        <div class="layui-input-inline categories_button" style="display: none">
+                            <button type="button" class="layui-btn layui-btn-radius layui-btn-primary save_categories_btn">
                                 <i class="layui-icon">&#xe605;</i>保存
+                            </button>
+                            <button type="button" class="layui-btn layui-btn-radius layui-btn-primary quit_categories_btn">
+                                <i class="layui-icon">&#x1006;</i>取消
                             </button>
                         </div>
 
                     </div>
 
-                    <!-- 发布形式 -->
-                    <div class="layui-form-item" style="margin-bottom: 5px">
+                    <div class="layui-form-item" style="margin-bottom: 5px;">
 
                         <label class="layui-form-label">文章标签</label>
-                        <div class="layui-input-block">
-                            <span class="layui-btn">查看消息<span class="layui-badge layui-bg-gray">1</span></span>
-                            <button type="button" class="layui-btn layui-btn-radius layui-btn-primary"><i class="layui-icon">&#xe654;</i>新增标签</button>
+                        <div class="layui-input-inline tags-container" style="width: auto">
+
                         </div>
+
+                        <div class="layui-input-inline" style="width:120px;">
+                            <input type="hidden" name="tagsName" placeholder="请输入标签名称"  class="layui-input">
+                        </div>
+                        <div class="layui-input-inline" style="margin-right:0px">
+                            <button type="button" class="layui-btn layui-btn-radius layui-btn-primary add_tags_btn">
+                                <i class="layui-icon">&#xe654;</i>新增标签
+                            </button>
+                        </div>
+                        <div class="layui-input-inline tags_button" style="display: none">
+                            <button type="button" class="layui-btn layui-btn-radius layui-btn-primary save_tags_btn">
+                                <i class="layui-icon">&#xe605;</i>保存
+                            </button>
+                            <button type="button" class="layui-btn layui-btn-radius layui-btn-primary quit_tags_btn">
+                                <i class="layui-icon">&#x1006;</i>取消
+                            </button>
+                        </div>
+
                     </div>
                     <!-- 发布形式 -->
                     <div class="layui-form-item">
 
                         <label class="layui-form-label"></label>
                         <div class="layui-input-block" >
-                            <input type="checkbox" th:each="tags,index:${tagsList}" th:title="${tags.name}" name="tags" th:value="${tags.id}" lay-skin="primary">
+                            <input type="checkbox" lay-filter="tags-click"  th:each="tags,index:${tagsList}" th:title="${tags.name}" name="tagsList" th:value="${tags.id}" lay-skin="primary">
                         </div>
                     </div>
-
-
 
                     <!-- 发布形式 -->
                     <div class="layui-form-item">
                         <label class="layui-form-label">发布形式</label>
                         <div class="layui-input-block">
-                            <input type="checkbox" name="like[write]" title="置顶">
-                            <input type="checkbox" name="like[read]" title="私密" checked>
-                            <input type="checkbox" name="like[dai]" title="发呆">
+                            <input type="checkbox" name="draft" title="草稿" lay-filter="type-click" value="1">
+                            <input type="checkbox" name="privacy" title="私密" lay-filter="type-click" value="1">
+                            <input type="checkbox" name="top" title="置顶" lay-filter="type-click" value="1">
                         </div>
                     </div>
                     <!-- 按钮 -->
@@ -99,9 +114,7 @@
                         <label class="layui-form-label"></label>
                         <div class="layui-input-block">
                             <button type="button" class="layui-btn layui-btn-normal" lay-submit="" lay-filter="save">立即提交</button>
-                            <button type="button" class="layui-btn layui-btn-warm" lay-submit="" lay-filter="draft">保存草稿</button>
-                            <button type="button" class="layui-btn layui-btn-danger" lay-submit="" lay-filter="demo1">返回列表</button>
-
+                            <a class="layui-btn layui-btn-danger" href="/admin/article">返回列表</a>
                         </div>
                     </div>
                 </form>
@@ -117,7 +130,7 @@
 <script th:inline="javascript">
 
     //获取博客
-    let articleVO = [[${articleVO}]];
+    let articleVO = [[${article}]];
 
     $(function() {
         //定义markdown编辑器
@@ -141,206 +154,199 @@
             }
         });
 
-        if(articleVO != null){
-            $("input[name='id']").val(articleVO['id']);
-            $("#articleContent").html(articleVO['articleContent']);
-            $(".editormd-html-textarea").html(articleVO['articleHtmlContent']);
-        }
+
 
         layui.use(['form'], function(){
 
             let form = layui.form;
-
-
-
             //监听提交
             form.on('submit(save)', function(data){
-                let params = {};
 
                 let field = data.field;
-                field['isDraft'] = 0;
-                field['articleHtmlContent'] = field['editor-md-html-code'];
-                //params['article'] = field;
-                let tagsList = [];
-                $("input:checkbox[name='tags']:checked").each(function (e) {
-                    let tags = {'id':$(this).val(),'name':$(this).attr("title")};
-                    tagsList.push(tags);
-                });
-                field['tagsList'] = tagsList;
+
 
                 save(field);
                 return false;
             });
 
 
-            form.on('submit(draft)', function(data){
-                let field = data.field;
-                field['isDraft'] = 1;
-
-                return;
-                save(field);
-                return false;
-            });
-
-            form.on('checkbox(tagsList)', function(data){
-
-                let othis = (data.othis)[0];
-                let elem = data.elem;
-                if($(othis).parent('#article_tags_checked').length == 1){
-                    $(othis).removeClass();
-                    $(othis).addClass('layui-unselect layui-form-checkbox layui-form');
-                    $("#article_tags_all").append(elem);
-                    $("#article_tags_all").append(othis);
-                }else{
-                    if($("#article_labels_checked").children().length == 5){
-                        layer.msg("最多只能选5个标签");
-                    }else{
-                        $(othis).removeClass();
-                        $(othis).addClass('layui-unselect layui-form-checkbox layui-form-checked');
-                        $("#article_labels_checked").append(elem);
-                        $("#article_labels_checked").append(othis);
+            //监听checkbox选中事件
+            form.on('checkbox(tags-click)', function(data){
+                let obj = $(this)[0]
+                //判断当前多选框是选中还是取消选中
+                if(data.elem.checked){　　　　　　
+                    let tagsList = getTagsList();
+                    if(tagsList.length > 2){
+                        layer.msg("最多添加三个标签");
+                        data.elem.click();
+                        form.render();
+                        return;
                     }
+                    addTags(obj.title,obj.value);
+                }else{
+                    $("."+obj.title).remove();
                 }
             });
+
+            //监听checkbox选中事件
+            form.on('checkbox(type-click)', function(data){
+               console.log(data.elem);
+            });
+
+            //初始化博客
+            if(articleVO != null) initArticle();
+            form.render();
         });
+    });
 
+    function initArticle(){
 
-        function save(e){
+        $("#articleContent").html(articleVO.articleContent);
+        $(".editormd-html-textarea").html(articleVO.articleHtmlContent);
 
-            let data = JSON.stringify(e)
-
-            ajax_post('/admin/article/save',data,function(e){
-
-                if(e.code == 0){
-                    let data = e.data;
-                    //示范一个公告层
-                    layer.open({
-                        type: 1,
-                        title: '发布成功',
-                        closeBtn: false,
-                        area: '500px;',
-                        shade: 0.8,
-                        id: 'article-success', //设定一个id，防止重复弹出
-                        btn: ['查看文章', '再写一篇'],
-                        btnAlign: 'c',
-                        moveType: 1, //拖拽模式，0或者1
-                        content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">'+data.articleDigest+'</div>',
-                        success: function(layero){
-                            let btn = layero.find('.layui-layer-btn');
-                            //查看文章按钮
-                            btn.find('.layui-layer-btn0').attr({
-                                href: '/article/' + data.id
-                                ,target: '_blank'
-                            });
-                            //再写一篇按钮
-                            btn.find('.layui-layer-btn1').attr({
-                                href: '/admin/editor'
-                            });
-                        }
-                    });
+        let categories = articleVO.categories;
+        if(categories != undefined && categories != null){
+            $(".layui-form-select dl").children().each(function(index,data){
+                if(data.textContent == categories.name){
+                    data.click();
                 }
             })
-
         }
 
 
-        //打开新增框
-        $(".open_button").on("click",function(e){
+        let tagsList = articleVO.tagsList;
+        if(tagsList != undefined && tagsList != null){
+            for(let i=0;i<tagsList.length;i++){
+                addTags(tagsList[i].name,tagsList[i].id);
+                $('input[name="tagsList"]').each(function(index,data){
+                    if(tagsList[i].id == data.value){
+                        data.click();
+                    }
+                })
+            }
+        }
+    }
 
-            $(this).parents('.layui-inline').removeClass("close_add_model");
+    function save(article){
 
-        })
+        article['draft'] = article.draft == undefined?0:1
+        article['privacy'] = article.privacy == undefined?0:1
+        article['top'] = article.top == undefined?0:1
 
-        //关闭新增框
-        $(".close_button").on("click",function(e){
+        article['articleHtmlContent'] = article['editor-md-html-code'];
 
-            $(this).parents('.layui-inline').addClass("close_add_model");
+        article['tagsList'] = getTagsList();
 
-        })
+        let data = JSON.stringify(article)
 
-        //新增分类
-        $(".submit_categories_button").on("click",function(e){
-            let categoriesName = $("input[name='categoriesName']").val();
-            if(categoriesName == '' || categoriesName == undefined){
-                layer.msg("分类名称不能为空！！！");
-                return;
-            }else{
-                $.post('/admin/categories/add',{'name':categoriesName},function (data) {
-                    if(data.code == 1){
-                        layer.msg("该分类已存在！！！");
-                    }else{
+        ajax_post('/admin/article/save',data,function(e){
 
-                        $("#md_editor_categories").html(data);
-                        $("#article_categories").addClass("close_add_model");
-                        layui.use('form', function() {
-                            let form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
-                            form.render();
+            if(e.code == 0){
+                let data = e.data;
+                //示范一个公告层
+                layer.open({
+                    type: 1,
+                    title: '发布成功',
+                    closeBtn: false,
+                    area: '500px;',
+                    shade: 0.8,
+                    id: 'article-success', //设定一个id，防止重复弹出
+                    btn: ['查看文章', '再写一篇'],
+                    btnAlign: 'c',
+                    moveType: 1, //拖拽模式，0或者1
+                    content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">'+data.articleDigest+'</div>',
+                    success: function(layero){
+                        let btn = layero.find('.layui-layer-btn');
+                        //查看文章按钮
+                        btn.find('.layui-layer-btn0').attr({
+                            href: '/article/' + data.id
+                            ,target: '_blank'
                         });
-                        //选中最后新增的分类
-                        $($(".layui-form-select dl").children(":last-child")).click();
+                        //再写一篇按钮
+                        btn.find('.layui-layer-btn1').attr({
+                            href: '/admin/editor'
+                        });
                     }
                 });
             }
-
-        });
-
-        $(".submit_tags_button").on("click",function(e){
-
-            if($("#article_labels_checked").find("input").length == 5){
-                layer.msg("最多只能选5个标签");
-                return;
-            }
-            let tagsName = $("input[name='tagsName']").val();
-
-            if(tagsName == '' || tagsName == undefined){
-                layer.msg("分类名称不能为空！！！");
-                return;
-            }else{
-                const checkedTags = [];
-                $($("#article_labels_checked").find("input")).each(function(){
-                    checkedTags.push(this.value);
-                });
-
-                let param = {'name':tagsName,'checkedTags':checkedTags};
-
-                $.post('/admin/tags/add',param,function (data) {
-
-                    $("#article_tags_all").html(data);
-                    $("#article_tags").addClass("close_add_model");
-
-                    layui.use('form', function() {
-                        let form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
-                        form.render();
-                    });
-                    //选中最后新增的分类
-                    $($("#article_tags_all").children(":last-child")).click();
-                    let tags = $("#article_tags_all").children("input");
-
-                })
-            }
-
-        });
-
-    });
-
-    function addCategories(){
-        $("input[name='categoriesName']").attr("type","text");
-        $("#categories-add-btn").css("display","none")
-        $("#categories-save-btn").css("display","block")
-
-
-    }
-    function saveCategories(){
-        $("input[name='categoriesName']").attr("type","hidden");
-        $("#categories-add-btn").css("display","block")
-        $("#categories-save-btn").css("display","none")
-        let categoriesName = $("input[name='categoriesName']").val();
-        $.post("/admin/categories/add", {'name':categoriesName},function(e){
-            console.log(e);
-            $("#md_editor_categories").html(e);
         })
 
     }
+
+    $(".quit_categories_btn").on("click",function(e){
+        hide('categories');
+    })
+    $(".quit_tags_btn").on("click",function(e){
+        hide('tags');
+    })
+
+    $(".add_categories_btn").on("click",function(e){
+        show('categories');
+    })
+
+    $(".add_tags_btn").on("click",function(e){
+        show('tags');
+    })
+
+    //保存标签
+    $(".save_tags_btn").on("click",function(e){
+
+        let tagsName = $("input[name='tagsName']").val();
+
+        if(tagsName == '' || tagsName == undefined){
+            layer.msg("标签名称不能为空！！！");
+            return;
+        }
+
+        let tagsList = getTagsList();
+
+        if(tagsList.length > 2){
+            layer.msg("最多添加三个标签");
+            return;
+        }
+
+        for(let i=0;i<tagsList.length;i++){
+            if(tagsName.toLowerCase() == tagsList[i].name.toLowerCase()){
+                layer.msg("该标签已存在！！！");
+                return;
+            }
+        }
+
+        $.post('/admin/tags/save',{'name':tagsName},function (result) {
+            addTags(result.data.name,result.data.id);
+            hide('tags');
+
+            $("input[name='tagsList']").each(function(index,data){
+                if(result.data.id == data.value){
+                    data.click();
+                }
+            })
+            layui.use('form', function() { layui.form.render() });
+        });
+
+    })
+
+    //新增分类
+    $(".save_categories_btn").on("click",function(e){
+        let categoriesName = $("input[name='categoriesName']").val();
+
+
+        if(categoriesName == '' || categoriesName == undefined){
+            layer.msg("分类名称不能为空！！！");
+        }else{
+            $.post('/admin/categories/add',{'name':categoriesName},function (data) {
+                if(data.code == 1){
+                    layer.msg("该分类已存在！！！");
+                }else{
+                    $("#md_editor_categories").html(data);
+                    hide('categories');
+                    layui.use('form', function() { layui.form.render() });
+                    //选中最后新增的分类
+                    $($(".layui-form-select dl").children(":last-child")).click();
+                }
+            });
+        }
+    });
 
     function ajax_post(url,data,success){
         $.ajax({
@@ -351,6 +357,63 @@
             success:success
         })
 
+    }
+
+    function getTagsList(){
+        let result = [];
+
+        let tagsList = $("input[name='tags']");
+
+        tagsList.each(function(index,data){
+            let tags = {};
+            tags['name'] = data.title;
+            tags['id'] = data.value;
+            result.push(tags);
+        })
+
+        return result;
+    }
+
+    function addTags(name,id){
+        $(".tags-container").append(
+
+            '<span class="layui-btn layui-btn-xs tags-info" '+name+'">\n' +
+            '    <input type="hidden" name="tags" title="'+ name +'" value="'+id+'">\n' +
+            '    <span >'+name+'</span>\n' +
+            '    <a type="button" onclick="removeTags(this)"><i class="layui-icon">&#x1006;</i></a>\n' +
+            '</span>')
+
+    }
+
+    function removeTags(e){
+
+        let tagsContainer = $(e).parent();
+
+        let element = tagsContainer.children('input')[0];
+
+        $('input[name="tagsList"]:checked').each(function(index,data){
+            if(element.value == data.value){
+                data.click();
+            }
+        })
+        //重新渲染页面
+        layui.use(['form'], function() {
+            let form = layui.form;
+            form.render();
+        })
+        tagsContainer.remove();
+    }
+
+    function show(e){
+        $("input[name='"+e+"Name']").attr("type","text");
+        $(".add_"+e+"_btn").parent().css("display","none")
+        $("."+e+"_button").css("display","block")
+    }
+    function hide(e){
+        $("input[name='"+e+"Name']").attr("type","hidden");
+        $(".add_"+e+"_btn").parent().css("display","block")
+        $("."+e+"_button").css("display","none")
+        $("input[name='"+e+"Name']").val('');
     }
 </script>
 

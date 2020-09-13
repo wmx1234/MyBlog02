@@ -1,6 +1,8 @@
 package com.xiao.blog.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.elasticsearch.annotations.Document;
 
 import java.io.Serializable;
@@ -12,6 +14,8 @@ import java.io.Serializable;
  */
 @Data
 @Document(indexName = "blog",type = "article")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Article implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,4 +54,8 @@ public class Article implements Serializable {
 
     private Integer categoriesId;
 
+    public Article(Integer draft,Integer privacy){
+        this.draft = draft;
+        this.privacy = privacy;
+    }
 }

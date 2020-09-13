@@ -435,50 +435,48 @@
 
             <div class="article col s12 m6" data-aos="fade-up">
                 <div class="article-badge left-badge text-color">
-                    <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                    <i th:class="${article.lastArticleId==null?'far fa-dot-circle':'fas fa-chevron-left'}"></i>&nbsp;
+                    <span th:text="${article.lastArticleId==null?'本篇':'上一篇'}">上一篇</span>
+                </div>
                 <div class="card">
-                    <a href="/2020/06/14/spring/springboot/springboot-ru-men-dao-jing-tong-yi-hello-world/">
+                    <a th:href="${article.lastArticleId==null?article.articleUrl:article.lastArticle.articleUrl}">
                         <div class="card-image">
 
-
-                            <img src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/featureimages/21.jpg" class="responsive-img" alt="SpringBoot入门到精通：（一）Hello World">
-
-                            <span class="card-title">SpringBoot入门到精通：（一）Hello World</span>
+                            <img class="responsive-img"
+                                 th:src="${article.lastArticleId==null?article.articleImage:article.lastArticle.articleImage}"
+                                 th:alt="${article.lastArticleId==null?article.articleTitle:article.lastArticle.articleTitle}">
+                            <span class="card-title"
+                                  th:text="${article.lastArticleId==null?article.articleTitle:article.lastArticle.articleTitle}">
+                            </span>
                         </div>
                     </a>
                     <div class="card-content article-content">
-                        <div class="summary block-with-text">
-
-
-    Spring Boot 概述
-    Build Anything with Spring Boot：Spring Boot is the starting point for building all Spring-based applicat
-
+                        <div class="summary block-with-text"
+                             th:text="${article.lastArticleId == null?article.articleDigest:article.lastArticle.articleDigest}">
                         </div>
+
                         <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-14
+                                <i class="far fa-clock fa-fw icon-date"></i>[[${article.lastArticleId==null?article.createDate:article.lastArticle.createDate}]]
                             </span>
                             <span class="publish-author">
 
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
 
-                                <a href="/categories/Spring/" class="post-category">
-                                        Spring
-                                    </a>
+                                <a class="post-category"
+                                   th:href="'/categories/'+${article.lastArticleId==null?article.categories.id:article.lastArticle.categories.id}"
+                                   th:text="${article.lastArticleId==null?article.categories.name:article.lastArticle.categories.name}">
 
-                                <a href="/categories/Spring/SpringBoot/" class="post-category">
-                                        SpringBoot
-                                    </a>
-
-
+                                </a>
                             </span>
                         </div>
                     </div>
 
                     <div class="card-action article-tags">
 
-                        <a href="/tags/SpringBoot/">
-                            <span class="chip bg-color">SpringBoot</span>
+                        <a  th:each="tags,index:${article.lastArticleId==null?article.tagsList:article.lastArticle.tagsList}"
+                            th:href="'/tags/'+${tags.id}">
+                            <span class="chip bg-color" th:text="${tags.name}"></span>
                         </a>
 
                     </div>
@@ -489,45 +487,43 @@
 
             <div class="article col s12 m6" data-aos="fade-up">
                 <div class="article-badge right-badge text-color">
-                    本篇&nbsp;<i class="far fa-dot-circle"></i>
+                    <span th:text="${article.nextArticleId==null?'本篇':'下一篇'}">上一篇</span>&nbsp;
+                    <i th:class="${article.lastArticleId==null?'far fa-dot-circle':'fas fa-chevron-right'}"></i>&nbsp;
                 </div>
                 <div class="card">
-                    <a href="/2020/06/14/docker/docker-ru-men-er-docker-jie-shao/">
+                    <a th:href="${article.nextArticleId==null?article.articleUrl:article.nextArticle.articleUrl}">
                         <div class="card-image">
 
+                            <img th:src="${article.nextArticleId == null?article.articleImage:article.nextArticle.articleImage}" class="responsive-img"
+                                 th:alt="${article.nextArticleId == null?article.articleTitle:article.nextArticle.articleTitle}">
 
-                            <img src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/featureimages/0.jpg" class="responsive-img" alt="Docker入门：（二）Docker介绍">
-
-                            <span class="card-title">Docker入门：（二）Docker介绍</span>
+                            <span class="card-title"
+                                  th:text="${article.nextArticleId == null?article.articleTitle:article.nextArticle.articleTitle}">
+                            </span>
                         </div>
                     </a>
                     <div class="card-content article-content">
-                        <div class="summary block-with-text">
-
-                                Docker概念
-    Docker is a platform for developers and sysadmins to build, run, and share applications with containers. The us
-
+                        <div class="summary block-with-text"
+                             th:text="${article.nextArticleId == null?article.articleDigest:article.nextArticle.articleDigest}">
                         </div>
                         <div class="publish-info">
                                 <span class="publish-date">
-                                    <i class="far fa-clock fa-fw icon-date"></i>2020-06-14
+                                    <i class="far fa-clock fa-fw icon-date"></i>[[${article.lastArticleId==null?article.createDate:article.lastArticle.createDate}]]
                                 </span>
                             <span class="publish-author">
-
                                 <i class="fas fa-bookmark fa-fw icon-category"></i>
-
-                                <a href="/categories/Docker/" class="post-category">
-                                        Docker
-                                    </a>
-
-
+                                <a class="post-category"
+                                   th:href="'/categories/'+${article.lastArticleId==null?article.categories.id:article.lastArticle.categories.id}"
+                                   th:text="${article.lastArticleId==null?article.categories.name:article.lastArticle.categories.name}">
+                                </a>
                             </span>
                         </div>
                     </div>
 
                     <div class="card-action article-tags">
-                        <a href="/tags/Docker/">
-                            <span class="chip bg-color">Docker</span>
+                        <a  th:each="tags,index:${article.nextArticleId==null?article.tagsList:article.nextArticle.tagsList}"
+                            th:href="'/tags/'+${tags.id}">
+                            <span class="chip bg-color" th:text="${tags.name}"></span>
                         </a>
                     </div>
                 </div>

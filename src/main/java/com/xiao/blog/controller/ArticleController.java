@@ -2,6 +2,7 @@ package com.xiao.blog.controller;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.xiao.blog.model.Article;
 import com.xiao.blog.pojo.request.PageRequest;
 import com.xiao.blog.pojo.response.BaseResponse;
 import com.xiao.blog.pojo.response.CommonResponse;
@@ -45,10 +46,11 @@ public class ArticleController {
 
     @RequestMapping("/getArticleVOList")
     @ResponseBody
-    public PageResponse<ArticleVO> getArticleVOList(PageRequest request){
+    public PageResponse<ArticleVO> getArticleVOList(PageRequest request, Article article){
+
         PageHelper.startPage(request.getPage(),request.getLimit());
-        //创建pageinfo，包含分页的信息
-        PageInfo info=new PageInfo(articleService.getAllArticles());
+
+        PageInfo info=new PageInfo(articleService.getPageArticleList(article));
 
         return new PageResponse<ArticleVO>(info);
     }
@@ -63,5 +65,17 @@ public class ArticleController {
     @ResponseBody
     public BaseResponse delete(@PathVariable Integer id){
         return new CommonResponse(articleService.delete(id));
+    }
+
+
+    /**
+     * 清除Es中的内容博客
+     * @return
+     */
+    @RequestMapping("/clearEsArticle")
+    @ResponseBody
+    public BaseResponse clearEsArticle(){
+        articleService.clearEsArticle();
+        return new BaseResponse();
     }
 }

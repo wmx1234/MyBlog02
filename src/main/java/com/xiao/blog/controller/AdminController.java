@@ -5,6 +5,7 @@ import com.xiao.blog.model.Permission;
 import com.xiao.blog.model.User;
 import com.xiao.blog.service.*;
 import com.xiao.blog.shiro.ShiroKit;
+import com.xiao.blog.vo.ArticleVO;
 import com.xiao.blog.vo.LoginUser;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -44,6 +45,9 @@ public class AdminController {
 
     @Resource
     CategoriesService categoriesService;
+
+    @Resource
+    ArticleService articleService;
 
     @GetMapping("/login")
     public String login(){
@@ -133,7 +137,7 @@ public class AdminController {
      */
     @RequestMapping("/editor")
     public String write(Model model){
-
+        model.addAttribute("article", new ArticleVO());
         //获取分类列表
         model.addAttribute("categoriesList",categoriesService.getCategoriesByField(new Categories(1)));
         //获取标签列表
@@ -149,7 +153,13 @@ public class AdminController {
      */
     @RequestMapping("/editor/{id}")
     public String edit(@PathVariable("id") Integer id,Model model){
-        //model.addAttribute("articleVO", articleService.getArticleById(id));
+
+        model.addAttribute("article", articleService.getArticleById(id));
+
+        //获取分类列表
+        model.addAttribute("categoriesList",categoriesService.getCategoriesByField(new Categories(1)));
+        //获取标签列表
+        model.addAttribute("tagsList",tagsService.getTagsList());
         return "admin/md_editor";
     }
 }

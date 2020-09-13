@@ -49,7 +49,7 @@ public interface RelationMapper {
      * @param id
      */
     @Delete("delete from blog_article_tags where article_id = #{id}")
-    void deleteLabelsByArticleId(Integer id);
+    void deleteRelationByArticleId(Integer id);
 
 
 }

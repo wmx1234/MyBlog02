@@ -40,16 +40,6 @@
           <result column="name" property="name" jdbcType="VARCHAR" />
         </association>
 
-        <association property="lastArticle" javaType="com.xiao.blog.model.Article">
-          <id column="last_article_id" property="id" jdbcType="INTEGER" />
-          <result column="last_article_title" property="articleTitle" jdbcType="VARCHAR" />
-        </association>
-
-        <association property="nextArticle" javaType="com.xiao.blog.model.Article">
-          <id column="next_article_id" property="id" jdbcType="INTEGER" />
-          <result column="next_article_title" property="articleTitle" jdbcType="VARCHAR" />
-        </association>
-
         <association property="categories" javaType="com.xiao.blog.model.Categories">
           <id column="categories_id" property="id" jdbcType="INTEGER" />
           <result column="categories_name" property="name" jdbcType="VARCHAR" />
@@ -109,24 +99,19 @@
 
     update blog_article
     set
+      article_content = #{articleContent,jdbcType=LONGVARCHAR},
+      article_html_content = #{articleHtmlContent,jdbcType=LONGVARCHAR},
       article_digest = #{articleDigest,jdbcType=VARCHAR},
       article_title = #{articleTitle,jdbcType=VARCHAR},
-      likes = #{likes,jdbcType=INTEGER},
-      read_count = #{readCount,jdbcType=INTEGER},
-      update_date = #{updateDate,jdbcType=VARCHAR},
-      last_article_id = #{lastArticleId,jdbcType=INTEGER},
-      next_article_id = #{nextArticleId,jdbcType=INTEGER},
+      categories_id = #{categoriesId,jdbcType=INTEGER},
       top = #{top,jdbcType=INTEGER},
-
       draft = #{draft,jdbcType=INTEGER},
-      privacy = #{privacy,jdbcType=INTEGER},
-      article_content = #{articleContent,jdbcType=LONGVARCHAR},
-      article_html_content = #{articleHtmlContent,jdbcType=LONGVARCHAR}
+      privacy = #{privacy,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 
     <!--根据条件查询博客 -->
-    <select id="getAllArticles" resultMap="ArticleVO">
+    <select id="getPageArticleList" resultMap="ArticleVO" parameterType="com.xiao.blog.model.Article">
 
         select
             article.id,
@@ -143,8 +128,22 @@
         from blog_article article
         left join sys_user u on article.user_id = u.id
         left join blog_categories categories on article.categories_id = categories.id
-        where article.draft = 0
-        and article.privacy = 0
+        where 1 = 1
+        <if test="id != null">
+            and article.id = #{id,jdbcType=INTEGER}
+        </if>
+        <if test="draft != null">
+            and article.draft = 0
+        </if>
+        <if test="privacy != null">
+            and article.privacy = 0
+        </if>
+        <if test="categoriesId != null">
+            and article.categories_id = #{categoriesId,jdbcType=INTEGER}
+        </if>
+        <if test="top != null">
+            and article.top = #{top,jdbcType=INTEGER}
+        </if>
         order by create_date desc
 
     </select>
@@ -168,10 +167,14 @@
         left join blog_article_tags bat on bat.article_id = article.id
         left join blog_tags tags on tags.id = bat.tags_id
         where 1 = 1
-        and article.draft = 0
-        and article.privacy = 0
         <if test="id != null">
             and article.id = #{id,jdbcType=INTEGER}
+        </if>
+        <if test="draft != null">
+            and article.draft = 0
+        </if>
+        <if test="privacy != null">
+            and article.privacy = 0
         </if>
         <if test="categoriesId != null">
             and article.categories_id = #{categoriesId,jdbcType=INTEGER}
@@ -192,8 +195,11 @@
 
         select
             article.id,
+            article.article_content,
             article.article_html_content,
             article.article_title,
+            article.article_image,
+            article.article_url,
             article.likes,
             article.create_date,
             article.draft,

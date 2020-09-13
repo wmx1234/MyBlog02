@@ -16,9 +16,9 @@ public class ArticleVO extends Article {
 
     private User user;
 
-    private Article lastArticle;
+    private ArticleVO lastArticle;
 
-    private Article nextArticle;
+    private ArticleVO nextArticle;
 
     private Categories categories;
 

@@ -36,14 +36,6 @@ public class TagsController {
         return new CommonResponse(tagsService.save(tags));
     }
 
-    @RequestMapping("/add")
-    public String add(Params tags, Model model){
-        //labelService.save(tags);
-        model.addAttribute("tagsList",tagsService.getTagsList());
-        return "/admin/md_editor::md_editor_tags";
-    }
-
-
     @RequestMapping("/delete/{id}")
     @ResponseBody
     public CommonResponse delete(@PathVariable("id") Integer id){

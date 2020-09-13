@@ -13,7 +13,7 @@ import java.util.List;
 public interface TagsService {
 
 
-    public int save(Tags tags);
+    public Tags save(Tags tags);
 
     /**
      * 删除标签

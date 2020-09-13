@@ -62,4 +62,13 @@ public interface TagsMapper extends BaseMapper<Tags> {
      */
     @Select("select count(id) from blog_tags")
     int getTagsCount();
+
+    /**
+     * 获取标签数
+     * @return
+     */
+    @Select("select * from blog_tags where name = #{name}")
+    Tags getTagsByName(String name);
+
+
 }

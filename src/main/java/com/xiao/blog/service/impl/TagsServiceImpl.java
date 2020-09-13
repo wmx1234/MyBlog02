@@ -29,17 +29,21 @@ public class TagsServiceImpl implements TagsService {
     TagsMapper tagsMapper;
 
     @Override
-    public int save(Tags tags) throws BusinessException {
+    public Tags save(Tags tags) throws BusinessException {
 
-        //校验标签是否已存在
-        BusinessExceptionAssert.assertTagsExist(tags);
+        Tags t = tagsMapper.getTagsByName(tags.getName());
 
-        if(tags.getId() != null){
-            return update(tags);
-        } else{
-            return insert(tags);
+        if(t != null){
+            return t;
         }
 
+        if(tags.getId() != null){
+            tagsMapper.updateByPrimaryKey(tags);
+        } else{
+            tags.setId(DataBaseUtil.nextValue());
+            tagsMapper.insert(tags);
+        }
+        return tags;
     }
 
     @Override
@@ -72,14 +76,5 @@ public class TagsServiceImpl implements TagsService {
     };
 
 
-    private int insert(Tags tags){
 
-        tags.setId(DataBaseUtil.nextValue());
-        return tagsMapper.insert(tags);
-    }
-
-    private int update(Tags tags){
-
-        return tagsMapper.updateByPrimaryKey(tags);
-    }
 }

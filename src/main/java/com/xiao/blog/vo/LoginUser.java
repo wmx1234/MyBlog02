@@ -11,4 +11,6 @@ public class LoginUser extends User {
 
     private RoleVO role;
 
+    private String vercode;
+
 }

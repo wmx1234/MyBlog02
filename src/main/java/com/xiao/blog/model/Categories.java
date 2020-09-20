@@ -16,15 +16,6 @@ public class Categories implements Serializable {
 
     private String icon;
 
-    private String createDate;
-
-    private String updateDate;
-
-    private Integer userId;
-
     public Categories(){}
 
-    public Categories(Integer  userId){
-        this.userId = userId;
-    }
 }

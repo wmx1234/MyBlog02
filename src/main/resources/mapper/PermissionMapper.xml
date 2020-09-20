@@ -84,11 +84,10 @@
     from sys_permission permission
     left join sys_role_permission  srp on permission.id = srp.permission_id
     left join sys_role  role on role.id = srp.role_id
-
   </select>
 
   <select id="getPermissionsByParent" resultMap="BaseResultMap" parameterType="java.lang.Integer">
-    select * from sys_permission where parent_id = #{parentId,jdbcType=INTEGER}
+    select * from sys_permission where parent_id = #{parentId,jdbcType=INTEGER} order by id
   </select>
 
   <select id="getPermissionsByRole" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -113,6 +112,7 @@
 	    sys_permission p1
     WHERE
 	     p1.parent_id = #{parentId,jdbcType=INTEGER}
+	order by p1.id
   </select>
 
 

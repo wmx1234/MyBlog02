@@ -14,12 +14,38 @@ public class ArticleUtil {
 
     public static String  extractSummary(String htmlArticleComment){
 
-        List<String> summaryList= HanLP.extractSummary(htmlArticleComment,5);
+        String articleComment = clearHtmlTags(htmlArticleComment);
+
+        List<String> summaryList= HanLP.extractSummary(articleComment,3);
 
         String summary = String.join(",", summaryList);
 
         return summary;
     }
+
+
+    public static String clearHtmlTags(String htmlArticleComment){
+
+        //去掉所有空格
+        String regex = "\\s+";
+        String str = htmlArticleComment.trim();
+
+        String articleComment = str.replaceAll(regex,"");
+
+        int beginIndex = articleComment.indexOf("<");
+        int endIndex = articleComment.indexOf(">");
+        while (beginIndex != -1) {
+            String tagsContent = articleComment.substring(beginIndex, endIndex+1);
+            System.out.println(tagsContent);
+            articleComment = articleComment.replace(tagsContent,"");
+
+            System.out.println(articleComment);
+            beginIndex = articleComment.indexOf("<");
+            endIndex = articleComment.indexOf(">");
+        }
+        return articleComment;
+    }
+
 
     /**
      * 获取文章简介

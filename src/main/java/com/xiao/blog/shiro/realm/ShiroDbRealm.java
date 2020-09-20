@@ -3,6 +3,10 @@ package com.xiao.blog.shiro.realm;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.xiao.blog.shiro.ShiroKit;
+import com.xiao.blog.shiro.exception.CaptchaEmptyException;
+import com.xiao.blog.shiro.exception.CaptchaErrorException;
+import com.xiao.blog.shiro.token.VerCodeToken;
 import com.xiao.blog.vo.LoginUser;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -30,10 +34,20 @@ public class ShiroDbRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken)
             throws AuthenticationException {
+
+        VerCodeToken verCodeToken = (VerCodeToken)authcToken;
         //获取用户名
-        String userName = (String)authcToken.getPrincipal();
+        String userName = (String)verCodeToken.getPrincipal();
         //根据用户名在数据库查询用户（shiroUtil是工具类，实际使用UserMapper访问数据库）
         LoginUser user = shiroUtil.getUser(userName);
+        //获取验证码
+        String verCode = verCodeToken.getVerCode();
+        if(verCode ==null || "".equals(verCode)){
+            throw new CaptchaEmptyException();
+        }
+        if(!verCode.equals(ShiroKit.getSessionAttr("rightCode"))){
+            throw new CaptchaErrorException();
+        }
         //认证
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user,user.getPassword(),super.getName());
         authenticationInfo.setCredentialsSalt(ByteSource.Util.bytes(user.getSalt()));

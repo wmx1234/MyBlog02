@@ -54,7 +54,7 @@ spring:
 logging:
   path: logger
   level: 
-     com.blog.mapper: debug
+     com.blog.mapper: error
 
 ## 该配置节点为独立的节点，有很多同学容易将这个配置放在spring的节点下，导致配置无法被识别
 mybatis-plus:
@@ -74,11 +74,11 @@ pagehelper:
     supportMethodsArguments: true
     params: count=countSql
     currentPage: 0
-    pageSize: 6
+    pageSize: 9
 
 
 
-###生产环境配置   
+###生产环境配置
 ---
 server:
   port: 443
@@ -92,18 +92,17 @@ condition:
   http2https: true
 
 
-http: 
-  port: 80
+http:
+  port: 8080
 file:
     staticAccessPath: /upload/**
     uploadFolder: /image/upload
- 
+
 spring:
     profiles: prod
     datasource:
         username: root
         password: 123456
-        # url: jdbc:mysql://47.93.217.159:3306/blog?serverTimezone=GMT%2B8&useSSL=true
         url: jdbc:mysql://192.168.31.202:3306/blog?serverTimezone=GMT%2B8&useSSL=true
         # 使用druid数据源
         type: com.alibaba.druid.pool.DruidDataSource
@@ -121,14 +120,14 @@ spring:
         testOnReturn: false
         poolPreparedStatements: true
         maxOpenPreparedStatements: 20
-      
+
     http:
-        encoding: 
-            charset: UTF-8 
+        encoding:
+            charset: UTF-8
             enabled: true
             force: true
-   
-    servlet: 
+
+    servlet:
       multipart:
         max-file-size: 5MB
         max-request-size: 5MB
@@ -144,11 +143,11 @@ mybatis-plus:
   global-config:
     id-type: 2
     db-column-underline: true
-  log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
 
 logging:
   path: logger
-  level: 
+  level:
      com.blog.mapper: error
 #pagehelper分页插件
 pagehelper:
@@ -159,4 +158,3 @@ pagehelper:
     currentPage: 0
     pageSize: 9
 
-    

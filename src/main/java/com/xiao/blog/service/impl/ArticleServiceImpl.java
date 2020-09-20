@@ -2,21 +2,34 @@ package com.xiao.blog.service.impl;
 
 import cn.hutool.core.date.DatePattern;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.xiao.blog.mapper.ArticleMapper;
 import com.xiao.blog.mapper.RelationMapper;
 import com.xiao.blog.mapper.TagsMapper;
 import com.xiao.blog.model.Article;
 import com.xiao.blog.model.Tags;
 import com.xiao.blog.pojo.Relation;
-import com.xiao.blog.pojo.param.Params;
 import com.xiao.blog.repository.ArticleRepository;
 import com.xiao.blog.service.ArticleService;
 import com.xiao.blog.shiro.ShiroKit;
 import com.xiao.blog.util.ArticleUtil;
 import com.xiao.blog.util.DataBaseUtil;
 import com.xiao.blog.vo.ArticleVO;
-import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.index.query.QueryBuilders;
+import org.elasticsearch.search.SearchHit;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightBuilder;
+import org.elasticsearch.search.fetch.subphase.highlight.HighlightField;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.SearchResultMapper;
+import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
+import org.springframework.data.elasticsearch.core.aggregation.impl.AggregatedPageImpl;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -256,8 +269,6 @@ public class ArticleServiceImpl implements ArticleService {
 
         articleRepository.save(article);
 
-
-
         return article;
     }
 
@@ -283,7 +294,10 @@ public class ArticleServiceImpl implements ArticleService {
 
         relationMapper.deleteRelationByArticleId(article.getId());
 
-        insertTagsAndUpdateRelation(articleVO.getTagsList(),article);
+        if(articleVO.getTagsList() != null){
+            insertTagsAndUpdateRelation(articleVO.getTagsList(),article);
+        }
+
 
         //删除es中的博客
         articleRepository.deleteArticleById(articleVO.getId());
@@ -299,6 +313,7 @@ public class ArticleServiceImpl implements ArticleService {
      * @param article
      */
     private void insertTagsAndUpdateRelation(List<Tags> tagsList,Article article){
+
         List<Relation> relationList = new ArrayList<Relation>();
 
         List<Tags> newTagsList = new ArrayList<Tags>();
@@ -321,14 +336,82 @@ public class ArticleServiceImpl implements ArticleService {
 
     private void updateLastArticle(Integer lastArticleId,Integer currentArticleId){
 
-        ArticleVO lastArticle = new ArticleVO();
+        if(lastArticleId == null || lastArticleId == 0) return;
+
+        Article lastArticle = new Article();
 
         lastArticle.setId(lastArticleId);
 
         lastArticle.setNextArticleId(currentArticleId);
 
-        update(lastArticle);
+        articleMapper.update(lastArticle);
     }
 
 
+    @Resource
+    private ElasticsearchTemplate elasticsearchTemplate;
+
+
+    public AggregatedPage<Article> queryByPageHigh(String keyword) {
+
+        Pageable pageable = PageRequest.of(0, 10);
+
+        String preTag = "<font color='#dd4b39'>";//google的色值
+        String postTag = "</font>";
+
+        SearchQuery searchQuery = new NativeSearchQueryBuilder().
+                withQuery(QueryBuilders.matchQuery("articleTitle", keyword)).
+                withQuery(QueryBuilders.matchQuery("articleHtmlContent", keyword)).
+                withHighlightFields(new HighlightBuilder.Field("articleTitle").preTags(preTag).postTags(postTag),
+                        new HighlightBuilder.Field("articleHtmlContent").preTags(preTag).postTags(postTag)).build();
+
+        searchQuery.setPageable(pageable);
+
+        //List<Article> articles = elasticsearchTemplate.queryForList(searchQueryBuilder.build(),Article.class);
+        AggregatedPage<Article> ideas = elasticsearchTemplate.queryForPage(searchQuery, Article.class, new SearchResultMapper() {
+
+
+
+            @Override
+            public <T> T mapSearchHit(SearchHit searchHit, Class<T> aClass) {
+
+                JSONObject object = JSONUtil.parseFromMap(searchHit.getSourceAsMap());
+
+                return JSONUtil.toBean(object,aClass);
+            }
+
+            @Override
+            public <T> AggregatedPage<T> mapResults(SearchResponse response, Class<T> clazz, Pageable pageable) {
+                List<Article> chunk = new ArrayList<Article>();
+                for (SearchHit searchHit : response.getHits()) {
+
+                    Article article = mapSearchHit(searchHit,Article.class);
+
+                    if (response.getHits().getHits().length <= 0) {
+                        return null;
+                    }
+
+
+                    HighlightField ideaTitle = searchHit.getHighlightFields().get("articleTitle");
+
+                    if (ideaTitle != null) {
+                        article.setArticleTitle(ideaTitle.fragments()[0].toString());
+                    }
+
+                    HighlightField ideaContent = searchHit.getHighlightFields().get("articleHtmlContent");
+
+                    if (ideaContent != null) {
+                        article.setArticleContent(ideaContent.fragments()[0].toString());
+                    }
+
+                    chunk.add(article);
+                }
+                if (chunk.size() > 0) {
+                    return new AggregatedPageImpl<>((List<T>) chunk);
+                }
+                return null;
+            }
+        });
+        return ideas;
+    }
 }

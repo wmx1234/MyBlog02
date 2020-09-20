@@ -85,8 +85,6 @@ public class CategoriesServiceImpl implements CategoriesService {
      * @return
      */
     private int insert(Categories categories){
-        categories.setCreateDate(DateUtil.today());
-        categories.setUserId(ShiroKit.getUser().getId());
         return categoriesMapper.insert(categories);
     }
 
@@ -96,7 +94,6 @@ public class CategoriesServiceImpl implements CategoriesService {
      * @return
      */
     private int update(Categories categories){
-        categories.setUpdateDate(DateUtil.today());
         return categoriesMapper.updateByPrimaryKey(categories);
     }
 }

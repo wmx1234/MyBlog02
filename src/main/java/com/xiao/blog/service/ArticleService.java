@@ -6,6 +6,7 @@ import com.xiao.blog.pojo.param.Params;
 import com.xiao.blog.vo.ArchiveVO;
 import com.xiao.blog.vo.ArticleVO;
 import com.xiao.blog.vo.ClassifyVO;
+import org.springframework.data.elasticsearch.core.aggregation.AggregatedPage;
 
 import java.util.List;
 import java.util.Map;
@@ -80,4 +81,6 @@ public interface ArticleService {
     public void clearEsArticle();
 
     public int getArticleCount();
+
+    public AggregatedPage<Article> queryByPageHigh(String keyword);
 }

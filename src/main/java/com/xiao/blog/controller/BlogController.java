@@ -250,7 +250,10 @@ public class BlogController {
     @ResponseBody
     @GetMapping("/articles")
     public Iterable<Article> search(@RequestParam(required = false,defaultValue = "1")String name){
+
         return articleService.searchArticle(name);
+        //return articleService.queryByPageHigh(name);
     }
+
 
 }

@@ -18,7 +18,7 @@ let searchFunc = function (path, search_id, content_id) {
         $.get("/articles", {name: keywords}).done(function(e){
             let str = '<ul class=\"search-result-list\">';
             let datas = e.content;
-
+            debugger;
             // perform local searching
             datas.forEach(function (data) {
 
@@ -66,10 +66,10 @@ let searchFunc = function (path, search_id, content_id) {
                         }
                         let match_content = content.substr(start, end);
                         // highlight all keywords
-                        keywords.forEach(function (keyword) {
-                            let regS = new RegExp(keyword, "gi");
-                            match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
-                        });
+                        //keywords.forEach(function (keyword) {
+                            //let regS = new RegExp(keyword, "gi");
+                            //match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                        //});
 
                         str += "<p class=\"search-result\">" + match_content + "...</p>"
                     }
@@ -77,6 +77,7 @@ let searchFunc = function (path, search_id, content_id) {
                 }
             });
             str += "</ul>";
+            console.log(str);
             $resultContent.innerHTML = str;
         });
 

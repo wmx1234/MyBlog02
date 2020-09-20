@@ -1,10 +1,12 @@
 package com.xiao.blog.controller;
 
+import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.xiao.blog.model.Categories;
 import com.xiao.blog.model.Permission;
 import com.xiao.blog.model.User;
 import com.xiao.blog.service.*;
 import com.xiao.blog.shiro.ShiroKit;
+import com.xiao.blog.shiro.token.VerCodeToken;
 import com.xiao.blog.vo.ArticleVO;
 import com.xiao.blog.vo.LoginUser;
 import org.apache.shiro.SecurityUtils;
@@ -19,6 +21,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.util.Collection;
 import java.util.List;
 
 
@@ -35,9 +44,6 @@ public class AdminController {
     UserService userService;
 
     @Resource
-    RoleService roleService;
-
-    @Resource
     PermissionService permissionService;
 
     @Resource
@@ -49,26 +55,32 @@ public class AdminController {
     @Resource
     ArticleService articleService;
 
+    @Resource
+    DefaultKaptcha defaultKaptcha;
+
     @GetMapping("/login")
     public String login(){
         return "admin/login";
     }
 
     @PostMapping("/login")
-    public String login(User user){
+    public String login(LoginUser user,HttpServletRequest request){
 
         Subject subject = SecurityUtils.getSubject();
 
-        UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getPassword());
+        VerCodeToken token = new VerCodeToken(user.getUserName(), user.getPassword(),user.getVercode());
 
         subject.login(token);
 
+        //根据用户名获取登录用户
         LoginUser currentUser = userService.getLoginUser(user.getUserName());
 
         Session session = ShiroKit.getSession();
 
         session.setAttribute("user",currentUser);
+
         List<Permission> menu = permissionService.getMenu(currentUser.getRole().getId());
+
         session.setAttribute("permissions",menu);
 
         return "redirect:index";
@@ -139,7 +151,7 @@ public class AdminController {
     public String write(Model model){
         model.addAttribute("article", new ArticleVO());
         //获取分类列表
-        model.addAttribute("categoriesList",categoriesService.getCategoriesByField(new Categories(1)));
+        model.addAttribute("categoriesList",categoriesService.getCategoriesByField(new Categories()));
         //获取标签列表
         model.addAttribute("tagsList",tagsService.getTagsList());
 
@@ -157,9 +169,39 @@ public class AdminController {
         model.addAttribute("article", articleService.getArticleById(id));
 
         //获取分类列表
-        model.addAttribute("categoriesList",categoriesService.getCategoriesByField(new Categories(1)));
+        model.addAttribute("categoriesList",categoriesService.getCategoriesByField(new Categories()));
         //获取标签列表
         model.addAttribute("tagsList",tagsService.getTagsList());
+
         return "admin/md_editor";
+    }
+
+    @RequestMapping("/getVerCode")
+    public void defaultKaptcha(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        byte[] captcha = null;
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+
+        try {
+            // 将生成的验证码保存在session中
+            String createText = defaultKaptcha.createText();
+
+            request.getSession().setAttribute("rightCode", createText);
+            System.out.println(request.getSession().getId());
+            BufferedImage bi = defaultKaptcha.createImage(createText);
+            ImageIO.write(bi, "jpg", out);
+        } catch (Exception e) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
+            return;
+        }
+
+        captcha = out.toByteArray();
+        response.setHeader("Cache-Control", "no-store");
+        response.setHeader("Pragma", "no-cache");
+        response.setDateHeader("Expires", 0);
+        response.setContentType("image/jpeg");
+        ServletOutputStream sout = response.getOutputStream();
+        sout.write(captcha);
+        sout.flush();
+        sout.close();
     }
 }

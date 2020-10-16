@@ -17,4 +17,6 @@ public interface UserService {
     public LoginUser getLoginUser(String userName);
 
     public List<User> getAll();
+
+    Integer update(User user);
 }

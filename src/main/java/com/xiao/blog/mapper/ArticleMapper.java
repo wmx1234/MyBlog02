@@ -54,6 +54,12 @@ public interface ArticleMapper extends BaseMapper<Article>{
     @Select("select create_date,count(id) count from blog_article where draft = 0 and privacy = 0 group by create_date")
     List<Map> getBlogCountByCreateDate();
 
+    /**
+     * 当前id存在
+     * @return
+     */
+    @Select("select count(id) from blog_article where id = #{id}")
+    Integer isExist(Integer id);
 
     /**
      * 获取最近的博客id
@@ -83,4 +89,7 @@ public interface ArticleMapper extends BaseMapper<Article>{
      */
     @Select("select count(id) from blog_article where draft = 0 and privacy = 0")
     int getArticleCount();
+
+
+    ArticleVO getArticleLatest();
 }

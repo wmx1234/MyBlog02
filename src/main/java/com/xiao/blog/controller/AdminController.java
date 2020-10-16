@@ -3,10 +3,12 @@ package com.xiao.blog.controller;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.xiao.blog.model.Categories;
 import com.xiao.blog.model.Permission;
-import com.xiao.blog.model.User;
 import com.xiao.blog.service.*;
 import com.xiao.blog.shiro.ShiroKit;
-import com.xiao.blog.shiro.token.VerCodeToken;
+import com.xiao.blog.shiro.exception.VerCodeEmptyException;
+import com.xiao.blog.shiro.exception.VerCodeErrorException;
+import com.xiao.blog.util.DataBaseUtil;
+import com.xiao.blog.util.KaptchaUtil;
 import com.xiao.blog.vo.ArticleVO;
 import com.xiao.blog.vo.LoginUser;
 import org.apache.shiro.SecurityUtils;
@@ -15,6 +17,7 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -27,7 +30,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.util.Collection;
 import java.util.List;
 
 
@@ -59,7 +61,8 @@ public class AdminController {
     DefaultKaptcha defaultKaptcha;
 
     @GetMapping("/login")
-    public String login(){
+    public String login(Model model){
+        model.addAttribute("kaptchaOnOff",KaptchaUtil.getKaptchaOnOff());
         return "admin/login";
     }
 
@@ -68,7 +71,20 @@ public class AdminController {
 
         Subject subject = SecurityUtils.getSubject();
 
-        VerCodeToken token = new VerCodeToken(user.getUserName(), user.getPassword(),user.getVercode());
+        //获取验证码
+        if(KaptchaUtil.getKaptchaOnOff()){
+            String verCode = user.getVerCode();
+            if(StringUtils.isEmpty(verCode)){
+                throw new VerCodeEmptyException();
+            }
+            if(!verCode.equals(ShiroKit.getSessionAttr("rightCode"))){
+                throw new VerCodeErrorException();
+            }
+        }
+
+        UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getPassword());
+
+        token.setRememberMe(user.getRememberMe()==null?false:user.getRememberMe());
 
         subject.login(token);
 
@@ -149,7 +165,11 @@ public class AdminController {
      */
     @RequestMapping("/editor")
     public String write(Model model){
-        model.addAttribute("article", new ArticleVO());
+        Integer id = DataBaseUtil.nextValue();
+
+        ShiroKit.setSessionAttr("articleId",id);
+
+        model.addAttribute("article", new ArticleVO(id));
         //获取分类列表
         model.addAttribute("categoriesList",categoriesService.getCategoriesByField(new Categories()));
         //获取标签列表
@@ -159,12 +179,26 @@ public class AdminController {
     }
 
     /**
+     * 新增博客
+     * @param model
+     * @return
+     */
+    @RequestMapping("/personal")
+    public String personal(Model model){
+
+
+        return "admin/personal";
+    }
+
+    /**
      * 编辑博客
      * @param model
      * @return
      */
     @RequestMapping("/editor/{id}")
     public String edit(@PathVariable("id") Integer id,Model model){
+
+        ShiroKit.setSessionAttr("articleId",id);
 
         model.addAttribute("article", articleService.getArticleById(id));
 
@@ -186,8 +220,9 @@ public class AdminController {
             String createText = defaultKaptcha.createText();
 
             request.getSession().setAttribute("rightCode", createText);
-            System.out.println(request.getSession().getId());
+
             BufferedImage bi = defaultKaptcha.createImage(createText);
+
             ImageIO.write(bi, "jpg", out);
         } catch (Exception e) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);

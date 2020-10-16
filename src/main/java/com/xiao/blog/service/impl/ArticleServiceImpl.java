@@ -59,7 +59,7 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Article save(ArticleVO articleVO) {
 
-        if(articleVO.getId() == null){
+        if(articleMapper.isExist(articleVO.getId()) == 0){
             return insert(articleVO);
         }else{
             return update(articleVO);
@@ -120,13 +120,20 @@ public class ArticleServiceImpl implements ArticleService {
         return article;
     }
 
+    /**
+     * 获取置顶文章，如果没有就获取最新的文章
+     * @return
+     */
     @Override
     public ArticleVO getTopArticle() {
         ArticleVO article = new ArticleVO();
         article.setTop(1);
         List<ArticleVO> articleListByField = articleMapper.getArticleListByField(article);
+
         if(articleListByField != null && articleListByField.size() > 0){
             return articleListByField.get(0);
+        }else{
+
         }
 
         return article;
@@ -413,5 +420,14 @@ public class ArticleServiceImpl implements ArticleService {
             }
         });
         return ideas;
+    }
+
+
+    /**
+     * 获取最新的博客
+     * @return
+     */
+    private ArticleVO getArticleLatest(){
+        return articleMapper.getArticleLatest();
     }
 }

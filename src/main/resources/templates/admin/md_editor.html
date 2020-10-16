@@ -144,8 +144,8 @@
             saveHTMLToTextarea : true,//注意3：这个配置，方便post提交表单
             /* 上传图片配置 */
             imageUpload : true,
-            /*imageFormats : [ "jpg", "jpeg", "gif", "png", "bmp", "webp" ],*/
-            imageUploadURL : "/upload2", //注意你后端的上传图片服务地址
+            imageFormats : [ "jpg", "jpeg", "gif", "png", "bmp", "webp" ],
+            imageUploadURL : "/image/upload", //注意你后端的上传图片服务地址
             onload: function() {
                 // 引入插件 执行监听方法
                 editormd.loadPlugin("../admin/mdeditor/plugins/image-dialog/image-handle-paste", function(){
@@ -163,8 +163,6 @@
             form.on('submit(save)', function(data){
 
                 let field = data.field;
-
-
                 save(field);
                 return false;
             });

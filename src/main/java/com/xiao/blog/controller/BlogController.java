@@ -53,7 +53,13 @@ public class BlogController {
 
         model.addAttribute("pageInfo",pageInfo);
 
-        model.addAttribute("topArticle",articleService.getTopArticle());
+        ArticleVO topArticle = articleService.getTopArticle();
+
+        if(topArticle == null){
+            topArticle = articles.get(0);
+        }
+
+        model.addAttribute("topArticle",topArticle);
 
         model.addAttribute("content","晓&静");
 
@@ -255,5 +261,14 @@ public class BlogController {
         //return articleService.queryByPageHigh(name);
     }
 
+    @RequestMapping("/box")
+    public String box(Model model){
+
+        model.addAttribute("content","工具箱");
+
+        model.addAttribute("title","晓&静 | 工具箱");
+
+        return "blog/box";
+    }
 
 }

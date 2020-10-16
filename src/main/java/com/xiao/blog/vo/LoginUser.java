@@ -9,8 +9,24 @@ import java.io.Serializable;
 @Data
 public class LoginUser extends User {
 
+    /**
+     * 用户角色
+     */
     private RoleVO role;
 
-    private String vercode;
+    /**
+     * 登陆验证码
+     */
+    private String verCode;
+
+    /**
+     * 记住我
+     */
+    private Boolean rememberMe;
+
+    /**
+     * 登录失败次数
+     */
+    private Integer retryCount;
 
 }

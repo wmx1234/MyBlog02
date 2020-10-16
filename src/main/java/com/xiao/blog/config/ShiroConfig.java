@@ -34,13 +34,19 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSecurityManager(securityManager);
 
         shiroFilterFactoryBean.setLoginUrl("/admin/login");
+
         shiroFilterFactoryBean.setSuccessUrl("/admin/index");
 
         Map<String, String> filterChainDefinitionMap = shiroUtil.loadFilterChainDefinitions();
+
         Map<String, Filter> filtersMap = new LinkedHashMap<String, Filter>();
+
         filtersMap.put("customRolesAuthorizationFilter", customRolesAuthorizationFilter());
+
         shiroFilterFactoryBean.setFilters(filtersMap);
+
         shiroFilterFactoryBean.setUnauthorizedUrl("/404.html");
+
         shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
         return shiroFilterFactoryBean;
     }

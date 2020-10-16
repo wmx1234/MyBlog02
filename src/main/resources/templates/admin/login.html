@@ -54,11 +54,10 @@
 		<!-- Footer -->
 		<div class="layui-row">
 			<div class="layui-col-sm12 layui-col-md12 zyl_center zyl_mar_01">
-				© 2020 - 简约后台登陆界面 || 简约后台登陆界面版权所有
+				© 2020 - 晓&静后台登陆界面
 			</div>
 		</div>
 		<!-- Footer End -->
-
 
 
 		<!-- LoginForm -->
@@ -82,8 +81,7 @@
 					</div>
 
 
-
-					<div class="layui-col-sm12 layui-col-md12">
+					<div class="layui-col-sm12 layui-col-md12" th:style="${kaptchaOnOff}?'':'display:none'">
 						<div class="layui-row">
 							<div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
 								<div class="layui-form-item">
@@ -94,6 +92,18 @@
 							<div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
 								<img alt="验证码" onclick="this.src='/admin/getVerCode?d=' + new Date()*1" src="/admin/getVerCode" />
 							</div>
+
+						</div>
+					</div>
+					<div class="layui-col-sm12 layui-col-md12">
+						<div class="layui-row">
+							<div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
+
+								<div class="layui-form-item">
+									<input type="checkbox" name="rememberMe" lay-skin="primary" title="记住我">
+								</div>
+							</div>
+
 
 						</div>
 					</div>

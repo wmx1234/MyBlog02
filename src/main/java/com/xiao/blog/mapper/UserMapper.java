@@ -13,6 +13,8 @@ public interface UserMapper {
 
     int insert(User record);
 
+    Integer update(User user);
+
     User selectByPrimaryKey(Integer id);
 
     List<User> selectAll();
@@ -25,6 +27,7 @@ public interface UserMapper {
      * @return
      */
     LoginUser getLoginUser(String userName);
+
 
 
 }

@@ -167,7 +167,7 @@
         <if test="top != null">
             and article.top = #{top,jdbcType=INTEGER}
         </if>
-        order by id
+        order by id desc
 
     </select>
 
@@ -209,7 +209,7 @@
             and tags.id = #{tagsId,jdbcType=INTEGER}
         </if>
 
-        order by id
+        order by id desc
 
     </select>
 

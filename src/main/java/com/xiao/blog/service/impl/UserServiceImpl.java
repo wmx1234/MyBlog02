@@ -5,10 +5,12 @@ import com.xiao.blog.exception.assertion.BusinessExceptionAssert;
 import com.xiao.blog.mapper.UserMapper;
 import com.xiao.blog.model.User;
 import com.xiao.blog.service.UserService;
+import com.xiao.blog.shiro.ShiroKit;
 import com.xiao.blog.vo.LoginUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -19,9 +21,22 @@ import java.util.List;
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
-    @Autowired
+    @Resource
     UserMapper userMapper;
 
+    @Override
+    public Integer update(User user) {
+
+        //修改密码
+        if(user.getPassword() != null){
+            User sessionUser = (User)ShiroKit.getSessionAttr("user");
+            user.setPassword(ShiroKit.md5(user.getPassword(),sessionUser.getSalt()));
+        }else{
+
+        }
+
+        return userMapper.update(user);
+    }
     @Override
     public User getUserById(Integer id) {
         return userMapper.selectByPrimaryKey(id);

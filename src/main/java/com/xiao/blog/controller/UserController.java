@@ -4,12 +4,17 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xiao.blog.model.User;
 import com.xiao.blog.pojo.request.PageRequest;
+import com.xiao.blog.pojo.response.BaseResponse;
+import com.xiao.blog.pojo.response.CommonResponse;
 import com.xiao.blog.pojo.response.PageResponse;
 import com.xiao.blog.service.UserService;
+import com.xiao.blog.shiro.ShiroKit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.annotation.Resource;
 
 /**
  * @author wangmx
@@ -21,7 +26,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/admin/user")
 public class UserController {
 
-    @Autowired
+    @Resource
     UserService userService;
 
     @RequestMapping("/getAll")
@@ -35,5 +40,25 @@ public class UserController {
         return new PageResponse<User>(info);
     }
 
+    @RequestMapping("/update")
+    @ResponseBody
+    public BaseResponse update(User user){
+
+        userService.update(user);
+
+
+        return new BaseResponse();
+    }
+
+    @RequestMapping("/verifyPassword")
+    @ResponseBody
+    public BaseResponse verifyPassword(User user){
+
+        User currentUser = userService.getUserById(user.getId());
+
+        String oldPassword = ShiroKit.md5(user.getPassword(),currentUser.getSalt());
+
+        return new CommonResponse<>(oldPassword.equals(currentUser.getPassword()));
+    }
 
 }

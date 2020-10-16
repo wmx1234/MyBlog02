@@ -36,8 +36,11 @@ public class ArticleVO extends Article {
     private String day;
 
 
+    public ArticleVO(){}
 
-    public Article getArticle(){
-        return new Article();
+    public ArticleVO(int id){
+        super.setId(id);
     }
+
+
 }

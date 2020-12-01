@@ -13,38 +13,27 @@
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="gender" property="gender" jdbcType="INTEGER" />
     <result column="description" property="description" jdbcType="VARCHAR" />
-    <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
-    <result column="login_count" property="loginCount" jdbcType="BIGINT" />
-    <result column="login_time" property="loginTime" jdbcType="TIMESTAMP" />
-    <result column="registered_time" property="registeredTime" jdbcType="TIMESTAMP" />
     <result column="salt" property="salt" jdbcType="VARCHAR" />
-    <result column="user_ip" property="userIp" jdbcType="VARCHAR" />
     <association property="role" javaType="com.xiao.blog.model.Role">
-
       <id column="role_id" property="id" jdbcType="INTEGER" />
       <result column="rName" property="name" jdbcType="VARCHAR" />
       <result column="role_name" property="roleName" jdbcType="VARCHAR" />
-
     </association>
 
   </resultMap>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
-    delete from sys_user
-    where id = #{id,jdbcType=INTEGER}
+    delete from sys_user where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.xiao.blog.model.User" >
     insert into sys_user (id, user_name, `password`,
       `name`, avatar, address, 
       phone_num, birthday, email, 
-      gender, description, last_login_time, 
-      login_count, login_time, registered_time, 
-      salt, user_ip)
+      gender, description, salt)
     values (#{id,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
       #{name,jdbcType=VARCHAR}, #{avatar,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
       #{phoneNum,jdbcType=VARCHAR}, #{birthday,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, 
-      #{gender,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
-      #{loginCount,jdbcType=BIGINT}, #{loginTime,jdbcType=TIMESTAMP}, #{registeredTime,jdbcType=TIMESTAMP}, 
-      #{salt,jdbcType=VARCHAR}, #{userIp,jdbcType=VARCHAR})
+      #{gender,jdbcType=INTEGER}, #{description,jdbcType=VARCHAR},
+      #{salt,jdbcType=VARCHAR})
   </insert>
 
   <update id="update" parameterType="com.xiao.blog.model.User" >
@@ -53,35 +42,48 @@
           <if test="password != null">
             password = #{password,jdbcType=VARCHAR},
           </if>
+          <if test="salt != null">
+            salt = #{salt,jdbcType=VARCHAR},
+          </if>
           <if test="avatar != null">
             avatar = #{avatar,jdbcType=VARCHAR},
           </if>
           <if test="name != null">
             name = #{name,jdbcType=VARCHAR},
           </if>
+          <if test="address != null">
+            address = #{address,jdbcType=VARCHAR},
+          </if>
+          <if test="phoneNum != null">
+            phone_num = #{phoneNum,jdbcType=VARCHAR},
+          </if>
+          <if test="birthday != null">
+            birthday = #{birthday,jdbcType=VARCHAR},
+          </if>
+          <if test="email != null">
+            email = #{email,jdbcType=VARCHAR},
+          </if>
+          <if test="gender != null">
+            gender = #{gender,jdbcType=VARCHAR},
+          </if>
+          <if test="description != null">
+            description = #{description,jdbcType=VARCHAR},
+          </if>
 
-          address = #{address,jdbcType=VARCHAR},
-          phone_num = #{phoneNum,jdbcType=VARCHAR},
-          birthday = #{birthday,jdbcType=VARCHAR},
-          email = #{email,jdbcType=VARCHAR},
-          gender = #{gender,jdbcType=INTEGER},
-          description = #{description,jdbcType=VARCHAR},
-          user_ip = #{userIp,jdbcType=VARCHAR}
         </trim>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select id, user_name, `password`, `name`, avatar, address, phone_num, birthday, email,
-    gender, description, last_login_time, login_count, login_time, registered_time, salt, 
-    user_ip
+    gender, description,salt
     from sys_user
     where id = #{id,jdbcType=INTEGER}
   </select>
   <select id="selectAll" resultMap="BaseResultMap" >
 
   select id, user_name, `password`, `name`, avatar, address, phone_num, birthday, email,
-  gender, description, last_login_time, login_count, login_time, registered_time, salt,
-  user_ip
+  gender, description,salt
+
   from sys_user order by id
 </select>
 
@@ -98,12 +100,9 @@
     <result column="email" property="email" jdbcType="VARCHAR" />
     <result column="gender" property="gender" jdbcType="INTEGER" />
     <result column="description" property="description" jdbcType="VARCHAR" />
-    <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
-    <result column="login_count" property="loginCount" jdbcType="BIGINT" />
-    <result column="login_time" property="loginTime" jdbcType="TIMESTAMP" />
-    <result column="registered_time" property="registeredTime" jdbcType="TIMESTAMP" />
+
     <result column="salt" property="salt" jdbcType="VARCHAR" />
-    <result column="user_ip" property="userIp" jdbcType="VARCHAR" />
+
     <association property="role" javaType="com.xiao.blog.vo.RoleVO">
 
       <id column="role_id" property="id" jdbcType="INTEGER" />

@@ -6,9 +6,11 @@ import com.xiao.blog.exception.BusinessException;
 import com.xiao.blog.pojo.response.ErrorResponse;
 import com.xiao.blog.shiro.exception.VerCodeEmptyException;
 import com.xiao.blog.shiro.exception.VerCodeErrorException;
+import com.xiao.blog.util.KaptchaUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,6 +31,11 @@ import java.sql.SQLIntegrityConstraintViolationException;
 @RestControllerAdvice
 @Slf4j
 public class UnifiedExceptionHandler {
+
+    @ExceptionHandler(value = AuthorizationException.class)
+    public String handleAuthorizationException() {
+        return "404";
+    }
 
     /**
      * 业务异常
@@ -80,7 +87,7 @@ public class UnifiedExceptionHandler {
         }
 
         modelAndView.setViewName("admin/login.html");
-
+        model.addAttribute("kaptchaOnOff", KaptchaUtil.getKaptchaOnOff());
         return modelAndView;
     }
 

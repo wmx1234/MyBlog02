@@ -13,6 +13,21 @@
 
         <div class="layui-content">
             <h2>博客管理</h2>
+            <form class="layui-form x-center" id="form_categories" style="width:50%">
+                <div class="layui-form-pane" style="margin-top: 15px;">
+                    <div class="layui-form-item">
+                        <div class="layui-input-inline" style="width:120px">
+                            <input type="text" name="startDate" id="startDate" placeholder="起始日期" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-input-inline" style="width:120px">
+                            <input type="text" name="endDate" id="endDate" placeholder="结束日期" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-input-inline" style="width:80px">
+                            <button class="layui-btn"  lay-submit="" lay-filter="add"><i class="layui-icon">&#xe608;</i>增加</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
             <table class="layui-hide" id="admin_articles" lay-filter="admin_articles_filter"></table>
         </div>
     </div>
@@ -49,10 +64,15 @@
 
 <script th:inline="none">
 
-    layui.use(['table','form','layer'], function(){
+    layui.use(['table','form','layer','laydate'], function(){
         let table = layui.table;
         const form = layui.form,
-            layer = layui.layer;
+            layer = layui.layer,
+            laydate = layui.laydate;
+
+        laydate.render({
+            elem: '#startDate'
+        });
 
         const tableIns = table.render({
             elem: '#admin_articles',
@@ -109,6 +129,8 @@
 
             }else if(obj.event === 'edit'){
                 window.location.href="editor/"+obj.data.id;
+            }else if(obj.event === 'show'){
+                window.location.href="/article/"+obj.data.id;
             }
         });
 

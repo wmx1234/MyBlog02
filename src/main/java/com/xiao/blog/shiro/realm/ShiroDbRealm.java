@@ -34,6 +34,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
         LoginUser user = shiroUtil.getUser(userName);
         //认证
         SimpleAuthenticationInfo authenticationInfo = new SimpleAuthenticationInfo(user,user.getPassword(),super.getName());
+
         authenticationInfo.setCredentialsSalt(ByteSource.Util.bytes(user.getSalt()));
        
         return authenticationInfo;

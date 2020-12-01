@@ -1,5 +1,6 @@
 package com.xiao.blog.service.impl;
 
+import com.xiao.blog.constants.ShiroConstants;
 import com.xiao.blog.exception.BusinessException;
 import com.xiao.blog.exception.assertion.BusinessExceptionAssert;
 import com.xiao.blog.mapper.UserMapper;
@@ -29,9 +30,10 @@ public class UserServiceImpl implements UserService {
 
         //修改密码
         if(user.getPassword() != null){
-            User sessionUser = (User)ShiroKit.getSessionAttr("user");
-            user.setPassword(ShiroKit.md5(user.getPassword(),sessionUser.getSalt()));
-        }else{
+
+            user.setSalt(ShiroKit.getRandomSalt(ShiroConstants.SALT_LENGTH));
+
+            user.setPassword(ShiroKit.md5(user.getPassword(),user.getSalt()));
 
         }
 

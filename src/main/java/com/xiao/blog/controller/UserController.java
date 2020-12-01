@@ -46,7 +46,6 @@ public class UserController {
 
         userService.update(user);
 
-
         return new BaseResponse();
     }
 

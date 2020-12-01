@@ -16,8 +16,11 @@
 package com.xiao.blog.shiro;
 
 
+import com.xiao.blog.constants.ShiroConstants;
+import lombok.ToString;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.crypto.hash.Md5Hash;
+import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 
@@ -31,20 +34,6 @@ import com.xiao.blog.util.ToolUtil;
  */
 public class ShiroKit {
 
-    private static final String NAMES_DELIMETER = ",";
-
-    /**
-     * 加盐参数
-     */
-    public final static String hashAlgorithmName = "MD5";
-
-    /**
-     * 循环次数
-     */
-    public final static int hashIterations = 1024;
-    
-    
-    
     /**
      * shiro密码加密工具类
      *
@@ -53,8 +42,8 @@ public class ShiroKit {
      * @return
      */
     public static String md5(String credentials, String saltSource) {
-        Md5Hash md5Hash = new Md5Hash(credentials, saltSource);
-        md5Hash.setIterations(1);
+        SimpleHash md5Hash = new SimpleHash(ShiroConstants.HASH_ALGORITHM_NAME,credentials, saltSource,ShiroConstants.HASH_ITERATIONS);
+
         return md5Hash.toString();
     }
 
@@ -159,7 +148,7 @@ public class ShiroKit {
         boolean hasAnyRole = false;
         Subject subject = getSubject();
         if (subject != null && roleNames != null && roleNames.length() > 0) {
-            for (String role : roleNames.split(NAMES_DELIMETER)) {
+            for (String role : roleNames.split(ShiroConstants.NAMES_DELIMETER)) {
                 if (subject.hasRole(role.trim())) {
                     hasAnyRole = true;
                     break;
@@ -180,7 +169,7 @@ public class ShiroKit {
         boolean hasAllRole = true;
         Subject subject = getSubject();
         if (subject != null && roleNames != null && roleNames.length() > 0) {
-            for (String role : roleNames.split(NAMES_DELIMETER)) {
+            for (String role : roleNames.split(ShiroConstants.NAMES_DELIMETER)) {
                 if (!subject.hasRole(role.trim())) {
                     hasAllRole = false;
                     break;
@@ -263,8 +252,5 @@ public class ShiroKit {
         return "";
     }
 
-    public static void main(String[] args) {
-		System.out.println(md5("hello", ""));
-		System.out.println(md5("哈希算法笔记", ""));
-	}
+
 }

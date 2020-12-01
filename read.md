@@ -1,3 +1,8 @@
+150f47c198c3673b9ff1f35a45f606fa
+uxh6mie2s4dwjfpkcpmz
+
+启动frpc
+启动nginx
 首先创建表：
 ```
 CREATE TABLE `sys_sequence` (

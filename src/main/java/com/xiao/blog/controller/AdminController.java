@@ -70,17 +70,8 @@ public class AdminController {
     public String login(LoginUser user,HttpServletRequest request){
 
         Subject subject = SecurityUtils.getSubject();
-
-        //获取验证码
-        if(KaptchaUtil.getKaptchaOnOff()){
-            String verCode = user.getVerCode();
-            if(StringUtils.isEmpty(verCode)){
-                throw new VerCodeEmptyException();
-            }
-            if(!verCode.equals(ShiroKit.getSessionAttr("rightCode"))){
-                throw new VerCodeErrorException();
-            }
-        }
+        //校验验证码
+        KaptchaUtil.verifyVerCode(user);
 
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUserName(), user.getPassword());
 
@@ -103,25 +94,45 @@ public class AdminController {
     }
 
 
-
+    /**
+     * 退出登录
+     * @param model
+     * @return
+     */
     @RequestMapping("/logout")
-    public String logout(){
+    public String logout(Model model){
         Subject subject = SecurityUtils.getSubject();
+        ShiroKit.getSession().removeAttribute("user");
+        model.addAttribute("kaptchaOnOff",KaptchaUtil.getKaptchaOnOff());
         subject.logout();
         return "admin/login";
     }
 
+    /**
+     * 后台首页
+     * @return
+     */
     @RequestMapping("/index")
     public String index(){
         return "admin/index";
     }
 
+    /**
+     * 博客管理页面
+     * @param model
+     * @return
+     */
     @RequestMapping("/article")
     public String article(Model model){
         model.addAttribute("categoriesList",categoriesService.getCategoriesVOList());
         return "admin/article";
     }
 
+    /**
+     * 权限管理页面
+     * @param model
+     * @return
+     */
     @RequestMapping("/permission")
     public String permission(Model model){
 
@@ -129,29 +140,51 @@ public class AdminController {
         return "admin/permission";
     }
 
+    /**
+     * 角色管理
+     * @param model
+     * @return
+     */
     @RequestMapping("/role")
     public String role(Model model){
         return "/admin/role";
     }
 
+    /**
+     * 用户管理
+     * @param model
+     * @return
+     */
     @RequestMapping("/user")
     public String user(Model model){
         return "/admin/user";
     }
 
+    /**
+     * 分类管理
+     * @param model
+     * @return
+     */
     @RequestMapping("/categories")
     public String categories(Model model){
         model.addAttribute("categoriesList",categoriesService.getCategoriesByField(null));
         return "admin/categories";
     }
 
-
+    /**
+     * 标签管理
+     * @return
+     */
     @RequestMapping("/tags")
     public String tags(){
 
         return "admin/tags";
     }
 
+    /**
+     * 评论管理
+     * @return
+     */
     @RequestMapping("/comment")
     public String comment(){
 
@@ -179,14 +212,12 @@ public class AdminController {
     }
 
     /**
-     * 新增博客
+     * 个人页面
      * @param model
      * @return
      */
     @RequestMapping("/personal")
     public String personal(Model model){
-
-
         return "admin/personal";
     }
 

@@ -4,7 +4,9 @@ import cn.hutool.json.JSONUtil;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xiao.blog.model.Article;
+import com.xiao.blog.model.BoxCategories;
 import com.xiao.blog.service.ArticleService;
+import com.xiao.blog.service.BoxService;
 import com.xiao.blog.service.CategoriesService;
 import com.xiao.blog.service.TagsService;
 import com.xiao.blog.vo.ArticleVO;
@@ -35,6 +37,9 @@ public class BlogController {
 
     @Resource
     CategoriesService categoriesService;
+
+    @Resource
+    BoxService boxService;
 
     /**
      * 访问网站主页
@@ -263,6 +268,9 @@ public class BlogController {
 
     @RequestMapping("/box")
     public String box(Model model){
+
+        model.addAttribute("boxCategories", boxService.getBoxCategoriesVO());
+
 
         model.addAttribute("content","工具箱");
 

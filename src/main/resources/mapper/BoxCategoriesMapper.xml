@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xiao.blog.mapper.BoxCategoriesMapper" >
+  <resultMap id="BaseResultMap" type="com.xiao.blog.vo.BoxCategoriesVO" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+
+    <result column="sort" property="sort" jdbcType="INTEGER" />
+    <result column="parent_id" property="parentId" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="levels" property="levels" jdbcType="INTEGER" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="create_time" property="createDate" jdbcType="DATE" />
+    <result column="update_time" property="updateDate" jdbcType="DATE" />
+
+    <collection property="children" ofType="com.xiao.blog.vo.BoxCategoriesVO">
+      <id column="child_id" property="id" jdbcType="INTEGER" />
+
+      <result column="child_sort" property="sort" jdbcType="INTEGER" />
+      <result column="child_parent_id" property="parentId" jdbcType="INTEGER" />
+      <result column="child_title" property="title" jdbcType="VARCHAR" />
+      <result column="child_levels" property="levels" jdbcType="INTEGER" />
+      <result column="child_icon" property="icon" jdbcType="VARCHAR" />
+      <result column="child_create_time" property="createDate" jdbcType="DATE" />
+      <result column="child_update_time" property="updateDate" jdbcType="DATE" />
+    </collection>
+
+
+  </resultMap>
+
+  <select id="getBoxCategories" resultMap="BaseResultMap" >
+    select p.*,
+    c.id child_id,
+    c.sort child_sort,
+    c.title child_title,
+    c.levels child_levels,
+    c.icon child_icon
+    from box_category p
+    left join box_category c on c.parent_id = p.id
+    where p.parent_id = 0
+    order by p.sort,c.sort
+  </select>
+
+</mapper>

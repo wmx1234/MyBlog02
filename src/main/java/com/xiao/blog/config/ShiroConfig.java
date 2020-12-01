@@ -43,8 +43,7 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setSuccessUrl("/admin/index");
 
         //登录的用户访问了没有被授权的资源自动跳转到的页面。
-        shiroFilterFactoryBean.setUnauthorizedUrl("/404.html");
-
+        shiroFilterFactoryBean.setUnauthorizedUrl("/403.html");
 
         //设置自定义过滤器
         Map<String, Filter> filtersMap = new LinkedHashMap<String, Filter>();

@@ -1,5 +1,6 @@
 package com.xiao.blog.shiro.factory;
 
+import com.sun.deploy.util.StringUtils;
 import com.xiao.blog.mapper.PermissionMapper;
 import com.xiao.blog.mapper.RelationMapper;
 import com.xiao.blog.mapper.UserMapper;
@@ -11,9 +12,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Shiro工具类
@@ -23,18 +22,17 @@ import java.util.Map;
 @Transactional(readOnly = true)
 public class ShiroUtil implements IShiro {
 
-    @Resource
+    @Autowired
     private UserMapper userMapper;
 
-    @Resource
+    @Autowired
     private PermissionMapper permissionMapper;
 
-    @Resource
+    @Autowired
     private RelationMapper relationMapper;
 
     @Override
     public LoginUser getUser(String userName) {
-        
         return userMapper.getLoginUser(userName);
     }
 
@@ -47,11 +45,11 @@ public class ShiroUtil implements IShiro {
             if(roles == null || roles.size() == 0) {
                 filterChainDefinitionMap.put(permission.getUrl(),"anon");
             }else {
-                String roleNames = "";
+                Set<String> roleNameContainer = new HashSet<String>();
                 for(Role role:roles) {
-                    roleNames += role.getRoleName()+",";
+                    roleNameContainer.add(role.getRoleName());
                 }
-                filterChainDefinitionMap.put(permission.getUrl(),"customRolesAuthorizationFilter["+roleNames.substring(0, roleNames.length()-1)+"]");
+                filterChainDefinitionMap.put(permission.getUrl(),"customRolesAuthorizationFilter["+StringUtils.join(roleNameContainer,",")+"]");
             }
         }
 

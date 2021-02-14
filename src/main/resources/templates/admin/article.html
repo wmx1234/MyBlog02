@@ -1,33 +1,94 @@
 <!DOCTYPE html>
 <html lang="zh-cn" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="admin/fragment/common::header"></head>
+<style>
+
+    .el-tag {
+        background-color: #ecf5ff;
+        display: inline-block;
+        height: 32px;
+        padding: 0 10px;
+        line-height: 30px;
+        font-size: 12px;
+        color: #409eff;
+        border: 1px solid #d9ecff;
+        border-radius: 4px;
+        box-sizing: border-box;
+        white-space: nowrap;
+    }
+    .el-tag.el-tag--success {
+        background-color: #f0f9eb;
+        border-color: #e1f3d8;
+        color: #67c23a;
+    }
+    .el-tag.el-tag--info {
+        background-color: #f4f4f5;
+        border-color: #e9e9eb;
+        color: #909399;
+    }
+    .el-tag.el-tag--warning {
+        background-color: #fdf6ec;
+        border-color: #faecd8;
+        color: #e6a23c;
+    }
+    .el-tag.el-tag--danger {
+        background-color: #fef0f0;
+        border-color: #fde2e2;
+        color: #f56c6c;
+    }
+</style>
 <body class="layui-layout-body">
 <div class="layui-layout layui-layout-admin">
 
     <div th:replace="admin/fragment/common::top"></div>
     <div th:replace="admin/fragment/common::left"></div>
 
-    <div class="layui-body" >
-
-
-
+    <div class="layui-body" style="padding: 20px; background-color: #F2F2F2;">
+        <span class="layui-breadcrumb">
+        <a href="/admin/index">首页</a>
+        <a><cite>博客管理</cite></a>
+        </span>
         <div class="layui-content">
-            <h2>博客管理</h2>
-            <form class="layui-form x-center" id="form_categories" style="width:50%">
-                <div class="layui-form-pane" style="margin-top: 15px;">
-                    <div class="layui-form-item">
-                        <div class="layui-input-inline" style="width:120px">
-                            <input type="text" name="startDate" id="startDate" placeholder="起始日期" autocomplete="off" class="layui-input">
+            <div class="layui-card" style="border-radius: 5px">
+
+                <div class="layui-card-body">
+                    <form class="layui-form" action="">
+
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">发布日期</label>
+                            <div class="layui-input-block">
+                                <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入标题" class="layui-input">
+                            </div>
                         </div>
-                        <div class="layui-input-inline" style="width:120px">
-                            <input type="text" name="endDate" id="endDate" placeholder="结束日期" autocomplete="off" class="layui-input">
+                        <div class="layui-inline">
+                        <label class="layui-form-label">发布日期</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" id="test6"
+                                   placeholder="                  - ">
                         </div>
-                        <div class="layui-input-inline" style="width:80px">
-                            <button class="layui-btn"  lay-submit="" lay-filter="add"><i class="layui-icon">&#xe608;</i>增加</button>
+                        <div class="layui-input-inline">
+                            <select name="categoriesId">
+                                <option value=""></option>
+                                <option th:each="categories,index:${categoriesList}" th:value="${categories.id}" >[[${categories.name}]]</option>
+                            </select>
+                        </div>
+
+
+                        <div class="layui-input-inline" style="width:120px">
+                            <input type="text" name="articleName" id="articleName" placeholder="关键字" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-input-inline">
+                            <button class="layui-btn layui-btn-sm layui-btn-normal layui-btn-radius"
+                                    lay-submit="" lay-filter="add"><i class="layui-icon">&#xe615;</i>搜索</button>
+
+                        </div>
+                        <div class="layui-input-inline">
+                            <button class="layui-btn layui-btn-sm layui-btn-warm layui-btn-radius"
+                                    lay-submit="" lay-filter="add"><i class="layui-icon">&#xe666;</i>重置</button>
                         </div>
                     </div>
                 </div>
-            </form>
+            </div>
             <table class="layui-hide" id="admin_articles" lay-filter="admin_articles_filter"></table>
         </div>
     </div>
@@ -36,33 +97,20 @@
 
 
 
-<script type="text/html" id="barDemo">
-    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="iconfont icon-shanchu"></i></a>
-    <a class="layui-btn layui-btn-xs" lay-event="edit"><i class="iconfont icon-bianji"></i></a>
-    <a class="layui-btn layui-btn-xs" lay-event="show"><i class="iconfont icon-yanjing"></i></a>
-</script>
-
-<script type="text/html" id="switch_privary">
-    <!-- 这里的 checked 的状态只是演示 -->
-    <input type="checkbox" name="privacy" value="{{d.privacy}}"  lay-skin="switch" lay-text="私密|公开" lay-filter="sexDemo" {{ d.privacy == 0 ?'checked' : '' }}>
-</script>
-
-<script type="text/html" id="checkbox_draft">
-    <!-- 这里的 checked 的状态只是演示 -->
-    <input type="checkbox" name="draft" value="{{d.draft}}"  title="发布" lay-filter="lockDemo" {{ d.draft == 1 ? 'checked' : '' }}>
-</script>
-
-<script type="text/html" id="checkbox_draft2" >
-    <select name="interest" lay-filter="aihao" data-value={{d.categoriesId}}>
-        <option th:each="categories,stat:${categoriesList}" th:text="${categories.name}"
-                th:value="${categories.id}" th:selected="${categories.id} == data-value"></option>
-    </select>
+<script type="text/html" id="operate_bar">
+    <a class="layui-btn layui-btn-danger layui-btn-xs" alt="删除" lay-event="del"><i class="iconfont icon-shanchu"></i></a>
+    <a class="layui-btn layui-btn-xs" alt="编辑" lay-event="edit"><i class="iconfont icon-bianji"></i></a>
+    <a class="layui-btn layui-btn-warm layui-btn-xs" alt="预览" lay-event="show" target="_blank"><i class="iconfont icon-yanjing"></i></a>
 </script>
 
 
 
 
 <script th:inline="none">
+
+    $(function(){
+        $('#adminarticle').addClass('active');
+    });
 
     layui.use(['table','form','layer','laydate'], function(){
         let table = layui.table;
@@ -74,6 +122,11 @@
             elem: '#startDate'
         });
 
+        //日期范围
+        laydate.render({
+            elem: '#test6'
+            ,range: true
+        });
         const tableIns = table.render({
             elem: '#admin_articles',
             url:'/admin/article/getArticleVOList',
@@ -88,17 +141,37 @@
                 form.render();
             },
             size: 'lg',
-            page: true,
+            page: {
+                'limit':15,
+                'limits':[15, 20, 30, 40, 50]
+            },
             cols: [[
-                {field:'id', title:'ID', width:80, fixed: 'center', unresize: true, sort: true,align: 'center'},
+                {align:'center', title: '序号', type:'numbers',width:80},
+
                 {field:'articleTitle', title:'标题', edit: 'text',unresize: true,align: 'center'},
-                {field:'categoriesId', title:'所属分类',templet: '#checkbox_draft2', align: 'center'},
-                {field:'privacy', width:110,title:'博客类型', templet: '#switch_privary',align: 'center'},
-                {field:'createDate', width:150,title:'创建时间', align: 'center'},
-                {field:'draft', width:130,title:'发布状态', templet: '#checkbox_draft', unresize: true,align: 'center'},
-                {field:'readCount',width:80, title:'浏览量', align: 'center'},
-                {title:'操作', width:150, toolbar: '#barDemo',align: 'center'}
-            ]]
+                {templet: '<div>{{d.categories.name}}</div>',title:'分类', align: 'center'},
+                {field:'privacy', width:110,title:'博客类型',align: 'center'},
+                {field:'draft', width:130,title:'发布状态', unresize: true,align: 'center'},
+                {field:'createDate', width:150,title:'创建时间', align: 'center',sort: true,},
+                {title:'操作', width:150, toolbar: '#operate_bar',align: 'center'}
+            ]],
+            done: function(res, curr, count){
+                $("[data-field='privacy']").children().each(function(){
+                    if($(this).text()=='0'){
+                        $(this).html("<div class='el-tag el-tag--success  el-tag--light'>公开</div>");
+                    }else if($(this).text()=='1'){
+                        $(this).html("<div class='el-tag el-tag--danger  el-tag--light'>私密</div>");
+                    }
+                });
+
+                $("[data-field='draft']").children().each(function(){
+                    if($(this).text()=='0'){
+                        $(this).html("<div class='el-tag el-tag--success  el-tag--light'>已发布</div>");
+                    }else if($(this).text()=='1'){
+                        $(this).html("<div class='el-tag el-tag--warning  el-tag--light'>草稿</div>");
+                    }
+                });
+            }
         });
 
         //监听单元格编辑
@@ -108,6 +181,12 @@
                 layer.msg(e.msg);
                 tableIns.reload();
             })
+        });
+
+        table.on('sort(test)', function(obj) {
+            table.reload('tableId', {
+                initSort: obj
+            });
         });
 
         //监听行工具事件
@@ -130,7 +209,7 @@
             }else if(obj.event === 'edit'){
                 window.location.href="editor/"+obj.data.id;
             }else if(obj.event === 'show'){
-                window.location.href="/article/"+obj.data.id;
+                window.open('_blank').location.href="/article/"+obj.data.id;
             }
         });
 

@@ -89,7 +89,7 @@
 									<i class="layui-icon layui-icon-vercode zyl_lofo_icon"></i>
 								</div>
 							</div>
-							<div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
+							<div class="layui-col-xs4 layui-col-sm4 layui-col-md4" style="margin-left: 5px">
 								<img alt="验证码" onclick="this.src='/admin/getVerCode?d=' + new Date()*1" src="/admin/getVerCode" />
 							</div>
 
@@ -98,27 +98,21 @@
 					<div class="layui-col-sm12 layui-col-md12">
 						<div class="layui-row">
 							<div class="layui-col-xs4 layui-col-sm4 layui-col-md4">
-
 								<div class="layui-form-item">
 									<input type="checkbox" name="rememberMe" lay-skin="primary" title="记住我">
 								</div>
 							</div>
-
-
 						</div>
 					</div>
 					<div class="layui-col-sm12 layui-col-md12">
 						<button type="submit" class="layui-btn layui-btn-fluid" lay-submit="" lay-filter="demo1">立即登录</button>
-
 					</div>
-					<div class="layui-col-sm12 layui-col-md12">
+					<div class="layui-col-sm12 layui-col-md12" style="margin-top: 3px">
 						<span style="color: red" th:if="${msg} != null" th:text="${msg}"></span>
 					</div>
 				</form>
 			</div>
 		</div>
-		<!-- LoginForm End -->
-
 
 		<script src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/libs/jquery/jquery.min.js"></script>
 
@@ -126,8 +120,6 @@
 		<script th:src="@{/admin/layui/layui.js}" charset="utf-8"></script>
 		<!-- Jqarticle Js -->
 		<script type="text/javascript" th:src="@{/js/jqarticle/jparticle.min.js}"></script>
-		<!-- ZylVerificationCode Js-->
-		<script type="text/javascript" th:src="@{/js/zylVerificationCode/zylVerificationCode.js}"></script>
 		<script>
 			layui.use(['carousel', 'form'], function(){
 				let carousel = layui.carousel,

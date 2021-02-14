@@ -45,7 +45,9 @@
 .custom-admin .layui-nav-tree .layui-nav-item.layui-nav-itemed > a,
 .layui-nav-tree .layui-nav-item a:hover{
     background-color: #001529;
+
 }
+
 .active{
     background-color: #177ce3;
     background-repeat: repeat-y;
@@ -212,9 +214,7 @@ html, body , .app-container{
     box-shadow: 2px 0 6px rgba(0,21,41,.35);
 }
 
-.layui-layout-admin .layui-header .layui-nav{
-    width: 120px;
-}
+
 .custom-header .layui-nav .layui-nav-item{
     line-height: 50px;
 }

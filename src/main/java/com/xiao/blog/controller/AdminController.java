@@ -1,12 +1,12 @@
 package com.xiao.blog.controller;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.xiao.blog.model.Categories;
 import com.xiao.blog.model.Permission;
 import com.xiao.blog.service.*;
 import com.xiao.blog.shiro.ShiroKit;
-import com.xiao.blog.shiro.exception.VerCodeEmptyException;
-import com.xiao.blog.shiro.exception.VerCodeErrorException;
 import com.xiao.blog.util.DataBaseUtil;
 import com.xiao.blog.util.KaptchaUtil;
 import com.xiao.blog.vo.ArticleVO;
@@ -17,7 +17,6 @@ import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -123,7 +122,7 @@ public class AdminController {
      * @return
      */
     @RequestMapping("/article")
-    public String article(Model model){
+    public String article(Model model,ArticleVO article){
         model.addAttribute("categoriesList",categoriesService.getCategoriesVOList());
         return "admin/article";
     }
@@ -205,8 +204,11 @@ public class AdminController {
         model.addAttribute("article", new ArticleVO(id));
         //获取分类列表
         model.addAttribute("categoriesList",categoriesService.getCategoriesByField(new Categories()));
+        PageHelper.startPage(0,15);
+
+        PageInfo info=new PageInfo(tagsService.getTagsList());
         //获取标签列表
-        model.addAttribute("tagsList",tagsService.getTagsList());
+        model.addAttribute("tagsList",info.getList());
 
         return "admin/md_editor";
     }
@@ -249,10 +251,14 @@ public class AdminController {
         try {
             // 将生成的验证码保存在session中
             String createText = defaultKaptcha.createText();
+            //获取数学运算式文本
+            String mathStr = createText.substring(0, createText.lastIndexOf("@"));
+            //获取运算式结果
+            String result = createText.substring(createText.lastIndexOf("@") + 1);
 
-            request.getSession().setAttribute("rightCode", createText);
+            request.getSession().setAttribute("rightCode", result);
 
-            BufferedImage bi = defaultKaptcha.createImage(createText);
+            BufferedImage bi = defaultKaptcha.createImage(mathStr);
 
             ImageIO.write(bi, "jpg", out);
         } catch (Exception e) {

@@ -3,6 +3,7 @@ package com.xiao.blog.controller;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.xiao.blog.model.Article;
+import com.xiao.blog.model.Categories;
 import com.xiao.blog.pojo.request.PageRequest;
 import com.xiao.blog.pojo.response.BaseResponse;
 import com.xiao.blog.pojo.response.CommonResponse;
@@ -11,6 +12,7 @@ import com.xiao.blog.service.ArticleService;
 import com.xiao.blog.service.CategoriesService;
 import com.xiao.blog.vo.ArticleVO;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,7 +48,7 @@ public class ArticleController {
 
     @RequestMapping("/getArticleVOList")
     @ResponseBody
-    public PageResponse<ArticleVO> getArticleVOList(PageRequest request, Article article){
+    public PageResponse<ArticleVO> getArticleVOList(PageRequest request, Article article,Model model){
 
         PageHelper.startPage(request.getPage(),request.getLimit());
 

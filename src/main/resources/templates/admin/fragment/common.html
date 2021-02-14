@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
+    <link rel="icon" type="image/png" href="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/favicon.png">
     <link rel="stylesheet" th:href="@{/admin/layui/css/layui.css}"  media="all">
     <link rel="stylesheet" th:href="@{/admin/layui/css/admin.css}" media="all">
     <link rel="stylesheet" href="//at.alicdn.com/t/font_1624535_zjv03gn2omk.css">
@@ -14,7 +14,7 @@
     <script th:src="@{/admin/index.js}" data-main="home"></script>
 
 
-    <title>管理后台</title>
+    <title>晓&静博客管理后台</title>
 </head>
 
 <div class="layui-header custom-header" th:fragment="top">
@@ -25,17 +25,23 @@
         </li>
     </ul>
 
-    <ul class="layui-nav layui-layout-right">
+    <ul class="layui-nav layui-layout-right" lay-filter>
         <li class="layui-nav-item">
-            <p href="javascript:;" th:text="${session.user.name}">BieJun</p>
+            <a href=""><img th:src="${session.user.avatar}" class="layui-nav-img">[[${session.user.userName}]]</a>
             <dl class="layui-nav-child">
                 <dd><a href="/">返回前台</a></dd>
                 <dd><a href="/admin/personal">个人中心</a></dd>
                 <dd><a href="/admin/logout">退出</a></dd>
             </dl>
         </li>
-    </ul>
 
+    </ul>
+    <script>
+        //注意：导航 依赖 element 模块，否则无法进行功能性操作
+        layui.use('element', function(){
+            var element = layui.element;
+        });
+    </script>
 </div>
 
 <div class="layui-side custom-admin" th:fragment="left">
@@ -43,9 +49,8 @@
 
         <div class="custom-logo">
             <img src="https://cdn.jsdelivr.net/gh/wangmx996/wangmx996.github.io/medias/logo.png" alt=""/>
-            <h1>Admin Pro</h1>
+            <h1>晓&静博客</h1>
         </div>
-
 
         <ul id="Nav" class="layui-nav layui-nav-tree" style="margin-top: 12px">
             <li class="layui-nav-item"
@@ -54,13 +59,11 @@
                     <i th:class="'iconfont '+${menu.icon}"></i>
                     <em th:text="${menu.name}">机构管理</em>
                 </a>
-
             </li>
-
-
         </ul>
 
     </div>
+
 </div>
 
 
@@ -72,7 +75,6 @@
                 <i class="fa fa-th-large" aria-hidden="true"></i>
             </div>
         </div>
-
 
         <ul class="layui-nav" lay-filter="">
 
@@ -86,7 +88,6 @@
                     <dd><a th:href="@{/admin/logout}">退出</a></dd>
                 </dl>
             </li>
-            <li class="layui-nav-item x-index"><a href="/">前台首页</a></li>
         </ul>
     </div>
 </div>
@@ -106,4 +107,8 @@
     </ul>
 
 </div>
+
+
+
+
 

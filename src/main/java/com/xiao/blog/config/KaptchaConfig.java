@@ -1,5 +1,6 @@
 package com.xiao.blog.config;
 
+import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.impl.DefaultKaptcha;
 import com.google.code.kaptcha.util.Config;
 import org.springframework.context.annotation.Bean;
@@ -14,19 +15,32 @@ import java.util.Properties;
 public class KaptchaConfig {
     @Bean
     public DefaultKaptcha getDefaultKaptcha(){
-        com.google.code.kaptcha.impl.DefaultKaptcha defaultKaptcha = new com.google.code.kaptcha.impl.DefaultKaptcha();
+        DefaultKaptcha defaultKaptcha = new com.google.code.kaptcha.impl.DefaultKaptcha();
         Properties properties = new Properties();
-        properties.setProperty("kaptcha.border", "no");
-        properties.setProperty("kaptcha.border.color", "105,179,90");
-        properties.setProperty("kaptcha.textproducer.font.color", "red");
-        properties.setProperty("kaptcha.image.width", "110");
-        properties.setProperty("kaptcha.image.height", "38");
-        properties.setProperty("kaptcha.textproducer.font.size", "40");
-        properties.setProperty("kaptcha.session.key", "code");
-        properties.setProperty("kaptcha.textproducer.char.length", "4");
-        properties.setProperty("kaptcha.textproducer.font.names", "宋体,楷体,微软雅黑");
+        // 是否有边框 默认为true 我们可以自己设置yes，no
+        properties.setProperty(Constants.KAPTCHA_BORDER, "no");
+        // 边框颜色 默认为Color.BLACK
+        properties.setProperty(Constants.KAPTCHA_BORDER_COLOR, "105,179,90");
+        // 验证码文本字符颜色 默认为Color.BLACK
+        properties.setProperty(Constants.KAPTCHA_TEXTPRODUCER_FONT_COLOR, "red");
+        // 验证码图片宽度 默认为200
+        properties.setProperty(Constants.KAPTCHA_IMAGE_WIDTH, "120");
+        // 验证码图片高度 默认为50
+        properties.setProperty(Constants.KAPTCHA_IMAGE_HEIGHT, "38");
+
+        // 验证码文本字符间距 默认为2
+        properties.setProperty(Constants.KAPTCHA_TEXTPRODUCER_CHAR_SPACE, "3");
+        // 验证码文本字符大小 默认为40
+        properties.setProperty(Constants.KAPTCHA_TEXTPRODUCER_FONT_SIZE, "38");
+        properties.setProperty(Constants.KAPTCHA_SESSION_KEY, "code");
+        properties.setProperty(Constants.KAPTCHA_TEXTPRODUCER_CHAR_LENGTH, "6");
+        properties.setProperty(Constants.KAPTCHA_TEXTPRODUCER_FONT_NAMES, "宋体,楷体,微软雅黑");
+        // 验证码文本生成器,一定要设置成自定义实现类的全路径
+        properties.setProperty(Constants.KAPTCHA_TEXTPRODUCER_IMPL,"com.xiao.blog.kaptcha.MathExpressionTextCreator");
         Config config = new Config(properties);
         defaultKaptcha.setConfig(config);
         return defaultKaptcha;
     }
+
+
 }

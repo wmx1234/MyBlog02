@@ -144,6 +144,8 @@
             article.article_title,
             article.create_date,
             article.user_id,
+            article.privacy,
+            article.draft,
             u.name user_name,
             article.categories_id,
             categories.name categories_name
